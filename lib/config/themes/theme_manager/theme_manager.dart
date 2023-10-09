@@ -34,11 +34,10 @@ class ThemeManager extends Cubit<ThemeState> {
 
   Future<bool> changeTheme() async {
     isDark = !isDark;
+    StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, isDark);
     if (isDark) {
-      StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, false);
       emit(const IsDarkMode());
     } else {
-      StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, true);
       emit(const IsLightMode());
     }
     return isDark;

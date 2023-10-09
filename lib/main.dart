@@ -58,15 +58,19 @@ class App extends StatelessWidget {
           create: (_) => sl<SettingBloc>(),
         ),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: AppConfiguration.appName,
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
-        themeMode: ThemeMode.system,
-        routeInformationParser: AppRoutes.router.routeInformationParser,
-        routeInformationProvider: AppRoutes.router.routeInformationProvider,
-        routerDelegate: AppRoutes.router.routerDelegate,
+      child: BlocBuilder<ThemeManager, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: AppConfiguration.appName,
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: (state is IsDarkMode) ? ThemeMode.dark : ThemeMode.light,
+            routeInformationParser: AppRoutes.router.routeInformationParser,
+            routeInformationProvider: AppRoutes.router.routeInformationProvider,
+            routerDelegate: AppRoutes.router.routerDelegate,
+          );
+        },
       ),
     );
   }
