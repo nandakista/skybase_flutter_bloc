@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skybase/config/themes/app_colors.dart';
+import 'package:skybase/config/themes/app_theme.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_header.dart';
 import 'package:skybase/ui/widgets/shimmer/shimmer_list.dart';
 
@@ -17,12 +17,17 @@ class ShimmerDetail extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Shimmer.fromColors(
-        baseColor: Get.isDarkMode ? baseDark : baseLight,
+        baseColor: context.isDarkMode ? baseDark : baseLight,
         highlightColor: Colors.white,
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SampleFeatureDetailHeader(),
+            SampleFeatureDetailHeader(
+              avatar: '',
+              repositoryCount: 0,
+              followerCount: 0,
+              followingCount: 0,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(

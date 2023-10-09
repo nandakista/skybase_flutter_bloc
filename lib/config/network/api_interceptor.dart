@@ -7,7 +7,7 @@ import 'api_token_manager.dart';
    Varcant
    nanda.kista@gmail.com
 */
-class ApiInterceptors extends ApiTokenManager
+final class ApiInterceptors extends ApiTokenManager
     implements QueuedInterceptorsWrapper {
   ApiInterceptors(this._dio);
   final Dio _dio;

@@ -4,20 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
 import 'package:skybase/data/repositories/auth/auth_repository.dart';
-import 'package:skybase/ui/routes/app_routes.dart';
-import 'package:skybase/ui/views/login/login_view.dart';
-import 'package:skybase/ui/views/main_navigation/main_nav_view.dart';
 
 part 'login_event.dart';
 
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  String tag = 'IntroBloc : ';
+  String tag = 'LoginBloc::->';
 
   final AuthRepository repository;
 
-  LoginBloc(this.repository) : super(const LoginInitial()) {
+  LoginBloc(this.repository) : super(LoginInitial()) {
     on<SubmitLogin>(_onSubmit);
     on<BypassLogin>(_onBypass);
   }
@@ -27,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     try {
-      emit(const LoginLoading());
+      emit(LoginLoading());
       await repository.login(
         phoneNumber: event.phone,
         email: event.email,
@@ -43,7 +40,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     BypassLogin event,
     Emitter<LoginState> emit,
   ) async {
-    emit(const LoginLoading());
+    emit(LoginLoading());
     try {
       final response = await repository.getProfile(username: 'nandakista');
       await AuthManager.find.saveAuthData(

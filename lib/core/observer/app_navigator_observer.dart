@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class AppNavigatorObserver extends NavigatorObserver {
-  final String tag = 'AppBlocObserver::->';
+  final String tag = 'Navigator Observer::->';
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

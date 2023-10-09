@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:skybase/config/auth_manager/auth_wrapper.dart';
-import 'package:skybase/core/extension/bool_extension.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
 import 'package:skybase/core/helper/validator_helper.dart';
 import 'package:skybase/config/themes/app_colors.dart';
@@ -31,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
 
   void onHidePassword() {
     setState(() {
-      isHiddenPassword.toggle();
+      isHiddenPassword = !isHiddenPassword;
     });
   }
 
@@ -43,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return AuthWrapper(
-      child: (authManager, state) => KeyboardDismissible(
+      builder: (authManager, state) => KeyboardDismissible(
         child: Scaffold(
           body: Center(
             child: SingleChildScrollView(
@@ -76,10 +74,10 @@ class _LoginViewState extends State<LoginView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('txt_login'.tr, style: AppStyle.headline2),
+                                Text('txt_login', style: AppStyle.headline2),
                                 const SizedBox(height: 10),
                                 Text(
-                                  'txt_login_subtitle'.tr,
+                                  'txt_login_subtitle',
                                   style: AppStyle.subtitle4,
                                 ),
                               ],
@@ -101,21 +99,21 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             const SizedBox(height: 20),
                             SkyFormField(
-                              label: 'txt_phone'.tr,
-                              hint: 'txt_phone'.tr,
+                              label: 'txt_phone',
+                              hint: 'txt_phone',
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
                               icon: Icons.phone,
                               validator: (value) => ValidatorHelper.field(
-                                title: 'txt_phone'.tr,
+                                title: 'txt_phone',
                                 value: value.toString(),
                                 regex: AppRegex.phone,
                               ),
                             ),
                             const SizedBox(height: 20),
                             SkyPasswordFormField(
-                              label: 'txt_password'.tr,
-                              hint: 'txt_password'.tr,
+                              label: 'txt_password',
+                              hint: 'txt_password',
                               controller: passwordController,
                               icon: Icons.lock,
                               hiddenText: isHiddenPassword,
@@ -124,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
                                 onPressed: onHidePassword,
                               ),
                               validator: (value) => ValidatorHelper.field(
-                                title: 'txt_password'.tr,
+                                title: 'txt_password',
                                 value: value.toString(),
                                 regex: AppRegex.password,
                               ),
@@ -143,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                                   );
                                 }
                               },
-                              text: 'txt_login'.tr,
+                              text: 'txt_login',
                               icon: Icons.arrow_forward,
                               color: AppColors.primary,
                             ),
@@ -155,7 +153,7 @@ class _LoginViewState extends State<LoginView> {
                           const SizedBox(height: 12),
                           SkyButton(
                             onPressed: () => bloc.add(BypassLogin()),
-                            text: 'txt_skip'.tr,
+                            text: 'txt_skip',
                             icon: Icons.arrow_forward,
                             color: AppColors.primary,
                           ),
@@ -163,10 +161,10 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('txt_forgot_password'.tr),
+                              Text('txt_forgot_password'),
                               InkWell(
                                 child: Text(
-                                  'txt_reset'.tr,
+                                  'txt_reset',
                                   style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.bold,
@@ -179,10 +177,10 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('txt_dont_have_account'.tr),
+                              Text('txt_dont_have_account'),
                               InkWell(
                                 child: Text(
-                                  'txt_register'.tr,
+                                  'txt_register',
                                   style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.bold,

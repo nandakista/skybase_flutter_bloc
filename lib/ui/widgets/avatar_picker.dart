@@ -39,7 +39,7 @@ class AvatarPicker extends StatelessWidget {
       child: Stack(
         children: [
           GestureDetector(
-            onTap: enabled ? _onPickAvatar : null,
+            onTap: enabled ? () => _onPickAvatar(context) : null,
             child: SkyImage(
               width: 80.0,
               height: 80.0,
@@ -55,7 +55,7 @@ class AvatarPicker extends StatelessWidget {
           Container(
             alignment: Alignment.bottomRight,
             child: GestureDetector(
-              onTap: enabled ? _onPickAvatar : null,
+              onTap: enabled ? () => _onPickAvatar(context) : null,
               child: editWidget ??
                   Container(
                     width: 24,
@@ -115,9 +115,11 @@ class AvatarPicker extends StatelessWidget {
     );
   }
 
-  void _onPickAvatar() async {
+  void _onPickAvatar(BuildContext context) async {
     BottomSheetHelper.bar(
+      context: context,
       child: AttachmentsSourceBottomSheet(
+        pageContext: context,
         allowMultiple: false,
         enabledFileSource: true,
         withImageCompression: true,

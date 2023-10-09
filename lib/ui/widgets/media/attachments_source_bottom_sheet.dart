@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:skybase/core/base/main_navigation.dart';
 import 'package:skybase/core/helper/file_helper.dart';
 import 'package:skybase/core/helper/media_helper.dart';
 import 'package:skybase/core/helper/permission_helper.dart';
@@ -15,6 +15,7 @@ import 'package:skybase/core/helper/permission_helper.dart';
    nanda.kista@gmail.com
 */
 class AttachmentsSourceBottomSheet extends StatelessWidget {
+  final BuildContext pageContext;
   final double? maxHeight;
   final double? maxWidth;
   final int? imageQuality;
@@ -36,6 +37,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
 
   const AttachmentsSourceBottomSheet({
     Key? key,
+    required this.pageContext,
     required this.onAttachmentsSelected,
     required this.onMultipleAttachmentsSelected,
     this.maxHeight,
@@ -61,50 +63,64 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       children: <Widget>[
         ListTile(
           leading: cameraIcon,
-          title: cameraLabel ?? Text('txt_camera'.tr),
-          onTap: () => _onPickImage(ImageSource.camera),
+          title: cameraLabel ?? const Text('txt_camera'),
+          onTap: () {
+            MainNavigation.pop(context);
+            _onPickImage(pageContext, ImageSource.camera);
+          },
         ),
         ListTile(
           leading: galleryIcon,
-          title: galleryLabel ?? Text('txt_gallery'.tr),
-          onTap: () => _onPickImage(ImageSource.gallery),
+          title: galleryLabel ?? const Text('txt_gallery'),
+          onTap: () {
+            MainNavigation.pop(context);
+            _onPickImage(pageContext, ImageSource.gallery);
+          },
         ),
         if (enabledFileSource)
           ListTile(
             leading: fileIcon,
-            title: fileLabel ?? Text('txt_document'.tr),
-            onTap: () => _onPickFile(),
+            title: fileLabel ?? const Text('txt_document'),
+            onTap: () {
+              MainNavigation.pop(context);
+              _onPickFile(pageContext);
+            },
           ),
       ],
     );
   }
 
-  Future<void> _onPickImage(ImageSource source) async {
+  Future<void> _onPickImage(BuildContext context, ImageSource source) async {
     if (source == ImageSource.camera) {
       final permission = await Permission.camera.request();
-      if (permission.isPermanentlyDenied) {
-        PermissionHelper.openSettings('txt_need_permission_camera'.tr);
-      } else if (permission.isGranted) {
-        _pickSingleImage(ImageSource.camera);
+      if (context.mounted) {
+        if (permission.isPermanentlyDenied) {
+          PermissionHelper.openSettings(context, 'txt_need_permission_camera');
+        } else if (permission.isGranted) {
+          _pickSingleImage(context, ImageSource.camera);
+        }
       }
     } else {
-      bool isGranted = await _checkPermission();
-      if (isGranted) {
+      bool isGranted = await _checkPermission(context);
+      if (context.mounted && isGranted) {
         if (allowMultiple) {
-          _pickMultipleImage();
+          _pickMultipleImage(context);
         } else {
-          _pickSingleImage(ImageSource.gallery);
+          _pickSingleImage(context, ImageSource.gallery);
         }
       }
     }
   }
 
-  Future<bool> _checkPermission() async {
+  Future<bool> _checkPermission(BuildContext context) async {
     final PermissionStatus permission;
     if (Platform.isIOS) {
       permission = await Permission.photos.request();
       if (permission.isPermanentlyDenied) {
-        PermissionHelper.openSettings('txt_need_permission_gallery_photo'.tr);
+        if (context.mounted) {
+          PermissionHelper.openSettings(
+              context, 'txt_need_permission_gallery_photo');
+        }
         return false;
       }
       return true;
@@ -113,36 +129,41 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       if (androidInfo.version.sdkInt < 33) {
         permission = await Permission.storage.request();
-        if (permission.isPermanentlyDenied) {
-          PermissionHelper.openSettings('txt_need_permission_gallery_photo'.tr);
-          return false;
-        } else if (permission.isGranted) {
-          return true;
-        } else if (permission.isDenied) {
-          PermissionHelper.error('txt_need_permission_storage'.tr);
-          return false;
+        if (context.mounted) {
+          if (permission.isPermanentlyDenied) {
+            PermissionHelper.openSettings(
+                context, 'txt_need_permission_gallery_photo');
+          } else if (permission.isDenied) {
+            PermissionHelper.error(context, 'txt_need_permission_storage');
+          }
         }
-        return false;
+
+        return permission.isGranted;
       } else {
-        Map<Permission, PermissionStatus> statuses = await [
+        Map<Permission, PermissionStatus> permissionList = await [
           Permission.photos,
           Permission.videos,
         ].request();
-        if (statuses.values.contains(PermissionStatus.permanentlyDenied)) {
-          PermissionHelper.openSettings("txt_need_permission_storage".tr);
-          return false;
-        } else if (statuses.values.every((e) => e.isGranted)) {
-          return true;
-        } else if (statuses.values.contains(PermissionStatus.denied)) {
-          PermissionHelper.error('txt_need_permission_storage'.tr);
-          return false;
+
+        bool isGranted = permissionList.values.every((e) => e.isGranted);
+        if (context.mounted) {
+          if (permissionList.values
+              .contains(PermissionStatus.permanentlyDenied)) {
+            PermissionHelper.openSettings(
+                context, 'txt_need_permission_storage');
+          } else if (!isGranted) {
+            PermissionHelper.error(context, 'txt_need_permission_storage');
+          }
         }
-        return false;
+        return isGranted;
       }
     }
   }
 
-  Future<void> _pickSingleImage(ImageSource source) async {
+  Future<void> _pickSingleImage(
+    BuildContext context,
+    ImageSource source,
+  ) async {
     final XFile? pickedFile = await ImagePicker().pickImage(
       source: source,
       maxHeight: withImageCompression ? 1024 : maxHeight,
@@ -159,21 +180,21 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         );
       }
       onAttachmentsSelected(imageFile);
-      Get.back();
+      if (context.mounted) MainNavigation.pop(context);
     }
   }
 
-  Future<void> _pickMultipleImage() async {
+  Future<void> _pickMultipleImage(BuildContext context) async {
     final List<XFile> result = await ImagePicker().pickMultiImage(
       maxHeight: withImageCompression ? 1024 : maxHeight,
       maxWidth: withImageCompression ? 1024 : maxWidth,
       imageQuality: imageQuality,
     );
     onMultipleAttachmentsSelected(result.map((e) => File(e.path)).toList());
-    Get.back();
+    if (context.mounted) MainNavigation.pop(context);
   }
 
-  Future<void> _onPickFile() async {
+  Future<void> _onPickFile(BuildContext context) async {
     List<File> result = await FileHelper.pickFile(
           allowMultiple: allowMultiple,
           allowedExtensions:
@@ -181,6 +202,6 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         ) ??
         [];
     onMultipleAttachmentsSelected(result);
-    Get.back();
+    if (context.mounted) MainNavigation.pop(context);
   }
 }

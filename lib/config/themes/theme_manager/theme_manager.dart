@@ -1,0 +1,46 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/core/database/storage/storage_key.dart';
+import 'package:skybase/core/database/storage/storage_manager.dart';
+import 'package:skybase/service_locator.dart';
+
+part 'theme_state.dart';
+
+/* Created by
+   Varcant
+   nanda.kista@gmail.com
+*/
+class ThemeManager extends Cubit<ThemeState> {
+  ThemeManager() : super(Initial());
+
+  static ThemeManager get find => sl<ThemeManager>();
+
+  bool isDark = false;
+
+  void toDarkMode() => isDark = true;
+
+  void toLightMode() => isDark = false;
+
+  bool get isDarkTheme => isDark;
+
+  void init() {
+    isDark = StorageManager.find.get<bool?>(StorageKey.IS_DARK_THEME) ?? false;
+    if (isDark) {
+      emit(const IsDarkMode());
+    } else {
+      emit(const IsLightMode());
+    }
+  }
+
+  Future<bool> changeTheme() async {
+    isDark = !isDark;
+    if (isDark) {
+      StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, false);
+      emit(const IsDarkMode());
+    } else {
+      StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, true);
+      emit(const IsLightMode());
+    }
+    return isDark;
+  }
+}

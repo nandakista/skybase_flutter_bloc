@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:skybase/core/helper/converter_helper.dart';
 import 'package:skybase/core/extension/int_extension.dart';
@@ -8,14 +7,23 @@ import 'package:skybase/core/helper/input_formater.dart';
 import 'package:skybase/core/helper/snackbar_helper.dart';
 import 'package:skybase/core/helper/validator_helper.dart';
 import 'package:skybase/config/themes/app_style.dart';
-import 'package:skybase/ui/views/utils/utils_controller.dart';
 import 'package:skybase/ui/widgets/keyboard_dismissible.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 import 'package:skybase/ui/widgets/sky_button.dart';
 import 'package:skybase/ui/widgets/sky_form_field.dart';
 
-class OtherUtilsView extends GetView<UtilsController> {
+class OtherUtilsView extends StatefulWidget {
+  static const String route = 'other';
+
   const OtherUtilsView({Key? key}) : super(key: key);
+
+  @override
+  State<OtherUtilsView> createState() => _OtherUtilsViewState();
+}
+
+class _OtherUtilsViewState extends State<OtherUtilsView> {
+  final currency = 125000;
+  final currencyCtr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +35,20 @@ class OtherUtilsView extends GetView<UtilsController> {
           child: Column(
             children: [
               const SizedBox(height: 12),
-              Text(
-                  'Sample Currency Format = ${controller.currency.currencyFormat()}'),
+              Text('Sample Currency Format = ${currency.currencyFormat()}'),
               const SizedBox(height: 12),
               SkyFormField(
-                controller: controller.currencyCtr,
+                controller: currencyCtr,
                 initialValue: 0.currencyFormat(symbol: 'Rp'),
-                hint: 'txt_price'.tr,
+                hint: 'txt_price',
                 keyboardType: TextInputType.number,
                 onChanged: (value) => (value.isEmpty)
-                    ? controller.currencyCtr.text =
-                        0.currencyFormat(symbol: 'Rp')
+                    ? currencyCtr.text = 0.currencyFormat(symbol: 'Rp')
                     : value,
                 validator: (value) => ValidatorHelper.required('$value'),
                 inputFormatters: CustomInputFormatters.idrCurrency,
-                onFieldSubmitted: (value) => SnackBarHelper.normal(context: context, message: value),
+                onFieldSubmitted: (value) =>
+                    SnackBarHelper.normal(context: context, message: value),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -49,9 +56,12 @@ class OtherUtilsView extends GetView<UtilsController> {
                   String? converted = ConverterHelper.replaceStringRange(
                       'name@email.com', 2, 5, '*');
                   debugPrint('Converted = $converted');
-                  SnackBarHelper.normal(context:context, message: 'String converted :\n $converted');
+                  SnackBarHelper.normal(
+                    context: context,
+                    message: 'String converted :\n $converted',
+                  );
                 },
-                text: '${'txt_convert'.tr} String',
+                text: '${'txt_convert'} String',
                 icon: CupertinoIcons.t_bubble,
               ),
               const SizedBox(height: 26),

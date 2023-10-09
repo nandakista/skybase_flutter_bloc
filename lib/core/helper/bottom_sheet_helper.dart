@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class BottomSheetHelper {
   static basic({
+    required BuildContext context,
     required Widget child,
     bool isDismissible = true,
     bool isScrollControlled = true,
@@ -12,16 +12,16 @@ class BottomSheetHelper {
     bool enableDrag = true,
   }) async {
     return await showModalBottomSheet(
-      context: Get.context!,
+      context: context,
       isDismissible: isDismissible,
       isScrollControlled: isScrollControlled,
       backgroundColor: backgroundColor,
       barrierColor: barrierColor,
       enableDrag: enableDrag,
       builder: (btmContext) => Container(
-        color: Theme.of(Get.context!).scaffoldBackgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: Get.height - 50),
+          constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height - 50),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
             child: child,
@@ -32,6 +32,7 @@ class BottomSheetHelper {
   }
 
   static rounded({
+    required BuildContext context,
     required Widget child,
     bool isDismissible = true,
     bool isScrollControlled = true,
@@ -42,7 +43,7 @@ class BottomSheetHelper {
     bool expand = false,
   }) async {
     return await showModalBottomSheet(
-      context: Get.context!,
+      context: context,
       isDismissible: isDismissible,
       isScrollControlled: isScrollControlled,
       backgroundColor: backgroundColor,
@@ -50,10 +51,11 @@ class BottomSheetHelper {
       barrierColor: barrierColor,
       builder: (btmContext) {
         return ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: Get.height - 50),
+          constraints:
+              BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height - 50),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(Get.context!).scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
@@ -70,6 +72,7 @@ class BottomSheetHelper {
   }
 
   static bar({
+    required BuildContext context,
     required Widget child,
     bool isDismissible = true,
     bool isScrollControlled = true,
@@ -78,7 +81,7 @@ class BottomSheetHelper {
     bool expand = false,
   }) async {
     return await showBarModalBottomSheet(
-      context: Get.context!,
+      context: context,
       isDismissible: isDismissible,
       expand: expand,
       backgroundColor: backgroundColor,
@@ -91,6 +94,7 @@ class BottomSheetHelper {
   }
 
   static Future cupertino({
+    required BuildContext context,
     required Widget child,
     bool isDismissible = true,
     bool isScrollControlled = true,
@@ -100,12 +104,12 @@ class BottomSheetHelper {
     Color? barrierColor,
   }) async {
     return await showCupertinoModalBottomSheet(
-      context: Get.context!,
+      context: context,
       isDismissible: isDismissible,
       enableDrag: enableDrag,
       topRadius: const Radius.circular(24),
       duration: const Duration(milliseconds: 600),
-      backgroundColor: Theme.of(Get.context!).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       barrierColor: barrierColor ?? Colors.black54,
       expand: expand,
       bounce: true,
@@ -141,6 +145,7 @@ class BottomSheetHelper {
   }
 
   static Future material({
+    required BuildContext context,
     required Widget child,
     bool isDismissible = true,
     bool isScrollControlled = true,
@@ -150,11 +155,11 @@ class BottomSheetHelper {
     Color? barrierColor,
   }) async {
     return await showMaterialModalBottomSheet(
-      context: Get.context!,
+      context: context,
       isDismissible: isDismissible,
       enableDrag: enableDrag,
       duration: const Duration(milliseconds: 600),
-      backgroundColor: Theme.of(Get.context!).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       barrierColor: barrierColor ?? Colors.black54,
       expand: expand,
       bounce: true,

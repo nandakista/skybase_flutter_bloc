@@ -160,7 +160,7 @@ class AppTheme {
 }
 
 extension DarkMode on BuildContext {
-  bool isDarkMode() {
+  bool get isDarkMode {
     final brightness = MediaQuery.of(this).platformBrightness;
     return brightness == Brightness.dark;
   }

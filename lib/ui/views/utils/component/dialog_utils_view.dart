@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 import 'package:skybase/ui/widgets/sky_button.dart';
 
 class DialogUtilsView extends StatelessWidget {
+  static const String route = 'dialog';
+
   const DialogUtilsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SkyAppBar.primary(title: 'Dialog Utility'),
+      appBar: SkyAppBar.primary(title: 'Dialog Utility',),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -27,7 +28,7 @@ class DialogUtilsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SkyButton(
-              text: 'txt_warning'.tr,
+              text: 'txt_warning',
               icon: Icons.warning_amber,
               outlineMode: true,
               color: Colors.orange,
@@ -41,7 +42,7 @@ class DialogUtilsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SkyButton(
-              text: 'txt_failed'.tr,
+              text: 'txt_failed',
               icon: Icons.close,
               outlineMode: true,
               color: Colors.red,
@@ -55,7 +56,7 @@ class DialogUtilsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SkyButton(
-              text: 'txt_success'.tr,
+              text: 'txt_success',
               icon: CupertinoIcons.checkmark_alt_circle,
               outlineMode: true,
               color: Colors.green,

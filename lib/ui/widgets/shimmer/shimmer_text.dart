@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:skybase/config/themes/app_theme.dart';
 
 class ShimmerText extends StatelessWidget {
   const ShimmerText({Key? key, this.width}) : super(key: key);
@@ -11,7 +11,7 @@ class ShimmerText extends StatelessWidget {
     return Container(
       width: width ?? double.infinity,
       height: 10,
-      color: Get.isDarkMode ? Colors.black54 : Colors.white,
+      color: context.isDarkMode ? Colors.black54 : Colors.white,
     );
   }
 }

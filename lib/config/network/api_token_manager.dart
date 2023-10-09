@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:skybase/config/app/app_env.dart';
+import 'package:skybase/config/environment/app_env.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
 import 'package:skybase/core/database/secure_storage/secure_storage_manager.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
@@ -11,6 +10,8 @@ import 'package:skybase/config/network/api_config.dart';
 import 'package:skybase/config/network/api_exception.dart';
 import 'package:skybase/config/network/api_request.dart';
 import 'package:skybase/config/network/api_response.dart';
+import 'package:skybase/core/base/main_navigation.dart';
+import 'package:skybase/ui/views/login/login_view.dart';
 
 /* Created by
    Varcant
@@ -27,8 +28,9 @@ enum TokenType {
   REFRESH_TOKEN,
 }
 
-class ApiTokenManager extends QueuedInterceptorsWrapper {
-  // final authManager = AuthManager.find;
+abstract base class ApiTokenManager extends QueuedInterceptorsWrapper
+    with NetworkException {
+  final authManager = AuthManager.find;
   final secureStorage = SecureStorageManager.find;
 
   Future<void> handleToken({
@@ -50,21 +52,21 @@ class ApiTokenManager extends QueuedInterceptorsWrapper {
     }
   }
 
-  _handleAccessToken(DioException err, ErrorInterceptorHandler handler) async {
+  void _handleAccessToken(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final int status = err.response?.statusCode ?? 0;
     if (status == 401) {
-      // DialogHelper.failed(
-      //   isDismissible: false,
-      //   message: 'txt_you_must_login_again'.tr,
-      //   onConfirm: () => authManager.logout(),
-      // );
+      await authManager.clearData();
+      MainNavigation.contextLessPopAllReplacement(LoginView.route);
       super.onError(err, handler);
     } else {
       super.onError(err, handler);
     }
   }
 
-  _handleRefreshToken(
+  void _handleRefreshToken(
     Dio dio,
     DioException err,
     ErrorInterceptorHandler handler,
@@ -72,9 +74,8 @@ class ApiTokenManager extends QueuedInterceptorsWrapper {
     String? accessToken = await secureStorage.getToken();
     String? refreshToken = await secureStorage.getRefreshToken();
     if (accessToken != null && err.response?.statusCode == 401) {
-      String? newToken = await _getAccessToken(
-        refreshToken: refreshToken.toString(),
-      );
+      String? newToken =
+          await _getAccessToken(refreshToken: refreshToken.toString());
       await secureStorage.setToken(value: newToken.toString());
       return handler.resolve(await _retry(dio, err.requestOptions));
     } else {
@@ -94,12 +95,10 @@ class ApiTokenManager extends QueuedInterceptorsWrapper {
       );
       return ApiResponse.fromJson(responseBody.data).data['token'];
     } on DioException catch (error) {
-      debugPrint('${NetworkException.getErrorException(error)}');
-      // return DialogHelper.failed(
-      //   isDismissible: false,
-      //   message: 'txt_you_must_login_again'.tr,
-      //   onConfirm: () => authManager.logout(),
-      // );
+      debugPrint(getErrorException(error).toString());
+      await authManager.clearData();
+      MainNavigation.contextLessPopAllReplacement(LoginView.route);
+      return error.toString();
     }
   }
 

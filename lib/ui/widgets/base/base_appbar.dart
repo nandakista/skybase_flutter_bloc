@@ -36,7 +36,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         title ?? '',
         style: titleStyle,
       ),
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
       elevation: elevation,
       actions: action,
       iconTheme: IconThemeData(color: iconColor, size: iconSize),

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:skybase/config/themes/theme_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 
-class ThemeComponentUtilsView extends StatelessWidget {
+class ThemeComponentUtilsView extends StatefulWidget {
+  static const String route = 'theme-component';
+
   const ThemeComponentUtilsView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    RxBool switchValue = false.obs;
+  State<ThemeComponentUtilsView> createState() =>
+      _ThemeComponentUtilsViewState();
+}
 
+class _ThemeComponentUtilsViewState extends State<ThemeComponentUtilsView> {
+  bool switchValue = false;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: SkyAppBar.secondary(title: 'Theme Component'),
       body: SingleChildScrollView(
@@ -21,34 +29,34 @@ class ThemeComponentUtilsView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Is Dark Mode'),
-                GetX<ThemeManager>(
-                  builder: (controller) => Switch(
-                    value: controller.isDark.value,
+                BlocBuilder<ThemeManager, ThemeState>(
+                  builder: (context, state) => Switch(
+                    value: state is IsDarkMode,
                     onChanged: (value) {
-                      controller.changeTheme();
+                      context.read<ThemeManager>().changeTheme();
                     },
                   ),
                 ),
               ],
             ),
-            Obx(
-              () => Radio(
-                value: switchValue.value,
-                groupValue: true,
-                onChanged: (value) => switchValue.toggle(),
-              ),
+            Radio(
+              value: switchValue,
+              groupValue: true,
+              onChanged: (value) => setState(() {
+                switchValue = !switchValue;
+              }),
             ),
-            Obx(
-              () => Switch(
-                value: switchValue.value,
-                onChanged: (value) => switchValue.toggle(),
-              ),
+            Switch(
+              value: switchValue,
+              onChanged: (value) => setState(() {
+                switchValue = !switchValue;
+              }),
             ),
-            Obx(
-              () => Checkbox(
-                value: switchValue.value,
-                onChanged: (value) => switchValue.toggle(),
-              ),
+            Checkbox(
+              value: switchValue,
+              onChanged: (value) => setState(() {
+                switchValue = !switchValue;
+              }),
             ),
           ],
         ),

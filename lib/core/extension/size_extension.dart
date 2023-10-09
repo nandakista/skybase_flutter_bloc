@@ -1,25 +1,25 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 extension SizeIntExtension on int {
-  double get w {
-    if (this >= 100) return Get.width;
-    return this / 100 * Get.width;
+  double w(context) {
+    if (this >= 100) return MediaQuery.sizeOf(context).width;
+    return this / 100 * MediaQuery.sizeOf(context).width;
   }
 
-  double get h {
-    if (this >= 100) return Get.height;
-    return this / 100 * Get.height;
+  double h(context) {
+    if (this >= 100) return MediaQuery.sizeOf(context).height;
+    return this / 100 * MediaQuery.sizeOf(context).height;
   }
 }
 
 extension DoubleIntExtension on double {
-  double get w {
-    if (this >= 100) return Get.width;
-    return this/100 * Get.width;
+  double w(context) {
+    if (this >= 100) return MediaQuery.sizeOf(context).width;
+    return this / 100 * MediaQuery.sizeOf(context).width;
   }
 
-  double get h {
-    if (this >= 100) return Get.height;
-    return this/100 * Get.height;
+  double h(context) {
+    if (this >= 100) return MediaQuery.sizeOf(context).height;
+    return this / 100 * MediaQuery.sizeOf(context).height;
   }
 }

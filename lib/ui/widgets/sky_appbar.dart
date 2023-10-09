@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/ui/widgets/base/base_appbar.dart';
@@ -22,8 +21,9 @@ abstract class SkyAppBar {
     return BaseAppBar(
       title: title,
       action: actions,
-      backgroundColor: backgroundColor ?? Get.theme.scaffoldBackgroundColor,
-      titleStyle: titleStyle ?? AppStyle.subtitle4.copyWith(color: AppColors.primary),
+      backgroundColor: backgroundColor,
+      titleStyle:
+          titleStyle ?? AppStyle.subtitle4.copyWith(color: AppColors.primary),
       elevation: 0,
       centerTitle: centerTitle,
       iconColor: iconColor ?? AppColors.systemDarkGrey,
@@ -50,7 +50,7 @@ abstract class SkyAppBar {
     );
   }
 
-///
-/// Add other AppBar if needed.
-///
+  ///
+  /// Add other AppBar if needed.
+  ///
 }

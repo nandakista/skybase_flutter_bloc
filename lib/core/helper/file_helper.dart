@@ -5,15 +5,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:skybase/core/helper/dialog_helper.dart';
-import 'package:skybase/core/helper/snackbar_helper.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'permission_helper.dart';
 
 class FileHelper {
   static String getFileSizeString(String path, int decimals) {
@@ -90,23 +84,6 @@ class FileHelper {
       debugPrint(result.message);
     } catch (e) {
       debugPrint("error: $e");
-    }
-  }
-
-  static Future<void> openPlatformDownloadedFolder(String folderPath) async {
-    if (Platform.isIOS) {
-      final downloadDir = Uri.tryParse("shareddocuments://$folderPath")!;
-      await launchUrl(downloadDir);
-    } else if (Platform.isAndroid) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-
-      if (androidInfo.version.sdkInt > 29) {
-        bool isGranted = await PermissionHelper.manageExternalStorage();
-        if (isGranted) await FileHelper.openDownloadedFolder(folderPath);
-      } else {
-        await FileHelper.openDownloadedFolder(folderPath);
-      }
     }
   }
 

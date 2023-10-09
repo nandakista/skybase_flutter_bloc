@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:skybase/core/base/main_navigation.dart';
 import 'package:skybase/ui/views/utils/component/bottom_sheet_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/dialog_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/list_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/media_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/snackbar_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/theme_component_utils_view.dart';
-import 'package:skybase/ui/views/utils/component/timer/timer_utils_view.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 import 'package:skybase/ui/widgets/sky_button.dart';
 
@@ -33,49 +32,48 @@ class UtilsView extends StatelessWidget {
                 text: 'Media Utility',
                 icon: Icons.photo_library_outlined,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const MediaUtilsView()),
+                onPressed: () =>
+                    MainNavigation.push(context, MediaUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
                 text: 'BottomSheet Utility',
                 icon: Icons.account_tree_outlined,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const BottomSheetUtilsView()),
+                onPressed: () =>
+                    MainNavigation.push(context, BottomSheetUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
                 text: 'List Utility',
                 icon: Icons.list,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const ListUtilsView()),
+                onPressed: () =>
+                    MainNavigation.push(context, ListUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
                 text: 'Dialog Utility',
                 icon: CupertinoIcons.conversation_bubble,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const DialogUtilsView()),
+                onPressed: () =>
+                    MainNavigation.push(context, DialogUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
                 text: 'SnackBar Utility',
                 icon: Icons.table_rows_outlined,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const SnackBarUtilsView()),
-              ),
-              const SizedBox(height: 12),
-              SkyButton(
-                text: 'Timer Utility',
-                icon: Icons.timer_outlined,
-                outlineMode: true,
-                onPressed: () => Get.toNamed(TimerUtilsView.route),
+                onPressed: () =>
+                    MainNavigation.push(context, SnackBarUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
                 text: 'Other',
                 icon: Icons.add,
                 outlineMode: true,
-                onPressed: () => Get.to(() => const OtherUtilsView()),
+                onPressed: () =>
+                    MainNavigation.push(context, OtherUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -84,9 +82,9 @@ class UtilsView extends StatelessWidget {
                 gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Color(0xff003EA1), Color(0xff9F0077)]
-                ),
-                onPressed: () => Get.to(() => const ThemeComponentUtilsView()),
+                    colors: [Color(0xff003EA1), Color(0xff9F0077)]),
+                onPressed: () =>
+                    MainNavigation.push(context, ThemeComponentUtilsView.route),
               ),
               const SizedBox(height: 28),
             ],

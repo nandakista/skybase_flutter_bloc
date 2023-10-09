@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
+import 'package:skybase/core/base/main_navigation.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 import 'package:skybase/ui/widgets/sky_dialog.dart';
 
@@ -28,7 +27,7 @@ class LoadingDialog {
     );
   }
 
-  static dismiss(BuildContext context) => context.pop();
+  static dismiss(BuildContext context) => MainNavigation.pop(context);
 }
 
 class DialogHelper {
@@ -45,7 +44,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.error(
         header: header,
-        title: title ?? 'txt_failed'.tr,
+        title: title ?? 'txt_failed',
         description: message,
         onConfirm: onConfirm ?? () => dismiss(context),
         isDismissible: isDismissible ?? true,
@@ -66,7 +65,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.success(
         header: header,
-        title: title ?? 'txt_success'.tr,
+        title: title ?? 'txt_success',
         description: message,
         onConfirm: onConfirm,
         isDismissible: isDismissible ?? false,
@@ -91,7 +90,7 @@ class DialogHelper {
       builder: (context) => DialogAlert.warning(
         header: header,
         isDismissible: isDismissible ?? false,
-        title: title ?? 'txt_warning'.tr,
+        title: title ?? 'txt_warning',
         description: message,
         onConfirm: onConfirm,
         confirmText: confirmText,
@@ -117,7 +116,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.retry(
         header: header,
-        title: title ?? 'txt_failed'.tr,
+        title: title ?? 'txt_failed',
         description: message,
         confirmText: confirmText,
         cancelText: cancelText,
@@ -143,7 +142,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.force(
         header: header,
-        title: title ?? 'txt_warning'.tr,
+        title: title ?? 'txt_warning',
         description: message,
         onConfirm: onConfirm,
         onCancel: onCancel ?? () => dismiss(context),
@@ -153,5 +152,5 @@ class DialogHelper {
     );
   }
 
-  static dismiss(BuildContext context) => context.pop();
+  static dismiss(BuildContext context) => MainNavigation.pop(context);
 }

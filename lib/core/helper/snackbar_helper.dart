@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum SkySnackBarType { NORMAL, SUCCESS, ERROR, WARNING }
 
@@ -18,7 +17,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success'.tr,
+      message: message ?? 'txt_success',
       type: SkySnackBarType.NORMAL,
       behavior: behavior,
       action: action,
@@ -39,7 +38,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success'.tr,
+      message: message ?? 'txt_success',
       type: SkySnackBarType.NORMAL,
       behavior: behavior,
       action: action,
@@ -54,7 +53,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success'.tr,
+      message: message ?? 'txt_success',
       type: SkySnackBarType.SUCCESS,
       behavior: behavior,
       action: action,
@@ -69,7 +68,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_error'.tr,
+      message: message ?? 'txt_error',
       type: SkySnackBarType.ERROR,
       behavior: behavior,
       action: action,
@@ -84,7 +83,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_warning'.tr,
+      message: message ?? 'txt_warning',
       type: SkySnackBarType.WARNING,
       behavior: behavior,
       action: action,
@@ -104,22 +103,13 @@ abstract class SnackBarHelper {
     ShapeBorder? shape,
     double? elevation,
   }) {
-    Color bgColor = backgroundColor ?? Theme.of(Get.context!).primaryColor;
-
-    switch (type) {
-      case SkySnackBarType.ERROR:
-        bgColor = Colors.red;
-        break;
-      case SkySnackBarType.SUCCESS:
-        bgColor = Colors.green;
-        break;
-      case SkySnackBarType.WARNING:
-        bgColor = Colors.orange;
-        break;
-      case SkySnackBarType.NORMAL:
-        bgColor = Colors.black;
-        break;
-    }
+    Color bgColor = backgroundColor ?? Theme.of(context).primaryColor;
+    bgColor = switch (type) {
+      SkySnackBarType.ERROR => bgColor = Colors.red,
+      SkySnackBarType.SUCCESS => bgColor = Colors.green,
+      SkySnackBarType.WARNING => bgColor = Colors.orange,
+      SkySnackBarType.NORMAL => bgColor = Colors.black,
+    };
 
     final snackBar = SnackBar(
       width: width,

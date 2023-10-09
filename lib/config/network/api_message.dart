@@ -2,14 +2,19 @@
    Varcant
    nanda.kista@gmail.com
 */
-class ApiMessage {
-  static message(String errorMessage) {
-    switch (errorMessage) {
-      case 'User not found' :
-        return 'Pengguna tidak ditemukan. \nSilahkan melakukan pendaftaran terlebih dahulu.';
 
-      default:
-        return errorMessage;
-    }
+mixin ApiMessage {
+
+  /// Convert message from BE
+  ///
+  /// **Ex:**
+  /// Be message = User not found, will be translated to *txt_api_user_not_found.tr*
+  String convertMessage(String errorMessage) {
+    return switch (errorMessage) {
+      'User not found' => 'txt_api_user_not_found',
+    // Add other..
+    // ...
+      _ => errorMessage,
+    };
   }
 }

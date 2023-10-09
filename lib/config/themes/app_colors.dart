@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppColors {
   // General
@@ -19,9 +18,6 @@ class AppColors {
   static const Color systemBgDark = Color(0xff303030);
   static const Color systemBgLight = Color(0xffFAFAFA);
   static const Color subtitleText = Color(0xff504F5E);
-  Color containerThemeColor = (Get.isDarkMode)
-      ? Get.context!.theme.dialogBackgroundColor
-      : systemGrey;
 
   // Dark Mode
   static const Color baseDark = Color(0xff303030);

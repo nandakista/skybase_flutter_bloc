@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
+import 'package:skybase/config/themes/app_theme.dart';
 import 'package:skybase/ui/widgets/sky_button.dart';
 
 /* Created by
@@ -35,13 +35,14 @@ class SkyDialog extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                 margin: margin ?? const EdgeInsets.only(top: 16),
                 decoration: BoxDecoration(
-                  color: (Get.isDarkMode) ? Colors.black : Colors.white,
+                  color: context.isDarkMode ? Colors.black : Colors.white,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(17),
                   boxShadow: [
                     BoxShadow(
-                        color:
-                            (Get.isDarkMode) ? AppColors.primary : Colors.black,
+                        color: (context.isDarkMode)
+                            ? AppColors.primary
+                            : Colors.black,
                         offset: const Offset(0.0, 0.0),
                         blurRadius: 10.0)
                   ],
@@ -101,8 +102,7 @@ class DialogAlert extends StatelessWidget {
           child: header ?? Image.asset('assets/images/ic_success.png'),
         ),
         onConfirm: onConfirm,
-        backgroundColorHeader:
-            backgroundColorHeader ?? Get.theme.scaffoldBackgroundColor,
+        backgroundColorHeader: backgroundColorHeader,
         confirmColor: Colors.green,
       );
 
@@ -123,8 +123,7 @@ class DialogAlert extends StatelessWidget {
           child: header ?? Image.asset('assets/images/ic_failed.png'),
         ),
         onConfirm: onConfirm,
-        backgroundColorHeader:
-            backgroundColorHeader ?? Get.theme.scaffoldBackgroundColor,
+        backgroundColorHeader: backgroundColorHeader,
         confirmColor: Colors.red[700],
       );
 
@@ -152,8 +151,7 @@ class DialogAlert extends StatelessWidget {
         onCancel: onCancel,
         confirmText: confirmText ?? 'Ya',
         cancelText: cancelText,
-        backgroundColorHeader:
-            backgroundColorHeader ?? Get.theme.scaffoldBackgroundColor,
+        backgroundColorHeader: backgroundColorHeader,
       );
 
   factory DialogAlert.retry({
@@ -170,7 +168,7 @@ class DialogAlert extends StatelessWidget {
       DialogAlert(
         title: title,
         description: description,
-        confirmText: confirmText ?? 'txt_try_again'.tr,
+        confirmText: confirmText ?? 'txt_try_again',
         cancelText: cancelText,
         isDismissible: isDismissible,
         header: Padding(
@@ -179,8 +177,7 @@ class DialogAlert extends StatelessWidget {
         ),
         onConfirm: onConfirm,
         onCancel: onCancel,
-        backgroundColorHeader:
-            backgroundColorHeader ?? Get.theme.scaffoldBackgroundColor,
+        backgroundColorHeader: backgroundColorHeader,
       );
 
   factory DialogAlert.force({
@@ -204,8 +201,7 @@ class DialogAlert extends StatelessWidget {
             ),
         onConfirm: onConfirm,
         confirmText: confirmText,
-        backgroundColorHeader:
-            backgroundColorHeader ?? Get.theme.scaffoldBackgroundColor,
+        backgroundColorHeader: backgroundColorHeader,
       );
 
   @override
@@ -230,7 +226,7 @@ class DialogAlert extends StatelessWidget {
                       borderRadius: BorderRadius.circular(17),
                       boxShadow: [
                         BoxShadow(
-                            color: (Get.isDarkMode)
+                            color: context.isDarkMode
                                 ? AppColors.primary
                                 : Colors.black,
                             offset: const Offset(0.0, 0.0),
@@ -263,7 +259,7 @@ class DialogAlert extends StatelessWidget {
                       Visibility(
                         visible: (onCancel != null),
                         child: SkyButton(
-                          text: cancelText ?? 'txt_no'.tr,
+                          text: cancelText ?? 'txt_no',
                           fontWeight: AppStyle.semiBold,
                           color: cancelColor ?? AppColors.primary,
                           onPressed: onCancel,
@@ -280,7 +276,8 @@ class DialogAlert extends StatelessWidget {
               left: 16,
               right: 16,
               child: CircleAvatar(
-                backgroundColor: backgroundColorHeader,
+                backgroundColor: backgroundColorHeader ??
+                    Theme.of(context).scaffoldBackgroundColor,
                 radius: 50,
                 child: header,
               ),

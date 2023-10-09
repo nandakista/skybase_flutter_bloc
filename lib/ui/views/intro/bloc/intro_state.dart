@@ -8,14 +8,8 @@ sealed class IntroState extends Equatable {
   List<Object?> get props => [];
 }
 
-class IntroFirstPage extends IntroState {
-  const IntroFirstPage();
-}
+class IntroFirstPage extends IntroState {}
 
-class IntroLastPage extends IntroState {
-  const IntroLastPage();
-}
+class IntroLastPage extends IntroState {}
 
-class IntroLoaded extends IntroState {
-  const IntroLoaded();
-}
+class IntroLoaded extends IntroState {}

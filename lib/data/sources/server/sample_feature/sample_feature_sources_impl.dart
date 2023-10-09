@@ -13,13 +13,13 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
     required int perPage,
   }) async {
     try {
-      var url = '/search/users?';
-      url += 'q=nanda&';
-      url += 'page=$page&';
-      url += 'per_page=$perPage';
       final res = await ApiRequest.get(
-        url: url,
-        useToken: true,
+        url: '/search/users',
+        queryParameters: {
+          'q': 'nanda',
+          'page': page,
+          'per_page': perPage,
+        },
       );
       return (res.data['items'] as List)
           .map((data) => SampleFeature.fromJson(data))
@@ -36,7 +36,6 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username',
-        useToken: true,
       );
       return SampleFeature.fromJson(res.data);
     } catch (e) {
@@ -50,12 +49,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/followers',
-        useToken: true,
       );
-      return (res.data as List)
-          .map((data) => SampleFeature.fromJson(data))
-          .toList()
-          .cast<SampleFeature>();
+      return List<SampleFeature>.from(
+        (res.data as List).map((data) => SampleFeature.fromJson(data)),
+      );
     } catch (e) {
       debugPrint('$tag Error = $e');
       rethrow;
@@ -67,12 +64,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/following',
-        useToken: true,
       );
-      return (res.data as List)
-          .map((data) => SampleFeature.fromJson(data))
-          .toList()
-          .cast<SampleFeature>();
+      return List<SampleFeature>.from(
+        (res.data as List).map((data) => SampleFeature.fromJson(data)),
+      );
     } catch (e) {
       debugPrint('$tag Error = $e');
       rethrow;
@@ -83,14 +78,12 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
   Future<List<Repo>> getRepos({required String username}) async {
     try {
       final res = await ApiRequest.get(
-        url: '/users/$username/repos?type=all',
-        useToken: true,
+        url: '/users/$username/repos',
+        queryParameters: {'type': 'all'},
       );
-      return (res.data as List)
-          .map((data) => Repo.fromJson(data))
-          .toList()
-          .cast<Repo>();
-      // return List<Repo>.from(_res.data.map((data) => Repo.fromJson(data)));
+      return List<Repo>.from(
+        (res.data as List).map((data) => Repo.fromJson(data)),
+      );
     } catch (e) {
       debugPrint('$tag Error = $e');
       rethrow;

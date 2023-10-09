@@ -6,17 +6,17 @@ import 'auth_manager.dart';
 /// Wrap your view with this for activate navigation from AuthManager
 /// Common use in Login and Profile page for login and logout process
 class AuthWrapper extends StatelessWidget {
-  const AuthWrapper({Key? key, required this.child}) : super(key: key);
+  const AuthWrapper({Key? key, required this.builder}) : super(key: key);
 
-  final Widget Function(AuthManager authManager, AuthState state) child;
+  final Widget Function(AuthManager authManager, AuthState state) builder;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthManager, AuthState>(
-      listener: (context, state) => AuthManager.find.authChanged(context, state),
+      listener: (context, state) => AuthManager.find.authChanged(state),
       builder: (context, state) {
         AuthManager bloc = context.read<AuthManager>();
-        return child(bloc, state);
+        return builder(bloc, state);
       },
     );
   }

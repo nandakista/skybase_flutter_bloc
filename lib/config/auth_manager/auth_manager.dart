@@ -2,19 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
-import 'package:skybase/core/database/get_storage/storage_key.dart';
-import 'package:skybase/core/database/get_storage/storage_manager.dart';
+import 'package:skybase/core/database/storage/storage_key.dart';
+import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/core/database/secure_storage/secure_storage_manager.dart';
-import 'package:skybase/config/themes/theme_manager.dart';
+import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/data/models/user/user.dart';
 import 'package:skybase/service_locator.dart';
+import 'package:skybase/core/base/main_navigation.dart';
 import 'package:skybase/ui/views/intro/intro_view.dart';
 import 'package:skybase/ui/views/login/login_view.dart';
-import 'package:skybase/ui/views/splash/splash_view.dart';
 import 'package:skybase/ui/views/main_navigation/main_nav_view.dart';
 
 part 'auth_state.dart';
@@ -50,24 +48,16 @@ class AuthManager extends Cubit<AuthState> {
     setup();
   }
 
-  void authChanged(BuildContext context, AuthState state) async {
-    switch (state) {
-      case Initial():
-        await setup();
-        break;
-      case FirstInstall():
-        await Future.delayed(const Duration(seconds: 2));
-        if (context.mounted) context.pushReplacementNamed(IntroView.route);
-        break;
-      case Unauthenticated():
-        if (context.mounted) context.pushReplacementNamed(LoginView.route);
-        break;
-      case Authenticated():
-        if (context.mounted) context.pushReplacementNamed(MainNavView.route);
-        break;
-      default:
-        if (context.mounted) context.pushReplacement(SplashView.route);
-    }
+  void authChanged(AuthState state) async {
+    return switch (state) {
+      Initial() => await setup(),
+      FirstInstall() =>
+        MainNavigation.contextLessPopAllReplacement(IntroView.route),
+      Unauthenticated() =>
+        MainNavigation.contextLessPopAllReplacement(LoginView.route),
+      Authenticated() =>
+        MainNavigation.contextLessPopAllReplacement(MainNavView.route),
+    };
   }
 
   Future<void> setup() async {

@@ -1,7 +1,7 @@
 import './main.dart' as main_app;
-import 'config/app/app_env.dart';
+import 'config/environment/app_env.dart';
 
 void main() async {
-  AppEnv.set(Env.STAGING);
+  AppEnv.set(Environment.STAGING);
   main_app.main();
 }

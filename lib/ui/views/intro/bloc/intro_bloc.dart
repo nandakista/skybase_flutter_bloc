@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:go_router/go_router.dart';
-import 'package:skybase/core/database/get_storage/storage_key.dart';
-import 'package:skybase/core/database/get_storage/storage_manager.dart';
+import 'package:skybase/core/database/storage/storage_key.dart';
+import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/ui/views/intro/intro_data.dart';
 import 'package:skybase/ui/views/login/login_view.dart';
 
@@ -12,7 +12,7 @@ part 'intro_event.dart';
 part 'intro_state.dart';
 
 class IntroBloc extends Bloc<IntroEvent, IntroState> {
-  String tag = 'IntroBloc : ';
+  String tag = 'IntroBloc::->';
 
   int currentIndex = 0;
   PageController pageController = PageController(initialPage: 0);
@@ -21,7 +21,7 @@ class IntroBloc extends Bloc<IntroEvent, IntroState> {
 
   bool get isLastPage => currentIndex == introItem.length - 1;
 
-  IntroBloc() : super(const IntroFirstPage()) {
+  IntroBloc() : super(IntroFirstPage()) {
     on<DonePage>(_onDonePage);
     on<PreviousPage>(_onPreviousPage);
     on<ChangePage>(_onChangePage);
@@ -33,7 +33,7 @@ class IntroBloc extends Bloc<IntroEvent, IntroState> {
     Emitter<IntroState> emit,
   ) {
     pageController.jumpToPage(2);
-    emit(const IntroLastPage());
+    emit(IntroLastPage());
   }
 
   void _onChangePage(
@@ -42,11 +42,11 @@ class IntroBloc extends Bloc<IntroEvent, IntroState> {
   ) {
     currentIndex = event.page;
     if (isFirstPage) {
-      emit(const IntroFirstPage());
+      emit(IntroFirstPage());
     } else if (isLastPage) {
-      emit(const IntroLastPage());
+      emit(IntroLastPage());
     } else {
-      emit(const IntroLoaded());
+      emit(IntroLoaded());
     }
   }
 
@@ -59,11 +59,11 @@ class IntroBloc extends Bloc<IntroEvent, IntroState> {
       duration: const Duration(milliseconds: 260),
     );
     if (isFirstPage) {
-      emit(const IntroFirstPage());
+      emit(IntroFirstPage());
     } else if (isLastPage) {
-      emit(const IntroLastPage());
+      emit(IntroLastPage());
     } else {
-      emit(const IntroLoaded());
+      emit(IntroLoaded());
     }
   }
 

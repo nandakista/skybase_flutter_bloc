@@ -13,7 +13,7 @@ class SplashView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: AuthWrapper(
-        child: (authManager, state) {
+        builder: (authManager, state) {
           return const Center(
             child: PlatformLoadingIndicator(color: Colors.white),
           );

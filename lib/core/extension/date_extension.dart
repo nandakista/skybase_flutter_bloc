@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:skybase/config/localization/locale_helper.dart';
-import 'package:skybase/core/database/get_storage/storage_key.dart';
-import 'package:skybase/core/database/get_storage/storage_manager.dart';
+import 'package:skybase/core/database/storage/storage_key.dart';
+import 'package:skybase/core/database/storage/storage_manager.dart';
 
 /* Created by
    Varcant

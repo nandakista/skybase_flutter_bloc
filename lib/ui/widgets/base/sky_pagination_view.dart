@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
@@ -217,7 +216,7 @@ class SkyPaginationView<ItemType> extends StatelessWidget {
                 errorImage: errorImage,
                 errorImageWidget: errorImageWidget,
                 errorTitle:
-                    '${errorTitle ?? pagingController.error ?? 'txt_err_general_formal'.tr}',
+                    '${errorTitle ?? pagingController.error ?? 'txt_err_general_formal'}',
                 errorSubtitle: errorSubtitle,
                 horizontalSpacing: horizontalSpacing ?? 24,
                 verticalSpacing: verticalSpacing ?? 24,
@@ -256,13 +255,13 @@ class PaginationErrorLoadView<ItemType> extends StatelessWidget {
       children: [
         const SizedBox(height: 12),
         Text(
-          'txt_err_general_formal'.tr,
+          'txt_err_general_formal',
           style: const TextStyle(color: Colors.grey),
         ),
         TextButton(
           onPressed: () => pagingController.retryLastFailedRequest(),
           child: Text(
-            'txt_tap_retry'.tr,
+            'txt_tap_retry',
             style: const TextStyle(color: Colors.grey),
           ),
         ),
@@ -286,7 +285,7 @@ class PaginationMaxItemView extends StatelessWidget {
       children: [
         const SizedBox(height: 12),
         Text(
-          'txt_max_item'.tr,
+          'txt_max_item',
           style: AppStyle.subtitle4.copyWith(
             color: Colors.grey,
             fontWeight: FontWeight.w600,

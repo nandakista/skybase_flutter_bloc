@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:skybase/config/themes/app_theme.dart';
 import 'package:skybase/ui/widgets/shimmer/shimmer_text.dart';
 
 /* Created by
@@ -14,7 +14,7 @@ class ShimmerItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color shimmerColor =  Get.isDarkMode ? Colors.black54 : Colors.white;
+    Color shimmerColor =  context.isDarkMode ? Colors.black54 : Colors.white;
     Color baseDark = Colors.grey[700]?? Colors.grey;
     Color baseLight = Colors.grey[300] ?? Colors.grey;
     return SizedBox(
@@ -22,7 +22,7 @@ class ShimmerItemList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Shimmer.fromColors(
-          baseColor: Get.isDarkMode ?  baseDark : baseLight,
+          baseColor: context.isDarkMode ?  baseDark : baseLight,
           highlightColor: shimmerColor,
           child: Column(
             children: [
