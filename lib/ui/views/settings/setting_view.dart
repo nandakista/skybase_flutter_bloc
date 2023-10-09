@@ -84,7 +84,6 @@ class _SettingViewState extends State<SettingView> {
                                 }),
                                 groupValue: jsonEncode(state.language),
                                 onChanged: (value) {
-                                  context.setLocale(Locale('en'));
                                   context.read<SettingBloc>().add(
                                         UpdateLocale(
                                           context,
@@ -101,8 +100,6 @@ class _SettingViewState extends State<SettingView> {
                                 }),
                                 groupValue: jsonEncode(state.language),
                                 onChanged: (value)async  {
-                                  // context.setLocale(Locale('id'));
-                                  // await WidgetsBinding.instance.performReassemble();
                                   context.read<SettingBloc>().add(
                                         UpdateLocale(
                                           context,

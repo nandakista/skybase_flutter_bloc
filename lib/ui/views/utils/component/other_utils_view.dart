@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:skybase/core/helper/converter_helper.dart';
 import 'package:skybase/core/extension/int_extension.dart';
 import 'package:skybase/core/helper/input_formater.dart';
@@ -62,7 +61,7 @@ class _OtherUtilsViewState extends State<OtherUtilsView> {
                     message: 'String converted :\n $converted',
                   );
                 },
-                text: '${'txt_convert'.tr()} String',
+                text: 'Convert String',
                 icon: CupertinoIcons.t_bubble,
               ),
               const SizedBox(height: 26),

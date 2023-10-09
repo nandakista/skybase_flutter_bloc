@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/ui/views/profile/profile_view.dart';
@@ -65,18 +66,18 @@ class _MainNavViewState extends State<MainNavView> {
               curve: Curves.ease,
             );
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.home),
-              label: 'Users',
+              icon: const Icon(CupertinoIcons.home),
+              label: 'txt_users'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.slider_horizontal_3),
-              label: 'Utility',
+              icon: const Icon(CupertinoIcons.slider_horizontal_3),
+              label: 'txt_utility'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.profile_circled),
-              label: 'Profile',
+              icon: const Icon(CupertinoIcons.profile_circled),
+              label: 'txt_profile'.tr(),
             ),
           ],
         ),
