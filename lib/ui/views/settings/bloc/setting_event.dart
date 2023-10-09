@@ -11,10 +11,10 @@ class InitLocale extends SettingEvent {}
 
 class UpdateLocale extends SettingEvent {
   final BuildContext context;
-  final String value;
+  final String languageCode;
 
-  const UpdateLocale(this.context, this.value);
+  const UpdateLocale(this.context, this.languageCode);
 
   @override
-  List<Object> get props => [context, value];
+  List<Object> get props => [context, languageCode];
 }

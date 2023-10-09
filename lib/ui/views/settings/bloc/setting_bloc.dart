@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +12,8 @@ part 'setting_state.dart';
 class SettingBloc extends Bloc<SettingEvent, SettingState> {
   String tag = 'SettingBloc::->';
 
-  SettingBloc() : super(const SettingState({})) {
+  SettingBloc()
+      : super(SettingState(LocaleManager.find.getCurrentLocale.languageCode)) {
     on<InitLocale>(_setLocale);
     on<UpdateLocale>(_onUpdateLocaleID);
   }
@@ -24,32 +23,16 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     Emitter<SettingState> emit,
   ) {
     Locale currentLocale = LocaleManager.find.getCurrentLocale;
-    Map<String, dynamic> language = {};
-    if (currentLocale == const Locale('en')) {
-      language = {
-        'name': 'English',
-        'locale': 'en',
-      };
-    } else {
-      language = {
-        'name': 'Indonesia',
-        'locale': 'id',
-      };
-    }
-    emit(SettingState(language));
+    emit(SettingState(currentLocale.languageCode));
   }
 
   void _onUpdateLocaleID(
     UpdateLocale event,
     Emitter<SettingState> emit,
   ) async {
-    Map<String, dynamic> lang = jsonDecode(event.value.toString());
-    if (lang['name'].toString() == 'English') {
-      StorageManager.find.save<String>(StorageKey.CURRENT_LOCALE, 'en');
-    } else {
-      StorageManager.find.save<String>(StorageKey.CURRENT_LOCALE, 'in');
-    }
-    LocaleManager.find.updateLocale(event.context, Locale(lang['locale']));
-    emit(SettingState(lang));
+    StorageManager.find
+        .save<String>(StorageKey.CURRENT_LOCALE, event.languageCode);
+    LocaleManager.find.updateLocale(event.context, Locale(event.languageCode));
+    emit(SettingState(event.languageCode));
   }
 }

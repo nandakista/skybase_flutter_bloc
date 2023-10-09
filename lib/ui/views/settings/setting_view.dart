@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,33 +76,21 @@ class _SettingViewState extends State<SettingView> {
                             children: [
                               const Text('ENG'),
                               Radio(
-                                value: jsonEncode({
-                                  'name': 'English',
-                                  'locale': 'en',
-                                }),
-                                groupValue: jsonEncode(state.language),
+                                value: 'en',
+                                groupValue: state.languageCode,
                                 onChanged: (value) {
                                   context.read<SettingBloc>().add(
-                                        UpdateLocale(
-                                          context,
-                                          value.toString(),
-                                        ),
+                                        UpdateLocale(context, value.toString()),
                                       );
                                 },
                               ),
                               const Text('ID'),
                               Radio(
-                                value: jsonEncode({
-                                  'name': 'Indonesia',
-                                  'locale': 'id',
-                                }),
-                                groupValue: jsonEncode(state.language),
-                                onChanged: (value)async  {
+                                value: 'id',
+                                groupValue: state.languageCode,
+                                onChanged: (value) async {
                                   context.read<SettingBloc>().add(
-                                        UpdateLocale(
-                                          context,
-                                          value.toString(),
-                                        ),
+                                        UpdateLocale(context, value.toString()),
                                       );
                                 },
                               ),

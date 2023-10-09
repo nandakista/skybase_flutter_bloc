@@ -29,6 +29,7 @@ void main() async {
       supportedLocales: LocaleManager.find.locales.values.toList(),
       startLocale: LocaleManager.find.getCurrentLocale,
       fallbackLocale: LocaleManager.find.fallbackLocale,
+      useFallbackTranslations: true,
       child: const App(),
     ),
   );

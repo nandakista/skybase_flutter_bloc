@@ -2,10 +2,10 @@ part of 'setting_bloc.dart';
 
 @immutable
 class SettingState extends Equatable {
-  final Map<String, dynamic> language;
+  final String languageCode;
 
-  const SettingState(this.language);
+  const SettingState(this.languageCode);
 
   @override
-  List<Object> get props => [language];
+  List<Object> get props => [languageCode];
 }
