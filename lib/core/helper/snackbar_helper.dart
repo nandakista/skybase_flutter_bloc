@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 enum SkySnackBarType { NORMAL, SUCCESS, ERROR, WARNING }
@@ -17,7 +18,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success',
+      message: message ?? 'txt_success'.tr(),
       type: SkySnackBarType.NORMAL,
       behavior: behavior,
       action: action,
@@ -38,7 +39,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success',
+      message: message ?? 'txt_success'.tr(),
       type: SkySnackBarType.NORMAL,
       behavior: behavior,
       action: action,
@@ -53,7 +54,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_success',
+      message: message ?? 'txt_success'.tr(),
       type: SkySnackBarType.SUCCESS,
       behavior: behavior,
       action: action,
@@ -68,7 +69,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_error',
+      message: message ?? 'txt_error'.tr(),
       type: SkySnackBarType.ERROR,
       behavior: behavior,
       action: action,
@@ -83,7 +84,7 @@ abstract class SnackBarHelper {
   }) {
     showDefaultSnackBar(
       context: context,
-      message: message ?? 'txt_warning',
+      message: message ?? 'txt_warning'.tr(),
       type: SkySnackBarType.WARNING,
       behavior: behavior,
       action: action,

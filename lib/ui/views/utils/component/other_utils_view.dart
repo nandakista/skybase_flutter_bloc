@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +41,7 @@ class _OtherUtilsViewState extends State<OtherUtilsView> {
               SkyFormField(
                 controller: currencyCtr,
                 initialValue: 0.currencyFormat(symbol: 'Rp'),
-                hint: 'txt_price',
+                hint: 'txt_price'.tr(),
                 keyboardType: TextInputType.number,
                 onChanged: (value) => (value.isEmpty)
                     ? currencyCtr.text = 0.currencyFormat(symbol: 'Rp')
@@ -61,7 +62,7 @@ class _OtherUtilsViewState extends State<OtherUtilsView> {
                     message: 'String converted :\n $converted',
                   );
                 },
-                text: '${'txt_convert'} String',
+                text: '${'txt_convert'.tr()} String',
                 icon: CupertinoIcons.t_bubble,
               ),
               const SizedBox(height: 26),

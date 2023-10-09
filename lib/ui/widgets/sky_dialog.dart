@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
@@ -168,7 +169,7 @@ class DialogAlert extends StatelessWidget {
       DialogAlert(
         title: title,
         description: description,
-        confirmText: confirmText ?? 'txt_try_again',
+        confirmText: confirmText ?? 'txt_try_again'.tr(),
         cancelText: cancelText,
         isDismissible: isDismissible,
         header: Padding(
@@ -259,7 +260,7 @@ class DialogAlert extends StatelessWidget {
                       Visibility(
                         visible: (onCancel != null),
                         child: SkyButton(
-                          text: cancelText ?? 'txt_no',
+                          text: cancelText ?? 'txt_no'.tr(),
                           fontWeight: AppStyle.semiBold,
                           color: cancelColor ?? AppColors.primary,
                           onPressed: onCancel,

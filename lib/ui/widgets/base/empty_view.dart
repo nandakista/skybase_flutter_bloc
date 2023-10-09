@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/ui/widgets/sky_button.dart';
 
@@ -57,7 +58,7 @@ class EmptyView extends StatelessWidget {
                 ),
             SizedBox(height: verticalSpacing),
             Text(
-              emptyTitle ?? 'txt_empty_list_title',
+              emptyTitle ?? 'txt_empty_list_title'.tr(),
               textAlign: TextAlign.center,
               style: titleStyle ?? Theme.of(context).textTheme.titleLarge,
             ),
@@ -65,7 +66,7 @@ class EmptyView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                emptySubtitle ?? 'txt_empty_list_subtitle',
+                emptySubtitle ?? 'txt_empty_list_subtitle'.tr(),
                 textAlign: TextAlign.center,
                 style: subtitleStyle,
               ),
@@ -77,7 +78,7 @@ class EmptyView extends StatelessWidget {
                     wrapContent: true,
                     height: 50,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    text: retryText ?? 'txt_reload',
+                    text: retryText ?? 'txt_reload'.tr(),
                     onPressed: onRetry,
                   )
           ],

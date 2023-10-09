@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:skybase/config/network/api_message.dart';
 import 'package:skybase/config/network/api_response.dart';
 
@@ -88,78 +89,78 @@ mixin NetworkException implements Exception {
 }
 
 final class ConnectionTimeOutException extends NetworkExceptionData {
-  ConnectionTimeOutException() : super(message: 'txt_connection_timeout');
+  ConnectionTimeOutException() : super(message: 'txt_connection_timeout'.tr());
 }
 
 final class ReceiveTimeOutException extends NetworkExceptionData {
-  ReceiveTimeOutException() : super(message: 'txt_connection_timeout');
+  ReceiveTimeOutException() : super(message: 'txt_connection_timeout'.tr());
 }
 
 final class SendTimeOutException extends NetworkExceptionData {
-  SendTimeOutException() : super(message: 'txt_connection_timeout');
+  SendTimeOutException() : super(message: 'txt_connection_timeout'.tr());
 }
 
 final class InternalServerErrorException extends NetworkExceptionData {
   InternalServerErrorException()
-      : super(message: 'txt_internal_server_error');
+      : super(message: 'txt_internal_server_error'.tr());
 }
 
 final class RequestEntityTooLargeException extends NetworkExceptionData {
   RequestEntityTooLargeException({Response? response})
-      : super(message: 'txt_request_entity_to_large', response: response);
+      : super(message: 'txt_request_entity_to_large'.tr(), response: response);
 }
 
 final class FetchDataException extends NetworkExceptionData {
   FetchDataException({String? message, Response? response})
       : super(
-      message: message ?? 'txt_error_during_communication',
+      message: message ?? 'txt_error_during_communication'.tr(),
       response: response);
 }
 
 final class NotFoundException extends NetworkExceptionData {
   NotFoundException({String? message, Response? response})
-      : super(message: message ?? 'txt_not_found', response: response);
+      : super(message: message ?? 'txt_not_found'.tr(), response: response);
 }
 
 final class BadRequestException extends NetworkExceptionData {
   BadRequestException({Response? response})
       : super(
-      prefix: 'txt_bad_request',
-      message: '${'txt_message'}: ${response?.statusMessage}',
+      prefix: 'txt_bad_request'.tr(),
+      message: '${'txt_message'.tr()}: ${response?.statusMessage}',
       response: response);
 }
 
 final class BadCertificateException extends NetworkExceptionData {
   BadCertificateException({Response? response})
-      : super(message: 'txt_bad_certificate', response: response);
+      : super(message: 'txt_bad_certificate'.tr(), response: response);
 }
 
 final class UnauthorisedException extends NetworkExceptionData {
   UnauthorisedException({Response? response})
-      : super(message: 'txt_unauthorized', response: response);
+      : super(message: 'txt_unauthorized'.tr(), response: response);
 }
 
 final class InvalidInputException extends NetworkExceptionData {
   InvalidInputException({Response? response})
-      : super(message: 'txt_invalid_input', response: response);
+      : super(message: 'txt_invalid_input'.tr(), response: response);
 }
 
 final class RequestCancelled extends NetworkExceptionData {
   RequestCancelled({Response? response})
-      : super(message: 'txt_request_cancel', response: response);
+      : super(message: 'txt_request_cancel'.tr(), response: response);
 }
 
 final class SocketException extends NetworkExceptionData {
   SocketException({Response? response})
-      : super(message: 'txt_no_internet_connection', response: response);
+      : super(message: 'txt_no_internet_connection'.tr(), response: response);
 }
 
 final class UnexpectedError extends NetworkExceptionData {
   UnexpectedError({Response? response})
-      : super(message: 'txt_unexpected_error', response: response);
+      : super(message: 'txt_unexpected_error'.tr(), response: response);
 }
 
 final class UnableToProcess extends NetworkExceptionData {
   UnableToProcess({Response? response})
-      : super(message: 'txt_unable_to_process', response: response);
+      : super(message: 'txt_unable_to_process'.tr(), response: response);
 }

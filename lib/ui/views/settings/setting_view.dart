@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +36,7 @@ class _SettingViewState extends State<SettingView> {
       builder: (authManager, state) => ColoredStatusBar(
         brightness: Brightness.dark,
         child: Scaffold(
-          appBar: SkyAppBar.secondary(title: 'txt_setting'),
+          appBar: SkyAppBar.secondary(title: 'txt_setting'.tr()),
           bottomNavigationBar: Padding(
             padding: EdgeInsets.fromLTRB(
               24,
@@ -47,7 +48,7 @@ class _SettingViewState extends State<SettingView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '${'txt_version'} ${AppConfiguration.appVersion}',
+                  '${'txt_version'.tr()} ${AppConfiguration.appVersion}',
                   style: AppStyle.body2.copyWith(color: Colors.grey),
                 ),
                 const SizedBox(height: 12),
@@ -56,7 +57,7 @@ class _SettingViewState extends State<SettingView> {
                     LoadingDialog.show(context);
                     authManager.logout();
                   },
-                  text: 'txt_logout',
+                  text: 'txt_logout'.tr(),
                 ),
               ],
             ),
@@ -68,7 +69,7 @@ class _SettingViewState extends State<SettingView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Flexible(child: Text('txt_language')),
+                    Flexible(child: Text('txt_language'.tr())),
                     Flexible(
                       child: BlocBuilder<SettingBloc, SettingState>(
                         builder: (context, state) {
@@ -83,9 +84,13 @@ class _SettingViewState extends State<SettingView> {
                                 }),
                                 groupValue: jsonEncode(state.language),
                                 onChanged: (value) {
-                                  context
-                                      .read<SettingBloc>()
-                                      .add(UpdateLocale(value.toString()));
+                                  context.setLocale(Locale('en'));
+                                  context.read<SettingBloc>().add(
+                                        UpdateLocale(
+                                          context,
+                                          value.toString(),
+                                        ),
+                                      );
                                 },
                               ),
                               const Text('ID'),
@@ -95,10 +100,15 @@ class _SettingViewState extends State<SettingView> {
                                   'locale': 'id',
                                 }),
                                 groupValue: jsonEncode(state.language),
-                                onChanged: (value) {
-                                  context
-                                      .read<SettingBloc>()
-                                      .add(UpdateLocale(value.toString()));
+                                onChanged: (value)async  {
+                                  // context.setLocale(Locale('id'));
+                                  // await WidgetsBinding.instance.performReassemble();
+                                  context.read<SettingBloc>().add(
+                                        UpdateLocale(
+                                          context,
+                                          value.toString(),
+                                        ),
+                                      );
                                 },
                               ),
                             ],
@@ -112,7 +122,7 @@ class _SettingViewState extends State<SettingView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('txt_dark_mode'),
+                    Text('txt_dark_mode'.tr()),
                     BlocBuilder<ThemeManager, ThemeState>(
                       builder: (context, state) => Switch(
                         value: state is IsDarkMode,

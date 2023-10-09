@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/core/base/main_navigation.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
@@ -44,7 +45,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.error(
         header: header,
-        title: title ?? 'txt_failed',
+        title: title ?? 'txt_failed'.tr(),
         description: message,
         onConfirm: onConfirm ?? () => dismiss(context),
         isDismissible: isDismissible ?? true,
@@ -65,7 +66,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.success(
         header: header,
-        title: title ?? 'txt_success',
+        title: title ?? 'txt_success'.tr(),
         description: message,
         onConfirm: onConfirm,
         isDismissible: isDismissible ?? false,
@@ -90,7 +91,7 @@ class DialogHelper {
       builder: (context) => DialogAlert.warning(
         header: header,
         isDismissible: isDismissible ?? false,
-        title: title ?? 'txt_warning',
+        title: title ?? 'txt_warning'.tr(),
         description: message,
         onConfirm: onConfirm,
         confirmText: confirmText,
@@ -116,7 +117,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.retry(
         header: header,
-        title: title ?? 'txt_failed',
+        title: title ?? 'txt_failed'.tr(),
         description: message,
         confirmText: confirmText,
         cancelText: cancelText,
@@ -142,7 +143,7 @@ class DialogHelper {
       context: context,
       builder: (context) => DialogAlert.force(
         header: header,
-        title: title ?? 'txt_warning',
+        title: title ?? 'txt_warning'.tr(),
         description: message,
         onConfirm: onConfirm,
         onCancel: onCancel ?? () => dismiss(context),

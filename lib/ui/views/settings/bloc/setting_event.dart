@@ -10,10 +10,11 @@ sealed class SettingEvent extends Equatable {
 class InitLocale extends SettingEvent {}
 
 class UpdateLocale extends SettingEvent {
+  final BuildContext context;
   final String value;
 
-  const UpdateLocale(this.value);
+  const UpdateLocale(this.context, this.value);
 
   @override
-  List<Object> get props => [value];
+  List<Object> get props => [context, value];
 }

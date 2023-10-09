@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/core/extension/string_extension.dart';
 
@@ -44,16 +45,16 @@ class ValidatorHelper {
     String? message,
   }) {
     if (value.isEmpty) {
-      return '$title ${'txt_cannot_be_empty'}';
+      return '$title ${'txt_cannot_be_empty'.tr()}';
     } else if (!RegExp(regex).hasMatch(value)) {
-      return message ?? '$title ${'txt_is_not_valid'}';
+      return message ?? '$title ${'txt_is_not_valid'.tr()}';
     }
     return null;
   }
 
   static String? required(String? value) {
     if (value.isNullOrEmpty) {
-      return 'txt_field_cannot_be_empty';
+      return 'txt_field_cannot_be_empty'.tr();
     }
     return null;
   }

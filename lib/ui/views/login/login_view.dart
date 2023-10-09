@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/auth_manager/auth_wrapper.dart';
@@ -74,10 +75,10 @@ class _LoginViewState extends State<LoginView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('txt_login', style: AppStyle.headline2),
+                                Text('txt_login'.tr(), style: AppStyle.headline2),
                                 const SizedBox(height: 10),
                                 Text(
-                                  'txt_login_subtitle',
+                                  'txt_login_subtitle'.tr(),
                                   style: AppStyle.subtitle4,
                                 ),
                               ],
@@ -99,21 +100,21 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             const SizedBox(height: 20),
                             SkyFormField(
-                              label: 'txt_phone',
-                              hint: 'txt_phone',
+                              label: 'txt_phone'.tr(),
+                              hint: 'txt_phone'.tr(),
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
                               icon: Icons.phone,
                               validator: (value) => ValidatorHelper.field(
-                                title: 'txt_phone',
+                                title: 'txt_phone'.tr(),
                                 value: value.toString(),
                                 regex: AppRegex.phone,
                               ),
                             ),
                             const SizedBox(height: 20),
                             SkyPasswordFormField(
-                              label: 'txt_password',
-                              hint: 'txt_password',
+                              label: 'txt_password'.tr(),
+                              hint: 'txt_password'.tr(),
                               controller: passwordController,
                               icon: Icons.lock,
                               hiddenText: isHiddenPassword,
@@ -122,7 +123,7 @@ class _LoginViewState extends State<LoginView> {
                                 onPressed: onHidePassword,
                               ),
                               validator: (value) => ValidatorHelper.field(
-                                title: 'txt_password',
+                                title: 'txt_password'.tr(),
                                 value: value.toString(),
                                 regex: AppRegex.password,
                               ),
@@ -141,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
                                   );
                                 }
                               },
-                              text: 'txt_login',
+                              text: 'txt_login'.tr(),
                               icon: Icons.arrow_forward,
                               color: AppColors.primary,
                             ),
@@ -153,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                           const SizedBox(height: 12),
                           SkyButton(
                             onPressed: () => bloc.add(BypassLogin()),
-                            text: 'txt_skip',
+                            text: 'txt_skip'.tr(),
                             icon: Icons.arrow_forward,
                             color: AppColors.primary,
                           ),
@@ -161,10 +162,10 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('txt_forgot_password'),
+                              Text('txt_forgot_password'.tr()),
                               InkWell(
                                 child: Text(
-                                  'txt_reset',
+                                  'txt_reset'.tr(),
                                   style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.bold,
@@ -177,10 +178,10 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('txt_dont_have_account'),
+                              Text('txt_dont_have_account'.tr()),
                               InkWell(
                                 child: Text(
-                                  'txt_register',
+                                  'txt_register'.tr(),
                                   style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.bold,

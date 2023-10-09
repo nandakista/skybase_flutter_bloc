@@ -19,6 +19,7 @@ dependencies:
   get_it: ^7.6.4
   flutter_secure_storage: ^8.0.0
   shared_preferences: ^2.2.1
+  easy_localization: ^3.0.3
 
   # File Manager
   path_provider: ^2.0.15
@@ -62,6 +63,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - lib/config/localization/languages/
+
   fonts:
     - family: Poppins
       fonts:

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
@@ -42,7 +43,7 @@ class DialogUtilsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SkyButton(
-              text: 'txt_failed',
+              text: 'txt_failed'.tr(),
               icon: Icons.close,
               outlineMode: true,
               color: Colors.red,
@@ -56,7 +57,7 @@ class DialogUtilsView extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SkyButton(
-              text: 'txt_success',
+              text: 'txt_success'.tr(),
               icon: CupertinoIcons.checkmark_alt_circle,
               outlineMode: true,
               color: Colors.green,

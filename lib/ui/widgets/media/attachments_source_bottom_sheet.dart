@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -63,7 +64,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       children: <Widget>[
         ListTile(
           leading: cameraIcon,
-          title: cameraLabel ?? const Text('txt_camera'),
+          title: cameraLabel ?? Text('txt_camera'.tr()),
           onTap: () {
             MainNavigation.pop(context);
             _onPickImage(pageContext, ImageSource.camera);
@@ -71,7 +72,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         ),
         ListTile(
           leading: galleryIcon,
-          title: galleryLabel ?? const Text('txt_gallery'),
+          title: galleryLabel ?? Text('txt_gallery'.tr()),
           onTap: () {
             MainNavigation.pop(context);
             _onPickImage(pageContext, ImageSource.gallery);
@@ -80,7 +81,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         if (enabledFileSource)
           ListTile(
             leading: fileIcon,
-            title: fileLabel ?? const Text('txt_document'),
+            title: fileLabel ?? Text('txt_document'.tr()),
             onTap: () {
               MainNavigation.pop(context);
               _onPickFile(pageContext);
@@ -95,7 +96,10 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       final permission = await Permission.camera.request();
       if (context.mounted) {
         if (permission.isPermanentlyDenied) {
-          PermissionHelper.openSettings(context, 'txt_need_permission_camera');
+          PermissionHelper.openSettings(
+            context,
+            'txt_need_permission_camera'.tr(),
+          );
         } else if (permission.isGranted) {
           _pickSingleImage(context, ImageSource.camera);
         }
@@ -119,7 +123,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       if (permission.isPermanentlyDenied) {
         if (context.mounted) {
           PermissionHelper.openSettings(
-              context, 'txt_need_permission_gallery_photo');
+              context, 'txt_need_permission_gallery_photo'.tr());
         }
         return false;
       }
@@ -132,9 +136,9 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         if (context.mounted) {
           if (permission.isPermanentlyDenied) {
             PermissionHelper.openSettings(
-                context, 'txt_need_permission_gallery_photo');
+                context, 'txt_need_permission_gallery_photo'.tr());
           } else if (permission.isDenied) {
-            PermissionHelper.error(context, 'txt_need_permission_storage');
+            PermissionHelper.error(context, 'txt_need_permission_storage'.tr());
           }
         }
 
@@ -150,9 +154,9 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
           if (permissionList.values
               .contains(PermissionStatus.permanentlyDenied)) {
             PermissionHelper.openSettings(
-                context, 'txt_need_permission_storage');
+                context, 'txt_need_permission_storage'.tr());
           } else if (!isGranted) {
-            PermissionHelper.error(context, 'txt_need_permission_storage');
+            PermissionHelper.error(context, 'txt_need_permission_storage'.tr());
           }
         }
         return isGranted;

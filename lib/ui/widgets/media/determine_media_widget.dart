@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/core/helper/media_helper.dart';
 
@@ -29,6 +30,6 @@ class DetermineMediaWidget extends StatelessWidget {
   }
 
   Widget _unsupportedMediaWidget() {
-    return const Center(child: Text('txt_media_unsupported'));
+    return Center(child: Text('txt_media_unsupported'.tr()));
   }
 }

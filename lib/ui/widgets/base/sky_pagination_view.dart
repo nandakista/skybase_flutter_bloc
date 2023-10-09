@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -216,7 +217,7 @@ class SkyPaginationView<ItemType> extends StatelessWidget {
                 errorImage: errorImage,
                 errorImageWidget: errorImageWidget,
                 errorTitle:
-                    '${errorTitle ?? pagingController.error ?? 'txt_err_general_formal'}',
+                    '${errorTitle ?? pagingController.error ?? 'txt_err_general_formal'.tr()}',
                 errorSubtitle: errorSubtitle,
                 horizontalSpacing: horizontalSpacing ?? 24,
                 verticalSpacing: verticalSpacing ?? 24,
@@ -255,13 +256,13 @@ class PaginationErrorLoadView<ItemType> extends StatelessWidget {
       children: [
         const SizedBox(height: 12),
         Text(
-          'txt_err_general_formal',
+          'txt_err_general_formal'.tr(),
           style: const TextStyle(color: Colors.grey),
         ),
         TextButton(
           onPressed: () => pagingController.retryLastFailedRequest(),
           child: Text(
-            'txt_tap_retry',
+            'txt_tap_retry'.tr(),
             style: const TextStyle(color: Colors.grey),
           ),
         ),
@@ -285,7 +286,7 @@ class PaginationMaxItemView extends StatelessWidget {
       children: [
         const SizedBox(height: 12),
         Text(
-          'txt_max_item',
+          'txt_max_item'.tr(),
           style: AppStyle.subtitle4.copyWith(
             color: Colors.grey,
             fontWeight: FontWeight.w600,

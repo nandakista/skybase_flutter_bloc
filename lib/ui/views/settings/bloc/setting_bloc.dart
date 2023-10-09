@@ -23,7 +23,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     InitLocale event,
     Emitter<SettingState> emit,
   ) {
-    Locale currentLocale = LocaleManager.find.getCurrentLocale();
+    Locale currentLocale = LocaleManager.find.getCurrentLocale;
     Map<String, dynamic> language = {};
     if (currentLocale == const Locale('en')) {
       language = {
@@ -49,7 +49,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     } else {
       StorageManager.find.save<String>(StorageKey.CURRENT_LOCALE, 'in');
     }
-    // TODO: Update Localization
+    LocaleManager.find.updateLocale(event.context, Locale(lang['locale']));
     emit(SettingState(lang));
   }
 }

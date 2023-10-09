@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/ui/widgets/media/determine_media_widget.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
@@ -27,7 +28,7 @@ class MediaListPreviewPage extends StatelessWidget {
     }
     return Scaffold(
       appBar: SkyAppBar.primary(
-        title: '${'txt_preview'} ${'txt_media'}',
+        title: '${'txt_preview'.tr()} ${'txt_media'.tr()}',
       ),
       body: SingleChildScrollView(
         child: Column(

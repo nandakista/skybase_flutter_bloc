@@ -7,7 +7,7 @@ class LocaleHelper {
     required T en,
     required T id,
   }) {
-    if (LocaleManager.find.getCurrentLocale() == const Locale('en')) {
+    if (LocaleManager.find.getCurrentLocale == const Locale('en')) {
       return en;
     } else {
       return id;

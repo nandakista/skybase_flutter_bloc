@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
@@ -30,7 +31,7 @@ class LocaleManager {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'txt_choose_language',
+                'txt_choose_language'.tr(),
                 style: AppStyle.subtitle2.copyWith(color: AppColors.primary),
               ),
               const SizedBox(height: 16),
@@ -43,7 +44,7 @@ class LocaleManager {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () {
                     final locale = locales.entries.toList()[index].value;
-                    updateLocale(locale);
+                    updateLocale(context, locale);
                     MainNavigation.pop(context);
                   },
                   child: Padding(
@@ -62,23 +63,20 @@ class LocaleManager {
     );
   }
 
-  void updateLocale(Locale locale) {
+  Future<void> updateLocale(BuildContext context, Locale locale) async {
     StorageManager.find.save<String>(
       StorageKey.CURRENT_LOCALE,
       locale.languageCode,
     );
-    // Get.updateLocale(locale);
+    context.setLocale(locale);
+    await WidgetsBinding.instance.performReassemble();
   }
 
-  Locale getCurrentLocale() {
+  Locale get getCurrentLocale {
     String? currentLanguageCode =
         StorageManager.find.get(StorageKey.CURRENT_LOCALE);
     if (currentLanguageCode != null) {
-      if (currentLanguageCode == 'en') {
-        return const Locale('en');
-      } else {
-        return const Locale('id');
-      }
+      return currentLanguageCode.toLocale();
     } else {
       StorageManager.find.save<String>(StorageKey.CURRENT_LOCALE, "en");
       return const Locale('en');

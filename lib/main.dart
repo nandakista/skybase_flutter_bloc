@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
+import 'package:skybase/config/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/ui/views/intro/bloc/intro_bloc.dart';
 import 'package:skybase/ui/views/login/bloc/login_bloc.dart';
@@ -18,9 +20,18 @@ import 'ui/views/sample_feature/detail/bloc/sample_feature_detail_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await ServiceLocator.init();
   Bloc.observer = AppBlocObserver();
-  runApp(const App());
+  runApp(
+    EasyLocalization(
+      path: 'lib/config/localization/languages',
+      supportedLocales: LocaleManager.find.locales.values.toList(),
+      startLocale: LocaleManager.find.getCurrentLocale,
+      fallbackLocale: LocaleManager.find.fallbackLocale,
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -66,6 +77,9 @@ class App extends StatelessWidget {
             theme: AppTheme.light(),
             darkTheme: AppTheme.dark(),
             themeMode: (state is IsDarkMode) ? ThemeMode.dark : ThemeMode.light,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             routeInformationParser: AppRoutes.router.routeInformationParser,
             routeInformationProvider: AppRoutes.router.routeInformationProvider,
             routerDelegate: AppRoutes.router.routerDelegate,

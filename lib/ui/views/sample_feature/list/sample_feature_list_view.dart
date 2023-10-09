@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/core/base/pagination_mixin.dart';
@@ -44,7 +45,7 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SkyAppBar.secondary(title: 'txt_list_users'),
+      appBar: SkyAppBar.secondary(title: 'txt_list_users'.tr()),
       body: BlocConsumer<SampleFeatureListBloc, SampleFeatureListState>(
         listener: (BuildContext context, SampleFeatureListState state) {
           if (state is SampleFeatureListError) {
