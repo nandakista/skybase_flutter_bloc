@@ -1,19 +1,42 @@
+import 'dart:developer';
+
+import 'package:skybase/core/base/cache_mixin.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
+import 'package:skybase/data/sources/local/cached_key.dart';
 import 'package:skybase/data/sources/server/sample_feature/sample_feature_sources.dart';
 
-class SampleFeatureRepositoryImpl implements SampleFeatureRepository {
-  final SampleFeatureSources apiService;
-  SampleFeatureRepositoryImpl({required this.apiService});
-
+class SampleFeatureRepositoryImpl
+    with CacheMixin
+    implements SampleFeatureRepository {
   String tag = 'SampleFeatureRepository::->';
+
+  final SampleFeatureSources apiService;
+
+  SampleFeatureRepositoryImpl({required this.apiService});
 
   @override
   Future<List<SampleFeature>> getUsers({
     required int page,
     required int perPage,
   }) async {
-    return await apiService.getUsers(page: page, perPage: perPage);
+    try {
+      // Using cached
+      return await getCacheList(
+        cachedKey: CachedKey.SAMPLE_FEATURE_LIST,
+        page: page,
+        onLoad: () async => await apiService.getUsers(
+          page: page,
+          perPage: perPage,
+        ),
+      );
+
+      // Without cache
+      // return await apiService.getUsers(page: page, perPage: perPage);
+    } catch (e, stack) {
+      log('$tag error = $e, $stack');
+      rethrow;
+    }
   }
 
   @override
@@ -21,10 +44,32 @@ class SampleFeatureRepositoryImpl implements SampleFeatureRepository {
     required int id,
     required String username,
   }) async {
-    final SampleFeature res = await apiService.getDetailUser(username: username);
-    res.followersList = await apiService.getFollowers(username: username);
-    res.followingList = await apiService.getFollowings(username: username);
-    res.repositoryList = await apiService.getRepos(username: username);
-    return res;
+    try {
+    // Using cache
+      return await getCache(
+        cachedKey: CachedKey.SAMPLE_FEATURE_DETAIL,
+        cachedId: id.toString(),
+        onLoad: () async =>
+        await apiService.getDetailUser(username: username).then(
+              (res) async {
+            res.followersList = await apiService.getFollowers(username: username);
+            res.followingList =
+            await apiService.getFollowings(username: username);
+            res.repositoryList = await apiService.getRepos(username: username);
+            return res;
+          },
+        ),
+      );
+
+      // Without Cache
+      // final SampleFeature res = await apiService.getDetailUser(username: username);
+      // res.followersList = await apiService.getFollowers(username: username);
+      // res.followingList = await apiService.getFollowings(username: username);
+      // res.repositoryList = await apiService.getRepos(username: username);
+      // return res;
+    } catch (e, stack) {
+      log('$tag Failed get data $e, $stack');
+      rethrow;
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:skybase/core/base/pagination_mixin.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
+import 'package:skybase/core/helper/dialog_helper.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/sources/local/cached_key.dart';
 import 'package:skybase/core/base/main_navigation.dart';
@@ -91,9 +92,11 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        onPressed: () {
-          StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_LIST);
-          StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_DETAIL);
+        onPressed: () async {
+          LoadingDialog.show(context);
+          await StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_LIST);
+          await StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_DETAIL);
+          if (context.mounted) LoadingDialog.dismiss(context);
         },
         child: const Icon(Icons.delete, color: Colors.white),
       ),
