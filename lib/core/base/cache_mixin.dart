@@ -11,7 +11,6 @@ mixin CacheMixin {
   StorageManager storage = StorageManager.find;
 
   /// Save list data in cache, only in saving page 1.
-  /// **[cachedKey]** is identifier cached data
   Future<List<T>> getCacheList<T>({
     required String cachedKey,
     required int page,
@@ -54,28 +53,26 @@ mixin CacheMixin {
 
   /// Save object data to cache.
   ///
-  /// **[cachedKey]** is identifier cached data
+  /// Set **[onlyCacheLast]** to true if you want to cache only the last data you've open.
   ///
-  /// **[cachedId]** is id of your data, if you need to save every object
-  /// data in list, you should fill [cachedId] with your data id.
-  ///
-  /// But if you only want save the last object you can leave [cachedId] null.
+  /// Set **[fieldId]** to your actual data id if your data id is not using "id".
+  /// For example: the id of user data is user_id
   Future<T> getCache<T>({
     required String cachedKey,
     required Future<T> Function() onLoad,
     required String? cachedId,
-    String? dataId,
+    bool onlyCacheLast = false,
+    String? fieldId,
   }) async {
     T result;
     String key = cachedKey;
-    if (cachedId != null) key += cachedId.toString();
+    if (!onlyCacheLast) key += cachedId.toString();
+    log('$cachedTag cached key = $key');
     dynamic cache = await storage.get(key);
 
-    log('$cachedTag cache data = $cache');
     if (storage.has(key) && cache.toString().isNotNullAndNotEmpty) {
       Map<String, dynamic> cacheMap = json.decode(cache);
-
-      if (cachedId == _getId(cache: cacheMap, dataId: dataId)) {
+      if (cachedId == _getId(cache: cacheMap, dataId: fieldId)) {
         log('$cachedTag get cache');
         /// Refresh data so the cache is always actual data
         _saveCache(cachedKey: key, onLoad: onLoad);
