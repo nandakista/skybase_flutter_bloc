@@ -24,7 +24,7 @@ class SampleFeatureListView extends StatefulWidget {
 }
 
 class _SampleFeatureListViewState extends State<SampleFeatureListView>
-    with PaginationMixin<SampleFeature> {
+    with PaginationMixin<SampleFeature>, AutomaticKeepAliveClientMixin {
 
   @override
   void initState() {
@@ -37,6 +37,9 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void dispose() {
     pagingController.dispose();
     super.dispose();
@@ -44,6 +47,7 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: SkyAppBar.secondary(title: 'txt_list_users'.tr()),
       body: BlocConsumer<SampleFeatureListBloc, SampleFeatureListState>(

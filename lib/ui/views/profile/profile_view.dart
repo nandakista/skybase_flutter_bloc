@@ -19,7 +19,9 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends State<ProfileView>
+    with AutomaticKeepAliveClientMixin {
+
   @override
   void initState() {
     Future.microtask(() => context.read<ProfileBloc>().add(LoadProfile()));
@@ -27,7 +29,11 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
