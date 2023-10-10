@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:skybase/core/observer/app_navigator_observer.dart';
+import 'package:skybase/config/observer/app_navigator_observer.dart';
 import 'package:skybase/ui/views/404_500/route_error_view.dart';
 import 'package:skybase/ui/views/intro/intro_route.dart';
 import 'package:skybase/ui/views/login/login_route.dart';

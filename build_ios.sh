@@ -10,7 +10,7 @@ declare BUILD_NAME=$2
 declare BUILD_NUMBER=$3
 declare MODE=$4
 
-declare APP_NAME="skybase-getx"
+declare APP_NAME="Skybase"
 
 if [ "$BUILD_NUMBER" == "i" ]
 then

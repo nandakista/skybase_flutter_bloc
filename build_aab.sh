@@ -1,6 +1,6 @@
 source trap_ctrlc.sh
 
-# build_apk
+# build_aab
 #   ENV             : staging|production
 #   BUILD_NAME      : (example 1.0.0)
 #   BUILD_NUMBER    : (example 1)
@@ -27,9 +27,9 @@ echo "⬜️ Build number : $BUILD_NUMBER"
 echo "⬜️ Mode         : $MODE"
 if [ "$MODE" == "obfuscate" ]
 then
-    flutter build apk -t "lib/main_$ENV.dart" --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER" --obfuscate --split-debug-info=.debug-info-android
+    flutter build appbundle -t "lib/main_${ENV}.dart" --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER" --obfuscate --split-debug-info=.debug-info-android
 else
-    flutter build apk -t "lib/main_$ENV.dart" --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"
+    flutter build appbundle -t "lib/main_${ENV}.dart" --build-name="$BUILD_NAME" --build-number="$BUILD_NUMBER"
 fi
 
 if [ ! $? == 0 ]
@@ -38,12 +38,11 @@ then
     exit 1
 fi
 
-declare RLSDIR="build/app/outputs/flutter-apk"
+declare RLSDIR="build/app/outputs/bundle/release"
 declare APKNAME="$APP_NAME $BUILD_NAME ($BUILD_NUMBER) $ENV"
 
 # make copies
-cp "$RLSDIR/app-release.apk" "$RLSDIR/$APKNAME.apk"
+cp "$RLSDIR/app-release.aab" "$RLSDIR/$APKNAME.aab"
 
-echo "⬜️ Location: $RLSDIR/app-release.apk"
-echo "⬜️ Or look for renamed file: \033[4m$APKNAME.apk\033[0m"
+echo "⬜️ Location: $RLSDIR/app-release.aab"
 echo "🟩 Build done"

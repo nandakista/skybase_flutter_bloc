@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
-import 'package:skybase/config/localization/locale_manager.dart';
+import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/data/repositories/auth/auth_repository.dart';
 import 'package:skybase/data/repositories/auth/auth_repository_impl.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository_impl.dart';

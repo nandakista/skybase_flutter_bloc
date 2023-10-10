@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/themes/app_style.dart';
-import 'package:skybase/core/base/main_navigation.dart';
+import 'package:skybase/config/base/main_navigation.dart';
 import 'package:skybase/ui/views/profile/bloc/profile_bloc.dart';
 import 'package:skybase/ui/views/settings/setting_view.dart';
 import 'package:skybase/ui/widgets/base/sky_view.dart';

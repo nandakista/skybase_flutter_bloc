@@ -10,7 +10,7 @@
 	<string>ad-hoc</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.skybase.getx</key>
+		<key>com.skybase.bloc</key>
 		<string>Skybase Ad Hoc</string>
 	</dict>
 	<key>signingCertificate</key>

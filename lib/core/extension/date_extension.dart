@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:skybase/config/localization/locale_helper.dart';
+import 'package:skybase/core/localization/locale_helper.dart';
 import 'package:skybase/core/database/storage/storage_key.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 

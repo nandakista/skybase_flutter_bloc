@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:skybase/core/base/main_navigation.dart';
+import 'package:skybase/config/base/main_navigation.dart';
 import 'package:skybase/ui/views/utils/component/bottom_sheet_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/dialog_utils_view.dart';
 import 'package:skybase/ui/views/utils/component/list_utils_view.dart';

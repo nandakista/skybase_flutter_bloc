@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:skybase/core/base/cache_mixin.dart';
+import 'package:skybase/config/base/cache_mixin.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
 import 'package:skybase/data/sources/local/cached_key.dart';

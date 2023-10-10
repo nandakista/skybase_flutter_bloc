@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
-import 'package:skybase/config/localization/locale_manager.dart';
+import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/ui/views/intro/bloc/intro_bloc.dart';
 import 'package:skybase/ui/views/login/bloc/login_bloc.dart';
@@ -11,7 +11,7 @@ import 'package:skybase/ui/views/settings/bloc/setting_bloc.dart';
 
 import 'app_configuration.dart';
 import 'config/themes/app_theme.dart';
-import 'core/observer/app_bloc_observer.dart';
+import 'config/observer/app_bloc_observer.dart';
 import 'service_locator.dart';
 import 'ui/routes/app_routes.dart';
 import 'ui/views/profile/bloc/profile_bloc.dart';
@@ -25,7 +25,7 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   runApp(
     EasyLocalization(
-      path: 'lib/config/localization/languages',
+      path: 'lib/core/localization/languages',
       supportedLocales: LocaleManager.find.locales.values.toList(),
       startLocale: LocaleManager.find.getCurrentLocale,
       fallbackLocale: LocaleManager.find.fallbackLocale,

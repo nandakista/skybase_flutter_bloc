@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skybase/config/localization/locale_manager.dart';
+import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/core/database/storage/storage_key.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 

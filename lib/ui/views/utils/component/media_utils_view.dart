@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:skybase/core/helper/bottom_sheet_helper.dart';
-import 'package:skybase/core/base/main_navigation.dart';
+import 'package:skybase/config/base/main_navigation.dart';
 import 'package:skybase/ui/widgets/media/attachments_source_bottom_sheet.dart';
 import 'package:skybase/ui/widgets/media/media_items.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';

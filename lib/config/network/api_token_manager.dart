@@ -9,7 +9,7 @@ import 'package:skybase/config/network/api_config.dart';
 import 'package:skybase/config/network/api_exception.dart';
 import 'package:skybase/config/network/api_request.dart';
 import 'package:skybase/config/network/api_response.dart';
-import 'package:skybase/core/base/main_navigation.dart';
+import 'package:skybase/config/base/main_navigation.dart';
 import 'package:skybase/ui/views/login/login_view.dart';
 
 /* Created by

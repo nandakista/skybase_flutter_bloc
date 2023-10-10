@@ -44,10 +44,10 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>CFBundleLocalizations</key>
-        <array>
-        	<string>en</string>
-        	<string>id</string>
-        </array>
+		<array>
+			<string>en</string>
+			<string>id</string>
+		</array>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>To take image from camera/gallery</string>
 		<key>NSCameraUsageDescription</key>
