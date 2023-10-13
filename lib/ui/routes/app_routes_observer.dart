@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-class AppNavigatorObserver extends NavigatorObserver {
+class AppRoutesObserver extends NavigatorObserver {
   final String tag = 'Navigator Observer::->';
 
   @override

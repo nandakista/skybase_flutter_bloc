@@ -12,6 +12,12 @@ enum Environment {
   DEVELOPMENT,
 }
 
+extension EnvExtension on Environment {
+  bool get isStaging => this == Environment.STAGING;
+  bool get isDev => this == Environment.DEVELOPMENT;
+  bool get isProduction => this == Environment.PRODUCTION;
+}
+
 class AppEnv {
   static Config config = Config(
     baseUrl: AppConfiguration.devBaseUrl,
