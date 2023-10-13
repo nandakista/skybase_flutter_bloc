@@ -9,7 +9,7 @@ import 'package:skybase/ui/views/sample_feature/list/bloc/sample_feature_list_bl
 import 'package:skybase/ui/views/settings/bloc/setting_bloc.dart';
 
 class AppBlocs {
-  static List<BlocProvider> get provider {
+  static List get provider {
     return [
       BlocProvider(create: (_) => sl<IntroBloc>()),
       BlocProvider(create: (_) => sl<LoginBloc>()),
