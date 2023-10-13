@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   String tag = 'LoginBloc::->';
 
   final AuthRepository repository;
+  CancelToken cancelToken = CancelToken();
 
   LoginBloc(this.repository) : super(LoginInitial()) {
     on<SubmitLogin>(_onSubmit);
@@ -42,7 +44,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginLoading());
     try {
-      final response = await repository.getProfile(username: 'nandakista');
+      final response = await repository.getProfile(
+        cancelToken: cancelToken,
+        username: 'nandakista',
+      );
       await AuthManager.find.saveAuthData(
         user: response,
         token: 'dummy',
@@ -52,5 +57,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } catch (e) {
       emit(LoginFailed(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    cancelToken.cancel();
+    return super.close();
   }
 }

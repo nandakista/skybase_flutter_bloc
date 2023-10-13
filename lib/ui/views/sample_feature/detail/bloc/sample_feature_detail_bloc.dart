@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,7 @@ class SampleFeatureDetailBloc
   String tag = 'SampleFeatureDetailBloc::->';
 
   final SampleFeatureRepository repository;
+  CancelToken cancelToken = CancelToken();
 
   SampleFeatureDetailBloc(this.repository)
       : super(SampleFeatureDetailInitial()) {
@@ -27,6 +29,7 @@ class SampleFeatureDetailBloc
     try {
       emit(SampleFeatureDetailLoading());
       final response = await repository.getDetailUser(
+        cancelToken: cancelToken,
         id: event.id,
         username: event.username,
       );
@@ -34,5 +37,11 @@ class SampleFeatureDetailBloc
     } catch (e) {
       emit(SampleFeatureDetailError(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    cancelToken.cancel();
+    return super.close();
   }
 }

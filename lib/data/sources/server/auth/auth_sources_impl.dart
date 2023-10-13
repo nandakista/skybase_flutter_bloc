@@ -64,11 +64,14 @@ class AuthSourcesImpl extends AuthSources {
   }
 
   @override
-  Future<User> getProfile({required String username}) async {
+  Future<User> getProfile({
+    CancelToken? cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username',
-        useToken: true,
+        cancelToken: cancelToken,
       );
       return User.fromJson(res.data);
     } catch (e, stack) {
@@ -78,11 +81,14 @@ class AuthSourcesImpl extends AuthSources {
   }
 
   @override
-  Future<List<Repo>> getProfileRepository({required String username}) async {
+  Future<List<Repo>> getProfileRepository({
+    CancelToken? cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/repos?type=all',
-        useToken: true,
+        cancelToken: cancelToken,
       );
       return (res.data as List)
           .map((data) => Repo.fromJson(data))

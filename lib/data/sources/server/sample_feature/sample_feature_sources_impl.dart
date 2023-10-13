@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:skybase/config/network/api_request.dart';
 import 'package:skybase/data/models/repo/repo.dart';
@@ -9,6 +10,7 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
 
   @override
   Future<List<SampleFeature>> getUsers({
+    required CancelToken cancelToken,
     required int page,
     required int perPage,
   }) async {
@@ -32,7 +34,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
   }
 
   @override
-  Future<SampleFeature> getDetailUser({required String username}) async {
+  Future<SampleFeature> getDetailUser({
+    required CancelToken cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username',
@@ -45,7 +50,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
   }
 
   @override
-  Future<List<SampleFeature>> getFollowers({required String username}) async {
+  Future<List<SampleFeature>> getFollowers({
+    required CancelToken cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/followers',
@@ -60,7 +68,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
   }
 
   @override
-  Future<List<SampleFeature>> getFollowings({required String username}) async {
+  Future<List<SampleFeature>> getFollowings({
+    required CancelToken cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/following',
@@ -75,7 +86,10 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
   }
 
   @override
-  Future<List<Repo>> getRepos({required String username}) async {
+  Future<List<Repo>> getRepos({
+    required CancelToken cancelToken,
+    required String username,
+  }) async {
     try {
       final res = await ApiRequest.get(
         url: '/users/$username/repos',

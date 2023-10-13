@@ -28,6 +28,7 @@ class ApiRequest {
     String? contentType = Headers.jsonContentType,
     Object? body,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
@@ -36,7 +37,7 @@ class ApiRequest {
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
         queryParameters: queryParameters,
-        cancelToken: CancelToken(),
+        cancelToken: cancelToken,
       ),
     );
   }
@@ -46,6 +47,7 @@ class ApiRequest {
     bool useToken = true,
     String? contentType = Headers.jsonContentType,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
@@ -53,7 +55,7 @@ class ApiRequest {
         url,
         options: Options(headers: headers, contentType: contentType),
         queryParameters: queryParameters,
-        cancelToken: CancelToken(),
+        cancelToken: cancelToken,
       ),
     );
   }
@@ -64,6 +66,7 @@ class ApiRequest {
     String? contentType = Headers.jsonContentType,
     Object? body,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
@@ -72,7 +75,7 @@ class ApiRequest {
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
         queryParameters: queryParameters,
-        cancelToken: CancelToken(),
+        cancelToken: cancelToken,
       ),
     );
   }
@@ -83,6 +86,7 @@ class ApiRequest {
     String? contentType = Headers.jsonContentType,
     Object? body,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
@@ -91,7 +95,7 @@ class ApiRequest {
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
         queryParameters: queryParameters,
-        cancelToken: CancelToken(),
+        cancelToken: cancelToken,
       ),
     );
   }
@@ -101,6 +105,7 @@ class ApiRequest {
     bool useToken = true,
     String? contentType = Headers.jsonContentType,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
@@ -108,6 +113,7 @@ class ApiRequest {
         url,
         options: Options(headers: headers),
         queryParameters: queryParameters,
+        cancelToken: cancelToken,
       ),
     );
   }

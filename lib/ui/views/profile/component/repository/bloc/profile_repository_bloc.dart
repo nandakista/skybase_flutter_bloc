@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,7 @@ class ProfileRepositoryBloc
   String tag = 'ProfileRepositoryBloc::->';
 
   final AuthRepository repository;
+  CancelToken cancelToken = CancelToken();
 
   ProfileRepositoryBloc(this.repository) : super(ProfileRepositoryInitial()) {
     on<LoadRepositories>(_onLoadData);
@@ -26,11 +28,18 @@ class ProfileRepositoryBloc
     try {
       emit(ProfileRepositoryLoading());
       final response = await repository.getProfileRepository(
+        cancelToken: cancelToken,
         username: 'nandakista',
       );
       emit(ProfileRepositoryLoaded(response));
     } catch (e) {
       emit(ProfileRepositoryError(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    cancelToken.cancel();
+    return super.close();
   }
 }
