@@ -55,14 +55,14 @@ mixin CacheMixin {
   ///
   /// Set **[onlyCacheLast]** to true if you want to cache only the last data you've open.
   ///
-  /// Set **[fieldId]** to your actual data id if your data id is not using "id".
+  /// Set **[customFieldId]** to your actual data id if your data id is not using "id".
   /// For example: the id of user data is user_id
   Future<T> getCache<T>({
     required String cachedKey,
     required Future<T> Function() onLoad,
     required String? cachedId,
     bool onlyCacheLast = false,
-    String? fieldId,
+    String? customFieldId,
   }) async {
     T result;
     String key = cachedKey;
@@ -72,7 +72,7 @@ mixin CacheMixin {
 
     if (storage.has(key) && cache.toString().isNotNullAndNotEmpty) {
       Map<String, dynamic> cacheMap = json.decode(cache);
-      if (cachedId == _getId(cache: cacheMap, dataId: fieldId)) {
+      if (cachedId == _getId(cache: cacheMap, customFieldId: customFieldId)) {
         log('$cachedTag get cache');
         /// Refresh data so the cache is always actual data
         _saveCache(cachedKey: key, onLoad: onLoad);
@@ -90,9 +90,9 @@ mixin CacheMixin {
 
   String _getId({
     required Map<String, dynamic> cache,
-    String? dataId,
+    String? customFieldId,
   }) {
-    if (dataId != null) return dataId.toString();
+    if (customFieldId != null) return customFieldId.toString();
     return (cache['id']).toString();
   }
 
