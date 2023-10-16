@@ -25,23 +25,23 @@ class IntroView extends StatelessWidget {
                   height: kToolbarHeight,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
-                    mainAxisAlignment: (state is IntroLastPage)
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (state is IntroLoaded)
-                        InkWell(
-                          onTap: () => bloc.add(PreviousPage()),
-                          child: const Icon(Icons.arrow_back),
-                        ),
-                      if (state is IntroLastPage)
-                        GestureDetector(
-                          onTap: () => bloc.add(SkipPage()),
-                          child: const Text(
-                            'Lewati',
-                            style: TextStyle(color: AppColors.primary),
-                          ),
-                        ),
+                      (state is IntroFirstPage)
+                          ? const SizedBox.shrink()
+                          : InkWell(
+                              onTap: () => bloc.add(PreviousPage()),
+                              child: const Icon(Icons.arrow_back),
+                            ),
+                      (state is IntroLastPage)
+                          ? const SizedBox.shrink()
+                          : GestureDetector(
+                              onTap: () => bloc.add(SkipPage()),
+                              child: const Text(
+                                'Lewati',
+                                style: TextStyle(color: AppColors.primary),
+                              ),
+                            ),
                     ],
                   ),
                 );
