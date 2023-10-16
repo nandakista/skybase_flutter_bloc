@@ -8,7 +8,7 @@ import 'package:skybase/service_locator.dart';
 FlutterSecureStorage secureStorage = sl<FlutterSecureStorage>();
 
 class SecureStorageManager {
-  static SecureStorageManager get find => sl<SecureStorageManager>();
+  static SecureStorageManager get instance => sl<SecureStorageManager>();
 
   final String _tokenKey = 'token';
   final String _refreshTokenKey = 'refresh_token';

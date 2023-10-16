@@ -15,7 +15,7 @@ extension DateTimeExt on DateTime {
     String format = 'dd MMM yyyy',
     String? idFormat,
   ]) {
-    String local = StorageManager.find.get(StorageKey.CURRENT_LOCALE) ?? 'id';
+    String local = StorageManager.instance.get(StorageKey.CURRENT_LOCALE) ?? 'id';
     return LocaleHelper.builder<String>(
       en: DateFormat(format, local).format(this),
       id: DateFormat(idFormat ?? format, local).format(this),

@@ -19,9 +19,9 @@ void main() async {
   runApp(
     EasyLocalization(
       path: 'lib/core/localization/languages',
-      supportedLocales: LocaleManager.find.locales.values.toList(),
-      startLocale: LocaleManager.find.getCurrentLocale,
-      fallbackLocale: LocaleManager.find.fallbackLocale,
+      supportedLocales: LocaleManager.instance.locales.values.toList(),
+      startLocale: LocaleManager.instance.getCurrentLocale,
+      fallbackLocale: LocaleManager.instance.fallbackLocale,
       useFallbackTranslations: true,
       child: const App(),
     ),

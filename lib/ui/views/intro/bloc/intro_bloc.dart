@@ -71,7 +71,7 @@ class IntroBloc extends Bloc<IntroEvent, IntroState> {
     DonePage event,
     Emitter<IntroState> emit,
   ) {
-    StorageManager.find.save<bool>(StorageKey.FIRST_INSTALL, false);
+    StorageManager.instance.save<bool>(StorageKey.FIRST_INSTALL, false);
     event.context.pushReplacementNamed(LoginView.route);
   }
 

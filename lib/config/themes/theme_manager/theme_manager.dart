@@ -13,7 +13,7 @@ part 'theme_state.dart';
 class ThemeManager extends Cubit<ThemeState> {
   ThemeManager() : super(Initial());
 
-  static ThemeManager get find => sl<ThemeManager>();
+  static ThemeManager get instance => sl<ThemeManager>();
 
   bool isDark = false;
 
@@ -24,7 +24,7 @@ class ThemeManager extends Cubit<ThemeState> {
   bool get isDarkTheme => isDark;
 
   void init() {
-    isDark = StorageManager.find.get<bool?>(StorageKey.IS_DARK_THEME) ?? false;
+    isDark = StorageManager.instance.get<bool?>(StorageKey.IS_DARK_THEME) ?? false;
     if (isDark) {
       emit(const IsDarkMode());
     } else {
@@ -34,7 +34,7 @@ class ThemeManager extends Cubit<ThemeState> {
 
   Future<bool> changeTheme() async {
     isDark = !isDark;
-    StorageManager.find.save<bool>(StorageKey.IS_DARK_THEME, isDark);
+    StorageManager.instance.save<bool>(StorageKey.IS_DARK_THEME, isDark);
     if (isDark) {
       emit(const IsDarkMode());
     } else {

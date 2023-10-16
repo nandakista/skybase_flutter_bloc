@@ -52,7 +52,7 @@ class _SettingViewState extends State<SettingView> {
               SkyButton(
                 onPressed: () {
                   LoadingDialog.show(context);
-                  AuthManager.find.logout();
+                  AuthManager.instance.logout();
                 },
                 text: 'txt_logout'.tr(),
               ),

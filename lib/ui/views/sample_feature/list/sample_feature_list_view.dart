@@ -94,8 +94,8 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
         backgroundColor: AppColors.primary,
         onPressed: () async {
           LoadingDialog.show(context);
-          await StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_LIST);
-          await StorageManager.find.delete(CachedKey.SAMPLE_FEATURE_DETAIL);
+          await StorageManager.instance.delete(CachedKey.SAMPLE_FEATURE_LIST);
+          await StorageManager.instance.delete(CachedKey.SAMPLE_FEATURE_DETAIL);
           if (context.mounted) LoadingDialog.dismiss(context);
         },
         child: const Icon(Icons.delete, color: Colors.white),

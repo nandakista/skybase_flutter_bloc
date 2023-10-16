@@ -13,7 +13,7 @@ import 'package:skybase/ui/widgets/sky_dialog.dart';
    nanda.kista@gmail.com
 */
 class LocaleManager {
-  static LocaleManager get find => sl<LocaleManager>();
+  static LocaleManager get instance => sl<LocaleManager>();
 
   final Map<String, Locale> locales = {
     'English': const Locale('en'),
@@ -64,7 +64,7 @@ class LocaleManager {
   }
 
   Future<void> updateLocale(BuildContext context, Locale locale) async {
-    StorageManager.find.save<String>(
+    StorageManager.instance.save<String>(
       StorageKey.CURRENT_LOCALE,
       locale.languageCode,
     );
@@ -74,11 +74,11 @@ class LocaleManager {
 
   Locale get getCurrentLocale {
     String? currentLanguageCode =
-        StorageManager.find.get(StorageKey.CURRENT_LOCALE);
+        StorageManager.instance.get(StorageKey.CURRENT_LOCALE);
     if (currentLanguageCode != null) {
       return currentLanguageCode.toLocale();
     } else {
-      StorageManager.find.save<String>(StorageKey.CURRENT_LOCALE, "en");
+      StorageManager.instance.save<String>(StorageKey.CURRENT_LOCALE, "en");
       return const Locale('en');
     }
   }

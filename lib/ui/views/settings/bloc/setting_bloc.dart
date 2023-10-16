@@ -13,7 +13,9 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
   String tag = 'SettingBloc::->';
 
   SettingBloc()
-      : super(SettingState(LocaleManager.find.getCurrentLocale.languageCode)) {
+      : super(SettingState(
+          LocaleManager.instance.getCurrentLocale.languageCode,
+        )) {
     on<InitLocale>(_setLocale);
     on<UpdateLocale>(_onUpdateLocaleID);
   }
@@ -22,7 +24,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     InitLocale event,
     Emitter<SettingState> emit,
   ) {
-    Locale currentLocale = LocaleManager.find.getCurrentLocale;
+    Locale currentLocale = LocaleManager.instance.getCurrentLocale;
     emit(SettingState(currentLocale.languageCode));
   }
 
@@ -30,9 +32,10 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     UpdateLocale event,
     Emitter<SettingState> emit,
   ) async {
-    StorageManager.find
+    StorageManager.instance
         .save<String>(StorageKey.CURRENT_LOCALE, event.languageCode);
-    LocaleManager.find.updateLocale(event.context, Locale(event.languageCode));
+    LocaleManager.instance
+        .updateLocale(event.context, Locale(event.languageCode));
     emit(SettingState(event.languageCode));
   }
 }

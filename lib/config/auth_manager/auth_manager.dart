@@ -20,11 +20,11 @@ enum AppType { INITIAL, FIRST_INSTALL, UNAUTHENTICATED, AUTHENTICATED }
 /// This class help you to manage authentication process.
 /// Contains auth general function such as [saveAuthData], [logout], and first install/[setup]
 class AuthManager {
-  static AuthManager get find => sl<AuthManager>();
+  static AuthManager get instance => sl<AuthManager>();
 
-  StorageManager storage = StorageManager.find;
-  SecureStorageManager secureStorage = SecureStorageManager.find;
-  ThemeManager themeManager = ThemeManager.find;
+  StorageManager storage = StorageManager.instance;
+  SecureStorageManager secureStorage = SecureStorageManager.instance;
+  ThemeManager themeManager = ThemeManager.instance;
 
   AppType authState = AppType.INITIAL;
   AppType? get state => authState;

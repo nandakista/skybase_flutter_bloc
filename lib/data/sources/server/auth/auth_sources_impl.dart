@@ -42,7 +42,7 @@ class AuthSourcesImpl extends AuthSources {
     required String token,
   }) async {
     try {
-      String? token = await SecureStorageManager.find.getToken();
+      String? token = await SecureStorageManager.instance.getToken();
       String url = AppEnv.config.baseUrl;
       url += 'auth/verify-token';
       final response = await Dio().get(

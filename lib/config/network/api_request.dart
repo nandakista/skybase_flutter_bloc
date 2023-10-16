@@ -32,7 +32,7 @@ class ApiRequest {
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
-      () => DioClient.find.post(
+      () => DioClient.instance.post(
         url,
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
@@ -51,7 +51,7 @@ class ApiRequest {
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
-      () => DioClient.find.get(
+      () => DioClient.instance.get(
         url,
         options: Options(headers: headers, contentType: contentType),
         queryParameters: queryParameters,
@@ -70,7 +70,7 @@ class ApiRequest {
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
-      () => DioClient.find.patch(
+      () => DioClient.instance.patch(
         url,
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
@@ -90,7 +90,7 @@ class ApiRequest {
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
-      () => DioClient.find.put(
+      () => DioClient.instance.put(
         url,
         data: _networkUtils.setBody(contentType: contentType, body: body),
         options: Options(headers: headers, contentType: contentType),
@@ -109,7 +109,7 @@ class ApiRequest {
   }) async {
     await _networkUtils.tokenManager(useToken);
     return await _networkUtils.safeFetch(
-      () => DioClient.find.delete(
+      () => DioClient.instance.delete(
         url,
         options: Options(headers: headers),
         queryParameters: queryParameters,
@@ -138,7 +138,7 @@ final class NetworkUtilsRequest with NetworkException {
 
   Future<void> tokenManager(bool useToken) async {
     DioClient.setInterceptor();
-    // String? token = await SecureStorageManager.find.getToken();
+    // String? token = await SecureStorageManager.instance.getToken();
     if (useToken) {
       headers[HttpHeaders.authorizationHeader] = 'token $gitToken';
     } else {

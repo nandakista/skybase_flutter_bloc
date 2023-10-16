@@ -11,7 +11,7 @@ class DioClient {
   static String baseURL = AppEnv.config.baseUrl;
   final Dio _dio = sl<Dio>();
 
-  static Dio get find => sl<DioClient>()._dio;
+  static Dio get instance => sl<DioClient>()._dio;
 
   void init() {
     _dio.options.baseUrl = baseURL;
@@ -20,7 +20,7 @@ class DioClient {
   }
 
   static void setInterceptor() {
-    DioClient.find.interceptors.clear();
-    DioClient.find.interceptors.add(ApiInterceptors(DioClient.find));
+    DioClient.instance.interceptors.clear();
+    DioClient.instance.interceptors.add(ApiInterceptors(DioClient.instance));
   }
 }

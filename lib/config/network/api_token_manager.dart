@@ -27,8 +27,8 @@ enum TokenType {
 
 abstract base class ApiTokenManager extends QueuedInterceptorsWrapper
     with NetworkException {
-  final authManager = AuthManager.find;
-  final secureStorage = SecureStorageManager.find;
+  final authManager = AuthManager.instance;
+  final secureStorage = SecureStorageManager.instance;
 
   Future<void> handleToken({
     required Dio dio,

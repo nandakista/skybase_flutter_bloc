@@ -8,7 +8,7 @@ import 'package:skybase/data/sources/local/cached_model_converter.dart';
 mixin CacheMixin {
   String cachedTag = 'CacheMixin::->';
 
-  StorageManager storage = StorageManager.find;
+  StorageManager storage = StorageManager.instance;
 
   /// Save list data in cache, only in saving page 1.
   Future<List<T>> getCacheList<T>({

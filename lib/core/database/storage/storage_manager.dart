@@ -10,7 +10,7 @@ import 'package:skybase/service_locator.dart';
 
 class StorageManager {
   SharedPreferences sharedPreferences = sl<SharedPreferences>();
-  static StorageManager get find => sl<StorageManager>();
+  static StorageManager get instance => sl<StorageManager>();
 
   /// If you want to save Object/Model don't forget to encode toJson
   Future<void> save<T>(String name, T value) async {
