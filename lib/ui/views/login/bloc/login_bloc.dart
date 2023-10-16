@@ -48,7 +48,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         cancelToken: cancelToken,
         username: 'nandakista',
       );
-      await AuthManager.find.saveAuthData(
+      await AuthManager.find.login(
         user: response,
         token: 'dummy',
         refreshToken: 'dummyRefresh',

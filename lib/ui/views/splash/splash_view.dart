@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skybase/config/auth_manager/auth_wrapper.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 
@@ -10,14 +9,10 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.primary,
-      body: AuthWrapper(
-        builder: (authManager, state) {
-          return const Center(
-            child: PlatformLoadingIndicator(color: Colors.white),
-          );
-        },
+      body: Center(
+        child: PlatformLoadingIndicator(color: Colors.white),
       ),
     );
   }

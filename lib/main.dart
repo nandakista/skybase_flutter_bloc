@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skybase/config/auth_manager/auth_manager.dart';
 import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/ui/blocs/app_blocs.dart';
@@ -36,7 +35,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<AuthManager>()..init()),
         BlocProvider(create: (_) => sl<ThemeManager>()..init()),
         ...AppBlocs.provider,
       ],

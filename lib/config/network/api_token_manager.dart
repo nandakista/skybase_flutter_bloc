@@ -9,8 +9,6 @@ import 'package:skybase/config/network/api_config.dart';
 import 'package:skybase/config/network/api_exception.dart';
 import 'package:skybase/config/network/api_request.dart';
 import 'package:skybase/config/network/api_response.dart';
-import 'package:skybase/config/base/main_navigation.dart';
-import 'package:skybase/ui/views/login/login_view.dart';
 
 /* Created by
    Varcant
@@ -57,8 +55,7 @@ abstract base class ApiTokenManager extends QueuedInterceptorsWrapper
   ) async {
     final int status = err.response?.statusCode ?? 0;
     if (status == 401) {
-      await authManager.clearData();
-      MainNavigation.contextLessPopAllReplacement(LoginView.route);
+      await authManager.logout();
       super.onError(err, handler);
     } else {
       super.onError(err, handler);
@@ -95,8 +92,7 @@ abstract base class ApiTokenManager extends QueuedInterceptorsWrapper
       return ApiResponse.fromJson(responseBody.data).data['token'];
     } on DioException catch (error) {
       debugPrint(getErrorException(error).toString());
-      await authManager.clearData();
-      MainNavigation.contextLessPopAllReplacement(LoginView.route);
+      await authManager.logout();
       return error.toString();
     }
   }

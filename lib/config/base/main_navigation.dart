@@ -103,7 +103,7 @@ class MainNavigation {
     }
   }
 
-  static void contextLessPopAllReplacement<T extends Object?>(
+  static void contextLessPushAllReplacement<T extends Object?>(
     String path, {
     Object? arguments,
     Map<String, String> pathParameters = const <String, String>{},

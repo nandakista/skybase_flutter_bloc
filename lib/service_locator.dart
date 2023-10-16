@@ -55,8 +55,8 @@ class ServiceLocator {
     sl.registerLazySingleton(() => SecureStorageManager());
     sl.registerSingleton(StorageManager());
     sl.registerSingleton(LocaleManager());
-    sl.registerFactory(() => AuthManager());
     sl.registerFactory(() => ThemeManager());
+    sl.registerSingleton(AuthManager());
 
     // Repository
     sl.registerLazySingleton<AuthRepository>(

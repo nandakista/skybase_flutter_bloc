@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 
 import 'package:skybase/core/database/storage/storage_key.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/core/database/secure_storage/secure_storage_manager.dart';
-import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/data/models/user/user.dart';
 import 'package:skybase/service_locator.dart';
 import 'package:skybase/config/base/main_navigation.dart';
@@ -15,48 +13,41 @@ import 'package:skybase/ui/views/intro/intro_view.dart';
 import 'package:skybase/ui/views/login/login_view.dart';
 import 'package:skybase/ui/views/main_navigation/main_nav_view.dart';
 
-part 'auth_state.dart';
+enum AppType { INITIAL, FIRST_INSTALL, UNAUTHENTICATED, AUTHENTICATED }
 
 /// This class will called first time before app go to pages.
 ///
 /// This class help you to manage authentication process.
 /// Contains auth general function such as [saveAuthData], [logout], and first install/[setup]
-class AuthManager extends Cubit<AuthState> {
+class AuthManager {
   static AuthManager get find => sl<AuthManager>();
-
-  AuthManager() : super(const Initial());
 
   StorageManager storage = StorageManager.find;
   SecureStorageManager secureStorage = SecureStorageManager.find;
   ThemeManager themeManager = ThemeManager.find;
 
-  /// This will work only if you called from context.read.
-  /// Recommendation to use from View using AuthWrapper
-  void setAuth() async {
-    if (await secureStorage.isLoggedIn()) {
-      emit(const Authenticated());
-    }
+  AppType authState = AppType.INITIAL;
+  AppType? get state => authState;
+
+  StreamController<AppType> authStreamController = StreamController<AppType>();
+  Stream<AppType?> get stream => authStreamController.stream;
+
+  AuthManager() {
+    authStreamController.add(authState);
+    authStreamController.stream.distinct().listen((state) {
+      authChanged(state);
+    });
   }
 
-  /// This will work only if you called from context.read.
-  /// Recommendation to use from View using AuthWrapper
-  void setUnAuth() async {
-    emit(const Unauthenticated());
-  }
-
-  void init() {
-    setup();
-  }
-
-  void authChanged(AuthState state) async {
+  void authChanged(AppType state) async {
     return switch (state) {
-      Initial() => await setup(),
-      FirstInstall() =>
-        MainNavigation.contextLessPopAllReplacement(IntroView.route),
-      Unauthenticated() =>
-        MainNavigation.contextLessPopAllReplacement(LoginView.route),
-      Authenticated() =>
-        MainNavigation.contextLessPopAllReplacement(MainNavView.route),
+      AppType.INITIAL => await setup(),
+      AppType.FIRST_INSTALL =>
+        MainNavigation.contextLessPushAllReplacement(IntroView.route),
+      AppType.UNAUTHENTICATED =>
+        MainNavigation.contextLessPushAllReplacement(LoginView.route),
+      AppType.AUTHENTICATED =>
+        MainNavigation.contextLessPushAllReplacement(MainNavView.route),
     };
   }
 
@@ -71,7 +62,8 @@ class AuthManager extends Cubit<AuthState> {
         await storage.get(StorageKey.FIRST_INSTALL) ?? true;
     if (isFirstInstall) {
       await secureStorage.setToken(value: '');
-      emit(const FirstInstall());
+      authState = AppType.FIRST_INSTALL;
+      authStreamController.add(authState);
     } else {
       checkUser();
     }
@@ -100,17 +92,39 @@ class AuthManager extends Cubit<AuthState> {
     }
   }
 
+  /// Set auth state to AppType.AUTHENTICATED
+  void setAuth() async {
+    if (await secureStorage.isLoggedIn()) {
+      authState = AppType.AUTHENTICATED;
+      authStreamController.add(authState);
+    }
+  }
+
   /// Just call this function to managed logout process.
   /// It will stream state and auto redirect your apps to page based on their state
   /// with [authChanged] function
   Future<void> logout() async {
     await clearData();
-    setUnAuth();
+    authState = AppType.UNAUTHENTICATED;
+    authStreamController.add(authState);
   }
 
   Future<void> clearData() async {
     await secureStorage.logout();
     await storage.logout();
+  }
+
+  /// Just call this function to managed login process.
+  /// It will stream state and auto redirect your apps to page based on their state
+  /// with [authChanged] function
+  /// * No need to navigate manually (Get.to or Get.off).
+  Future<void> login({
+    required User user,
+    required String token,
+    required String refreshToken,
+  }) async {
+    await saveAuthData(user: user, token: token, refreshToken: refreshToken);
+    setAuth();
   }
 
   Future<void> saveAuthData({
