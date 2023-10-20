@@ -62,8 +62,7 @@ class _ProfileViewState extends State<ProfileView>
             errorTitle: errMessage,
             onRetry: () => bloc.add(LoadProfile()),
             onRefresh: () => bloc.add(LoadProfile()),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [

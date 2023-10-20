@@ -12,6 +12,7 @@ import 'package:skybase/config/base/main_navigation.dart';
 import 'package:skybase/ui/views/sample_feature/detail/sample_feature_detail_view.dart';
 import 'package:skybase/ui/views/sample_feature/list/bloc/sample_feature_list_bloc.dart';
 import 'package:skybase/ui/widgets/base/sky_pagination_view.dart';
+import 'package:skybase/ui/widgets/shimmer/shimmer_list.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
@@ -41,6 +42,12 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
   bool get wantKeepAlive => true;
 
   @override
+  Future<void> onRefresh() {
+    deleteCached(CachedKey.SAMPLE_FEATURE_LIST);
+    return super.onRefresh();
+  }
+
+  @override
   void dispose() {
     pagingController.dispose();
     super.dispose();
@@ -62,6 +69,7 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
         builder: (context, state) {
           return SkyPaginationView<SampleFeature>(
             pagingController: pagingController,
+            loadingView: const ShimmerList(),
             onRefresh: onRefresh,
             itemBuilder: (BuildContext context, item, int index) {
               return ListTile(

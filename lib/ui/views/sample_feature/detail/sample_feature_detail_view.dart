@@ -55,29 +55,26 @@ class _SampleFeatureDetailViewState extends State<SampleFeatureDetailView> {
               emptyEnabled: false,
               loadingView: const ShimmerDetail(),
               errorTitle: errMessage,
-              onRefresh: () =>
-                  bloc.add(LoadGithubUser(widget.idArgs, widget.usernameArgs)),
-              onRetry: () =>
-                  bloc.add(LoadGithubUser(widget.idArgs, widget.usernameArgs)),
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    SampleFeatureDetailHeader(
-                      avatar: data?.avatarUrl ?? '',
-                      repositoryCount: data?.repository ?? 0,
-                      followerCount: data?.followers ?? 0,
-                      followingCount: data?.following ?? 0,
-                    ),
-                    SampleFeatureDetailInfo(
-                      name: data?.name ?? '',
-                      bio: data?.bio ?? '',
-                      company: data?.company ?? '',
-                      location: data?.location ?? '',
-                    ),
-                    SampleFeatureDetailTab(data: data),
-                  ],
-                ),
+              onRefresh: () => bloc
+                  .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),
+              onRetry: () => bloc
+                  .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),
+              child: Column(
+                children: [
+                  SampleFeatureDetailHeader(
+                    avatar: data?.avatarUrl ?? '',
+                    repositoryCount: data?.repository ?? 0,
+                    followerCount: data?.followers ?? 0,
+                    followingCount: data?.following ?? 0,
+                  ),
+                  SampleFeatureDetailInfo(
+                    name: data?.name ?? '',
+                    bio: data?.bio ?? '',
+                    company: data?.company ?? '',
+                    location: data?.location ?? '',
+                  ),
+                  SampleFeatureDetailTab(data: data),
+                ],
               ),
             );
           },

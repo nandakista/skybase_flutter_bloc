@@ -20,7 +20,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadProfile>(_onLoadData);
   }
 
-  void _onLoadData(
+  Future<void> _onLoadData(
     LoadProfile event,
     Emitter<ProfileState> emit,
   ) async {

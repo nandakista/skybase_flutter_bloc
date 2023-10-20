@@ -37,7 +37,6 @@ class _ProfileRepositoryViewState extends State<ProfileRepositoryView> {
           errorEnabled: state is ProfileRepositoryError,
           emptyEnabled: state is ProfileRepositoryInitial,
           errorTitle: errMessage,
-          onRefresh: () => bloc.add(LoadRepositories()),
           onRetry: () => bloc.add(LoadRepositories()),
           loadingView: const ShimmerList(),
           child: ListView.builder(

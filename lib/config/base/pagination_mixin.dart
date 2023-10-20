@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:skybase/core/database/storage/storage_manager.dart';
 
 mixin PaginationMixin<T> {
   final String tag = 'PaginationMixin::->';
+
+  StorageManager storage = StorageManager.instance;
 
   final pagingController = PagingController<int, T>(firstPageKey: 0);
   final int perPage = 20;
@@ -24,6 +27,10 @@ mixin PaginationMixin<T> {
     } catch (e) {
       log('$tag Error $e');
     }
+  }
+
+  Future<void> deleteCached(String cacheKey) async {
+    await storage.delete(cacheKey.toString());
   }
 
   void finishLoadData({required List<T> data, int? page}) {

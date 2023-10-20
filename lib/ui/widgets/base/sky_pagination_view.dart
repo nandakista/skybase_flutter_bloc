@@ -34,7 +34,7 @@ class SkyPaginationView<ItemType> extends StatelessWidget {
     this.emptyImage,
     this.emptyTitle,
     this.emptySubtitle,
-    this.enableIOSStyle = false,
+    this.enableIOSStyle = true,
     this.errorTitle,
     this.errorSubtitle,
     this.errorImage,

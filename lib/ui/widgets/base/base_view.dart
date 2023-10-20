@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 
@@ -114,37 +117,70 @@ class BaseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget body;
-    if (loadingEnabled) {
-      body = loadingView ?? const PlatformLoadingIndicator();
-    } else if (visibleOnError && errorEnabled) {
+    if (visibleOnError && errorEnabled) {
       body = getErrorView(context);
     } else if (visibleOnEmpty && emptyEnabled) {
       body = getEmptyView(context);
-    } else if (!loadingEnabled && !emptyEnabled && !errorEnabled) {
-      body = getBodyView(context);
+    } else if (!emptyEnabled && !errorEnabled) {
+      body = getLoadingAndBodyView(context);
     } else {
       body = const SizedBox.shrink();
     }
 
+    return body;
+  }
+
+  Widget getLoadingAndBodyView(BuildContext context) {
+    if (isComponent) {
+      return loadingEnabled
+          ? loadingView ?? const PlatformLoadingIndicator()
+          : child;
+    }
     if (onRefresh != null) {
-      return RefreshIndicator(
-        onRefresh: () => Future.sync(onRefresh!),
-        child: body,
-      );
+      return Platform.isIOS
+          ? _iosObjectView(onRefresh: onRefresh!)
+          : _androidObjectView(onRefresh: onRefresh!);
     } else {
-      return body;
+      return child;
     }
   }
 
-  Widget getBodyView(BuildContext context) {
-    if (isComponent) {
-      return child;
-    } else {
-      return SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: child,
-      );
-    }
+  Widget _androidObjectView({required VoidCallback onRefresh}) {
+    return RefreshIndicator(
+      onRefresh: () => Future.sync(onRefresh),
+      child: CustomScrollView(
+        slivers: [
+          (!loadingEnabled)
+              ? SliverToBoxAdapter(child: child)
+              : SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: loadingView ?? const CircularProgressIndicator(),
+                  ),
+                ),
+        ],
+      ),
+    );
+  }
+
+  Widget _iosObjectView({required VoidCallback onRefresh}) {
+    return CustomScrollView(
+      slivers: [
+        CupertinoSliverRefreshControl(
+          onRefresh: () => Future.sync(onRefresh),
+        ),
+        (!loadingEnabled)
+            ? SliverToBoxAdapter(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: child,
+                ),
+              )
+            : SliverFillRemaining(
+                child: loadingView ?? const PlatformLoadingIndicator(),
+              ),
+      ],
+    );
   }
 
   Widget getLoadingView(Widget loadingWidget) {
