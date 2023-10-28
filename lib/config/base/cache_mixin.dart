@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:skybase/core/database/storage/cache_data.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/core/extension/string_extension.dart';
 import 'package:skybase/data/sources/local/cached_model_converter.dart';
@@ -26,8 +27,9 @@ mixin CacheMixin {
         /// Refresh data so the cache is always actual data
         _saveCacheList(cachedKey: cachedKey, onLoad: onLoad);
 
+        CacheData cacheData = CacheData.fromJson(jsonDecode(cache));
         result = List<T>.from(
-          (json.decode(cache) as List).map(
+          (json.decode(cacheData.value) as List).map(
             (x) => CachedModelConverter<T>().fromJson(x),
           ),
         );
@@ -47,7 +49,12 @@ mixin CacheMixin {
   }) async {
     log('$cachedTag Load & save cache data');
     List<T> result = await onLoad();
-    await storage.save<String>(cachedKey, json.encode(result));
+    await storage.save<String>(
+      cachedKey,
+      jsonEncode(
+        CacheData(value: json.encode(result)),
+      ),
+    );
     return result;
   }
 
@@ -71,7 +78,8 @@ mixin CacheMixin {
     dynamic cache = await storage.get(key);
 
     if (storage.has(key) && cache.toString().isNotNullAndNotEmpty) {
-      Map<String, dynamic> cacheMap = json.decode(cache);
+      CacheData cacheData = CacheData.fromJson(jsonDecode(cache));
+      Map<String, dynamic> cacheMap = cacheData.value as Map<String, dynamic>;
       if (cachedId == _getId(cache: cacheMap, customFieldId: customFieldId)) {
         log('$cachedTag get cache');
 
@@ -105,7 +113,9 @@ mixin CacheMixin {
     T result = await onLoad();
     await storage.save<String>(
       cachedKey,
-      json.encode(CachedModelConverter<T>().toJson(result)),
+      jsonEncode(
+        CacheData(value: result).toJson(),
+      ),
     );
     return result;
   }

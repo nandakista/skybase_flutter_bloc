@@ -6,6 +6,7 @@ import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 import 'package:skybase/core/database/storage/storage_key.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/core/database/secure_storage/secure_storage_manager.dart';
+import 'package:skybase/core/database/storage/cache_data.dart';
 import 'package:skybase/data/models/user/user.dart';
 import 'package:skybase/service_locator.dart';
 import 'package:skybase/config/base/main_navigation.dart';
@@ -54,6 +55,27 @@ class AuthManager {
   Future<void> setup() async {
     checkFirstInstall();
     await checkAppTheme();
+    await clearExpiredCache();
+  }
+
+  Future<void> clearExpiredCache() async {
+    await Future.wait(
+      storage.sharedPreferences.getKeys().map((key) async {
+        List<String> permanentKeys = [
+          StorageKey.FIRST_INSTALL,
+          StorageKey.CURRENT_LOCALE,
+          StorageKey.IS_DARK_THEME,
+          StorageKey.USERS,
+        ];
+
+        if (!permanentKeys.contains(key)) {
+          final now = DateTime.now();
+          dynamic storageItem = await storage.get(key);
+          CacheData cacheData = CacheData.fromJson(jsonDecode(storageItem));
+          if (cacheData.expiredDate.isBefore(now)) await storage.delete(key);
+        }
+      }),
+    );
   }
 
   /// Check if app is first time installed. It will navigate to Introduction Page
