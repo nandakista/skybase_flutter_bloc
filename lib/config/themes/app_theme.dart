@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 
 class AppTheme {
-  static ThemeData light() {
+  static ThemeData get light {
     return ThemeData(
+      useMaterial3: false,
       primaryColor: AppColors.primary,
       primarySwatch: AppColors.materialPrimary,
       indicatorColor: AppColors.accent,
@@ -28,8 +29,9 @@ class AppTheme {
     );
   }
 
-  static ThemeData dark() {
+  static ThemeData get dark {
     return ThemeData(
+      useMaterial3: false,
       primaryColor: AppColors.primary,
       primarySwatch: AppColors.materialPrimary,
       indicatorColor: AppColors.accent,
@@ -139,21 +141,6 @@ class AppTheme {
       focusedErrorBorder: OutlineInputBorder(
         borderSide: const BorderSide(width: 1, color: AppColors.primary),
         borderRadius: BorderRadius.circular(12),
-      ),
-    );
-  }
-
-  static setStatusBar({
-    required Brightness brightness,
-    Color color = AppColors.primary,
-  }) {
-    final androidIconBrightness =
-        brightness == Brightness.dark ? Brightness.light : Brightness.dark;
-    return SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarIconBrightness: androidIconBrightness,
-        statusBarBrightness: brightness,
-        statusBarColor: color,
       ),
     );
   }

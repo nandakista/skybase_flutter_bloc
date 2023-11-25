@@ -40,7 +40,6 @@ class ServiceLocator {
   static Future<void> init() async {
     if (kReleaseMode) debugPrint = (String? message, {int? wrapWidth}) {};
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    AppTheme.setStatusBar(brightness: Brightness.light);
     AppInfo.setInfo(await PackageInfo.fromPlatform());
 
     // _initConfig
