@@ -30,7 +30,7 @@ class _SettingViewState extends State<SettingView> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredStatusBar(
+    return ColoredStatusBar.primary(
       brightness: Brightness.dark,
       child: Scaffold(
         appBar: SkyAppBar.secondary(title: 'txt_setting'.tr()),

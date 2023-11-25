@@ -11,7 +11,7 @@ class SnackBarUtilsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredStatusBar(
+    return ColoredStatusBar.primary(
       child: Scaffold(
         appBar: SkyAppBar.secondary(title: 'SnackBar Utility'),
         body: SingleChildScrollView(

@@ -23,7 +23,7 @@ class _MainNavViewState extends State<MainNavView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ColoredStatusBar(
+      body: ColoredStatusBar.primary(
         brightness: Brightness.dark,
         child: SafeArea(
           child: PageView(
