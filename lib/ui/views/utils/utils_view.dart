@@ -15,7 +15,7 @@ import 'component/other_utils_view.dart';
 class UtilsView extends StatelessWidget {
   static const String route = '/utils';
 
-  const UtilsView({Key? key}) : super(key: key);
+  const UtilsView({super.key});
 
   @override
   Widget build(BuildContext context) {

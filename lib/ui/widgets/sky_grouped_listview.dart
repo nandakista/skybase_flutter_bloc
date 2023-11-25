@@ -13,7 +13,7 @@ enum SortBy {
 
 class SkyGroupedListView<T, G> extends StatelessWidget {
   const SkyGroupedListView({
-    Key? key,
+    super.key,
     required this.data,
     required this.groupBy,
     required this.groupHeaderBuilder,
@@ -26,7 +26,7 @@ class SkyGroupedListView<T, G> extends StatelessWidget {
     this.separator,
     this.separatorGroup,
     this.groupFooterBuilder,
-  }) : super(key: key);
+  });
 
   final ScrollPhysics? physics;
   final bool shrinkWrap;

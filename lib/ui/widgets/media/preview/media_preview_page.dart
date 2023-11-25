@@ -14,12 +14,12 @@ class MediaPreviewPage extends StatelessWidget {
   final TextStyle? titleStyle;
 
   const MediaPreviewPage({
-    Key? key,
+    super.key,
     required this.src,
     this.isAsset = true,
     this.title,
     this.titleStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

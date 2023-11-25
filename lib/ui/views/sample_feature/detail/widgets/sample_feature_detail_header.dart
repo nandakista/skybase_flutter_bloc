@@ -4,12 +4,12 @@ import 'package:skybase/ui/widgets/sky_image.dart';
 
 class SampleFeatureDetailHeader extends StatelessWidget {
   const SampleFeatureDetailHeader({
-    Key? key,
+    super.key,
     required this.avatar,
     required this.repositoryCount,
     required this.followerCount,
     required this.followingCount,
-  }) : super(key: key);
+  });
 
   final String avatar;
   final int repositoryCount;

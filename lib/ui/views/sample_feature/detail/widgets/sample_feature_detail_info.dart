@@ -3,12 +3,12 @@ import 'package:skybase/config/themes/app_style.dart';
 
 class SampleFeatureDetailInfo extends StatelessWidget {
   const SampleFeatureDetailInfo({
-    Key? key,
+    super.key,
     required this.name,
     required this.bio,
     required this.company,
     required this.location,
-  }) : super(key: key);
+  });
 
   final String name;
   final String bio;

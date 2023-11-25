@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skybase/config/themes/app_theme.dart';
 
 class ShimmerText extends StatelessWidget {
-  const ShimmerText({Key? key, this.width}) : super(key: key);
+  const ShimmerText({super.key, this.width});
 
   final double? width;
 

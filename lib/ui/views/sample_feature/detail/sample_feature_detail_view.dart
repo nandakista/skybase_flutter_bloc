@@ -12,10 +12,10 @@ class SampleFeatureDetailView extends StatefulWidget {
   static const String route = '/user-detail';
 
   const SampleFeatureDetailView({
-    Key? key,
+    super.key,
     required this.idArgs,
     required this.usernameArgs,
-  }) : super(key: key);
+  });
 
   final int idArgs;
   final String usernameArgs;

@@ -24,7 +24,7 @@ class MediaItems extends StatelessWidget {
   final double borderRadius;
 
   const MediaItems({
-    Key? key,
+    super.key,
     required this.mediaUrls,
     this.onTapMore,
     this.mainAxisAlignment = MainAxisAlignment.start,
@@ -36,7 +36,7 @@ class MediaItems extends StatelessWidget {
     this.itemsSpacing = 5,
     this.moreText,
     this.borderRadius = 8,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,11 +139,10 @@ class _MoreItem extends StatelessWidget {
   final bool isGrid;
 
   const _MoreItem({
-    Key? key,
     required this.child,
     required this.text,
     required this.isGrid,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

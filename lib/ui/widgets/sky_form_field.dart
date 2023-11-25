@@ -33,7 +33,7 @@ class SkyFormField extends StatelessWidget {
   final TextStyle? hintStyle;
 
   const SkyFormField({
-    Key? key,
+    super.key,
     this.label,
     this.hint,
     this.maxLength,
@@ -60,7 +60,7 @@ class SkyFormField extends StatelessWidget {
     this.disabledBorder,
     this.style,
     this.hintStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class SkyPasswordFormField extends StatelessWidget {
   final InputBorder? disabledBorder;
 
   const SkyPasswordFormField({
-    Key? key,
+    super.key,
     this.label,
     required this.hint,
     this.onPress,
@@ -170,7 +170,7 @@ class SkyPasswordFormField extends StatelessWidget {
     this.enabled,
     this.disabledBorder,
     this.prefixWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +228,7 @@ class RegisterPasswordRequirement extends StatelessWidget {
   final String message;
 
   const RegisterPasswordRequirement(
-      {Key? key, required this.isValid, required this.message})
-      : super(key: key);
+      {super.key, required this.isValid, required this.message});
 
   @override
   Widget build(BuildContext context) {

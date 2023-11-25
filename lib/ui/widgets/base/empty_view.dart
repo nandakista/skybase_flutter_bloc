@@ -8,7 +8,7 @@ import 'package:skybase/ui/widgets/sky_button.dart';
 */
 class EmptyView extends StatelessWidget {
   const EmptyView({
-    Key? key,
+    super.key,
     this.emptyImage,
     this.emptyImageWidget,
     this.emptyTitle,
@@ -23,7 +23,7 @@ class EmptyView extends StatelessWidget {
     this.onRetry,
     this.retryWidget,
     this.emptyRetryEnabled = false,
-  }) : super(key: key);
+  });
 
   final Widget? emptyImageWidget;
   final String? emptyImage;

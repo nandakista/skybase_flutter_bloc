@@ -15,11 +15,11 @@ class SkyDialog extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
 
   const SkyDialog({
-    Key? key,
+    super.key,
     required this.child,
     this.padding,
     this.margin,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class DialogAlert extends StatelessWidget {
   final bool isDismissible;
 
   const DialogAlert({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.header,
@@ -84,7 +84,7 @@ class DialogAlert extends StatelessWidget {
     this.cancelText,
     this.confirmColor,
     this.cancelColor,
-  }) : super(key: key);
+  });
 
   factory DialogAlert.success({
     required String title,
@@ -207,8 +207,8 @@ class DialogAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => isDismissible,
+    return PopScope(
+      canPop: isDismissible,
       child: Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 0,

@@ -4,10 +4,10 @@ import 'package:skybase/ui/widgets/sky_image.dart';
 
 class IntroIndicator extends StatelessWidget {
   const IntroIndicator({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   final int itemCount;
   final int currentIndex;

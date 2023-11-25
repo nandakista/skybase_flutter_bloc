@@ -10,7 +10,7 @@ import 'package:skybase/ui/widgets/sky_box.dart';
 class MainNavView extends StatefulWidget {
   static const String route = '/home';
 
-  const MainNavView({Key? key}) : super(key: key);
+  const MainNavView({super.key});
 
   @override
   State<MainNavView> createState() => _MainNavViewState();

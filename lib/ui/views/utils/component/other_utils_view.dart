@@ -15,7 +15,7 @@ import 'package:skybase/ui/widgets/sky_form_field.dart';
 class OtherUtilsView extends StatefulWidget {
   static const String route = 'other';
 
-  const OtherUtilsView({Key? key}) : super(key: key);
+  const OtherUtilsView({super.key});
 
   @override
   State<OtherUtilsView> createState() => _OtherUtilsViewState();

@@ -8,7 +8,7 @@ import 'package:skybase/ui/widgets/shimmer/shimmer_list.dart';
 import 'shimmer_text.dart';
 
 class ShimmerDetail extends StatelessWidget {
-  const ShimmerDetail({Key? key}) : super(key: key);
+  const ShimmerDetail({super.key});
 
   @override
   Widget build(BuildContext context) {

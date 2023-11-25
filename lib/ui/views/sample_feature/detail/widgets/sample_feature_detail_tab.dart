@@ -7,8 +7,7 @@ import 'package:skybase/ui/views/sample_feature/detail/component/following_tab_v
 import 'package:skybase/ui/views/sample_feature/detail/component/repo_tab_view.dart';
 
 class SampleFeatureDetailTab extends StatelessWidget {
-  const SampleFeatureDetailTab({Key? key, required this.data})
-      : super(key: key);
+  const SampleFeatureDetailTab({super.key, required this.data});
 
   final SampleFeature? data;
 

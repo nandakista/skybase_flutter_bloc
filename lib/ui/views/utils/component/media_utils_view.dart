@@ -12,7 +12,7 @@ import 'package:skybase/ui/widgets/sky_image.dart';
 class MediaUtilsView extends StatefulWidget {
   static const String route = 'media';
 
-  const MediaUtilsView({Key? key}) : super(key: key);
+  const MediaUtilsView({super.key});
 
   @override
   State<MediaUtilsView> createState() => _MediaUtilsViewState();
@@ -118,9 +118,8 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
         spacing: 16,
         runSpacing: 16,
         children: [
-          ...pickedImages
-              .map(
-                (e) => Stack(
+          ...pickedImages.map(
+            (e) => Stack(
               children: [
                 SkyImage(
                   src: e.path,
@@ -157,8 +156,7 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
                 ),
               ],
             ),
-          )
-              .toList(),
+          ),
         ],
       ),
     ];

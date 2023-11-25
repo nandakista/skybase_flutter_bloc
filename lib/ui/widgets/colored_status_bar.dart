@@ -10,12 +10,12 @@ import 'package:skybase/config/themes/app_colors.dart';
 /// Wrap your Scaffold to this widget for set Status Bar color in specific pages.
 class ColoredStatusBar extends StatelessWidget {
   const ColoredStatusBar({
-    Key? key,
+    super.key,
     required this.child,
     this.color = AppColors.primary,
     this.brightness = Brightness.dark,
     this.coloredBottomBar = false,
-  }) : super(key: key);
+  });
 
   /// Background color of Status Bar
   final Color? color;

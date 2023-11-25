@@ -37,7 +37,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
   final bool enabledFileSource;
 
   const AttachmentsSourceBottomSheet({
-    Key? key,
+    super.key,
     required this.pageContext,
     required this.onAttachmentsSelected,
     required this.onMultipleAttachmentsSelected,
@@ -56,7 +56,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
     this.allowMultiple = true,
     this.allowedFileExtensions,
     this.enabledFileSource = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:skybase/ui/widgets/sky_button.dart';
 */
 class ErrorView extends StatelessWidget {
   const ErrorView({
-    Key? key,
+    super.key,
     this.errorImage,
     this.errorImageWidget,
     this.errorTitle,
@@ -22,7 +22,7 @@ class ErrorView extends StatelessWidget {
     this.subtitleStyle,
     this.retryWidget,
     this.physics,
-  }) : super(key: key);
+  });
 
   final String? errorImage;
   final Widget? errorImageWidget;

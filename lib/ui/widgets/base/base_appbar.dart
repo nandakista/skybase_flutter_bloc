@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 */
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BaseAppBar({
-    Key? key,
+    super.key,
     this.title,
     this.action,
     this.backgroundColor,
@@ -16,7 +16,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.elevation,
     this.height,
     this.iconSize,
-  }) : super(key: key);
+  });
 
   final String? title;
   final Color? backgroundColor;

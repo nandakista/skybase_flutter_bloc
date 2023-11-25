@@ -9,8 +9,7 @@ import 'package:skybase/ui/widgets/sky_image.dart';
    nanda.kista@gmail.com
 */
 class MediaListPreviewPage extends StatelessWidget {
-  const MediaListPreviewPage({Key? key, required this.mediaUrls})
-      : super(key: key);
+  const MediaListPreviewPage({super.key, required this.mediaUrls});
   final List<String> mediaUrls;
 
   @override

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 */
 class SkyBox extends StatelessWidget {
   const SkyBox({
-    Key? key,
+    super.key,
     required this.child,
     this.margin,
     this.padding,
@@ -20,7 +20,7 @@ class SkyBox extends StatelessWidget {
     this.elevation = 4,
     this.boxShadow,
     this.enabledCard = true,
-  }) : super(key: key);
+  });
 
   final Widget? child;
   final EdgeInsetsGeometry? margin, padding;

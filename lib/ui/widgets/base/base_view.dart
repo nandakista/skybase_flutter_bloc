@@ -83,7 +83,7 @@ class BaseView extends StatelessWidget {
   final bool emptyRetryEnabled;
 
   const BaseView({
-    Key? key,
+    super.key,
     required this.loadingEnabled,
     required this.errorEnabled,
     required this.emptyEnabled,
@@ -112,7 +112,7 @@ class BaseView extends StatelessWidget {
     this.errorImage,
     this.retryWidget,
     this.emptyImageWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

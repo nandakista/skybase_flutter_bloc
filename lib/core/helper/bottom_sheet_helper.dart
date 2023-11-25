@@ -113,10 +113,8 @@ class BottomSheetHelper {
       barrierColor: barrierColor ?? Colors.black54,
       expand: expand,
       bounce: true,
-      builder: (btmContext) => WillPopScope(
-        onWillPop: () async {
-          return enableBack;
-        },
+      builder: (btmContext) => PopScope(
+        canPop: enableBack,
         child: Material(
           child: Stack(
             alignment: Alignment.topCenter,
@@ -163,10 +161,8 @@ class BottomSheetHelper {
       barrierColor: barrierColor ?? Colors.black54,
       expand: expand,
       bounce: true,
-      builder: (btmContext) => WillPopScope(
-        onWillPop: () async {
-          return enableBack;
-        },
+      builder: (btmContext) => PopScope(
+        canPop: enableBack,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: child,

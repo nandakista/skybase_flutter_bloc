@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlatformLoadingIndicator extends StatelessWidget {
-  const PlatformLoadingIndicator({Key? key, this.color}) : super(key: key);
+  const PlatformLoadingIndicator({super.key, this.color});
 
   final Color? color;
 

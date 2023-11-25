@@ -4,13 +4,13 @@ import 'package:skybase/ui/widgets/sky_box.dart';
 
 class ShimmerBox extends StatelessWidget {
   const ShimmerBox({
-    Key? key,
+    super.key,
     this.height,
     this.width,
     this.borderRadius,
     this.margin,
     this.baseColor,
-  }) : super(key: key);
+  });
 
   final double? height;
   final double? width;

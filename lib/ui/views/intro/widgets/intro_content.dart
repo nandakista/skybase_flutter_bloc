@@ -4,11 +4,11 @@ import 'package:skybase/ui/widgets/sky_image.dart';
 
 class IntroContent extends StatelessWidget {
   const IntroContent({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.description,
-  }) : super(key: key);
+  });
 
   final String image;
   final String title;

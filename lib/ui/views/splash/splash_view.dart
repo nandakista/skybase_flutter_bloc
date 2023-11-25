@@ -5,7 +5,7 @@ import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 class SplashView extends StatelessWidget {
   static const String route = '/splash';
 
-  const SplashView({Key? key}) : super(key: key);
+  const SplashView({super.key});
 
   @override
   Widget build(BuildContext context) {

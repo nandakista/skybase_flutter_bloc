@@ -4,13 +4,13 @@ import 'package:skybase/core/helper/media_helper.dart';
 
 class DetermineMediaWidget extends StatelessWidget {
   const DetermineMediaWidget({
-    Key? key,
+    super.key,
     required this.path,
     this.file,
     this.image,
     this.video,
     this.unknown,
-  }) : super(key: key);
+  });
 
   final String path;
   final Widget? file;

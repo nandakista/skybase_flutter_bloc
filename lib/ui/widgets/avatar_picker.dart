@@ -9,7 +9,7 @@ import 'media/attachments_source_bottom_sheet.dart';
 
 class AvatarPicker extends StatelessWidget {
   const AvatarPicker({
-    Key? key,
+    super.key,
     this.imagePath,
     this.editWidget,
     this.hideRemove = false,
@@ -19,7 +19,7 @@ class AvatarPicker extends StatelessWidget {
     this.onRemoveImage,
     this.editIcon,
     this.editBackgroundColor,
-  }) : super(key: key);
+  });
 
   final String? imagePath;
   final String? namePlaceholder;

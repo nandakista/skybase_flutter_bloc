@@ -10,7 +10,7 @@ import 'widgets/intro_content.dart';
 class IntroView extends StatelessWidget {
   static const String route = '/intro';
 
-  const IntroView({Key? key}) : super(key: key);
+  const IntroView({super.key});
 
   @override
   Widget build(BuildContext context) {

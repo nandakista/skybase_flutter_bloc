@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skybase/ui/widgets/shimmer/shimmer_item_list.dart';
 
 class ShimmerList extends StatelessWidget {
-  const ShimmerList({Key? key, this.itemHeight = 60}) : super(key: key);
+  const ShimmerList({super.key, this.itemHeight = 60});
 
   final double itemHeight;
 

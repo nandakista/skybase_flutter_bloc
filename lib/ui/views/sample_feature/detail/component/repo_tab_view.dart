@@ -6,7 +6,7 @@ import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
 class RepoTabView extends StatelessWidget {
-  const RepoTabView({Key? key, required this.data}) : super(key: key);
+  const RepoTabView({super.key, required this.data});
 
   final SampleFeature data;
 

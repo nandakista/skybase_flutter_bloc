@@ -77,7 +77,7 @@ class SkyButton extends StatelessWidget {
   final bool enabled;
 
   const SkyButton({
-    Key? key,
+    super.key,
     this.text,
     required this.onPressed,
     this.icon,
@@ -101,7 +101,7 @@ class SkyButton extends StatelessWidget {
     this.child,
     this.gradient,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

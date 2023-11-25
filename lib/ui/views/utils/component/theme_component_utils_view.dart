@@ -6,7 +6,7 @@ import 'package:skybase/ui/widgets/sky_appbar.dart';
 class ThemeComponentUtilsView extends StatefulWidget {
   static const String route = 'theme-component';
 
-  const ThemeComponentUtilsView({Key? key}) : super(key: key);
+  const ThemeComponentUtilsView({super.key});
 
   @override
   State<ThemeComponentUtilsView> createState() =>

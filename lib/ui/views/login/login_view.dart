@@ -13,7 +13,7 @@ import 'package:skybase/ui/widgets/sky_form_field.dart';
 class LoginView extends StatefulWidget {
   static const String route = '/login';
 
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();

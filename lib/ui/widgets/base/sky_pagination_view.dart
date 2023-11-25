@@ -22,7 +22,7 @@ typedef ItemWidgetBuilder<ItemType> = Widget Function(
 
 class SkyPaginationView<ItemType> extends StatelessWidget {
   const SkyPaginationView({
-    Key? key,
+    super.key,
     required this.pagingController,
     required this.itemBuilder,
     this.onRefresh,
@@ -56,7 +56,7 @@ class SkyPaginationView<ItemType> extends StatelessWidget {
     this.padding,
     this.emptyEnabled = true,
     this.errorEnabled = true,
-  }) : super(key: key);
+  });
 
   final PagingController<int, ItemType> pagingController;
 
@@ -244,9 +244,9 @@ class SkyPaginationView<ItemType> extends StatelessWidget {
 
 class PaginationErrorLoadView<ItemType> extends StatelessWidget {
   const PaginationErrorLoadView({
-    Key? key,
+    super.key,
     required this.pagingController,
-  }) : super(key: key);
+  });
 
   final PagingController<int, ItemType> pagingController;
 
@@ -278,7 +278,7 @@ class PaginationErrorLoadView<ItemType> extends StatelessWidget {
 }
 
 class PaginationMaxItemView extends StatelessWidget {
-  const PaginationMaxItemView({Key? key}) : super(key: key);
+  const PaginationMaxItemView({super.key});
 
   @override
   Widget build(BuildContext context) {
