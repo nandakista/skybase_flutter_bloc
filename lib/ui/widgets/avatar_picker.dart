@@ -48,7 +48,7 @@ class AvatarPicker extends StatelessWidget {
                   (namePlaceholder != null
                       ? MediaHelper.generateAvatarByName(
                           namePlaceholder.toString())
-                      : 'assets/images/placeholder_user.png'),
+                      : 'assets/images/img_placeholder_user.png'),
               fit: BoxFit.cover,
             ),
           ),

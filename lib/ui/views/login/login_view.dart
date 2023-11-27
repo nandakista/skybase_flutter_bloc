@@ -74,7 +74,8 @@ class _LoginViewState extends State<LoginView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('txt_login'.tr(), style: AppStyle.headline2),
+                                Text('txt_login'.tr(),
+                                    style: AppStyle.headline2),
                                 const SizedBox(height: 10),
                                 Text(
                                   'txt_login_subtitle'.tr(),
@@ -84,10 +85,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
                           const Flexible(
-                            child: Image(
-                              image: AssetImage('assets/images/img_login.png'),
-                              width: 250,
-                            ),
+                            child: FlutterLogo(size: 160),
                           )
                         ],
                       ),

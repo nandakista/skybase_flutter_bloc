@@ -26,7 +26,7 @@ abstract class SkyAppBar {
           titleStyle ?? AppStyle.subtitle4.copyWith(color: AppColors.primary),
       elevation: 0,
       centerTitle: centerTitle,
-      iconColor: iconColor ?? AppColors.systemDarkGrey,
+      iconColor: iconColor ?? Colors.grey,
     );
   }
 

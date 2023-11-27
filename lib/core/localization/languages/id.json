@@ -55,6 +55,7 @@
   "txt_date": "Tanggal",
   "txt_price": "Harga",
   "txt_media": "Media",
+  "txt_media_unsupported": "Media tidak didukung!",
   "txt_preview": "Preview",
   "txt_oops": "Oops",
   "txt_error": "Error",
@@ -85,5 +86,7 @@
   "txt_permission_warning": "Izin diperlukan",
   "txt_need_permission_storage": "Izinkan aplikasi mengakses penyimpanan",
   "txt_need_permission_camera": "Izinkan aplikasi mengakses kamera",
-  "txt_need_permission_gallery_photo": "Izinkan aplikasi mengakses galeri dan foto"
+  "txt_need_permission_gallery_photo": "Izinkan aplikasi mengakses galeri dan foto",
+  "txt_crash_error_title": "Terjadi Kesalahan!",
+  "txt_crash_error_message": "Mohon maaf, halaman yang Anda minta tidak dapat diakses saat ini. Coba lagi dalam beberapa saat."
 }

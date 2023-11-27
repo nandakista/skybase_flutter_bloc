@@ -40,7 +40,7 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
               mediaUrls: [
                 'https://picsum.photos/200/200.jpg',
                 'https://picsum.photos/200/200.jpg',
-                'assets/images/img_sample.jpeg',
+                'assets/images/img_error.png',
                 'https://picsum.photos/200/200.jpg',
                 'https://picsum.photos/200/200.jpg',
               ],
@@ -51,16 +51,15 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
               maxItem: 3,
               mediaUrls: [
                 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-                'assets/images/img_sample.jpeg',
+                'assets/images/img_pv_1.png',
                 'https://picsum.photos/200/200.jpg',
                 'https://picsum.photos/200/200.jpg',
                 'https://picsum.photos/200/200.jpg',
-                'assets/images/img_sample.jpeg',
+                'assets/images/img_error.png',
                 'https://picsum.photos/200/200.jpg',
               ],
             ),
             const SizedBox(height: 24),
-            const SkyImage(src: 'assets/images/img_sample.jpeg'),
           ],
         ),
       ),
@@ -88,7 +87,8 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(40.0),
-                    child: SkyImage(src: 'assets/images/img_man.png'),
+                    child:
+                        SkyImage(src: 'assets/images/img_placeholder_user.png'),
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/ui/views/profile/component/repository/bloc/profile_repository_bloc.dart';
 import 'package:skybase/ui/widgets/base/sky_view.dart';
@@ -92,9 +91,9 @@ class _ProfileRepositoryViewState extends State<ProfileRepositoryView> {
                         Row(
                           children: [
                             const SkyImage(
-                              src: 'assets/images/fork.svg',
+                              src: 'assets/images/ic_fork.svg',
                               height: 14,
-                              color: AppColors.systemDarkGrey,
+                              color: Colors.grey,
                             ),
                             Text(
                               ' ${item?.totalFork}',

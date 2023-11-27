@@ -8,7 +8,7 @@ class AppTheme {
       useMaterial3: false,
       primaryColor: AppColors.primary,
       primarySwatch: AppColors.materialPrimary,
-      indicatorColor: AppColors.accent,
+      indicatorColor: AppColors.secondary,
       fontFamily: "Poppins",
       brightness: Brightness.light,
       inputDecorationTheme: inputDecorationTheme(),
@@ -34,7 +34,7 @@ class AppTheme {
       useMaterial3: false,
       primaryColor: AppColors.primary,
       primarySwatch: AppColors.materialPrimary,
-      indicatorColor: AppColors.accent,
+      indicatorColor: AppColors.secondary,
       fontFamily: "Poppins",
       brightness: Brightness.dark,
       inputDecorationTheme: inputDecorationTheme(),
@@ -77,7 +77,7 @@ class AppTheme {
           return null;
         }
         if (states.contains(MaterialState.selected)) {
-          return AppColors.accent;
+          return AppColors.secondary;
         }
         return null;
       }),
@@ -92,7 +92,7 @@ class AppTheme {
           return null;
         }
         if (states.contains(MaterialState.selected)) {
-          return AppColors.accent;
+          return AppColors.secondary;
         }
         return null;
       }),
@@ -117,7 +117,7 @@ class AppTheme {
           return null;
         }
         if (states.contains(MaterialState.selected)) {
-          return AppColors.accent;
+          return AppColors.secondary;
         }
         return null;
       }),

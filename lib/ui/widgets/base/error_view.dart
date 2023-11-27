@@ -40,41 +40,43 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: physics,
-      padding: EdgeInsets.symmetric(
-        vertical: verticalSpacing,
-        horizontal: horizontalSpacing,
-      ),
-      child: Column(
-        children: [
-          errorImageWidget ??
-              Image.asset(
-                errorImage ?? 'assets/images/img_error.png',
-                height: imageSize,
-              ),
-          SizedBox(height: verticalSpacing * 2),
-          Text(
-            errorTitle ?? 'txt_err_general_formal'.tr(),
-            textAlign: TextAlign.center,
-            style: titleStyle ?? Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            errorSubtitle ?? 'txt_tap_retry'.tr(),
-            textAlign: TextAlign.center,
-            style: subtitleStyle,
-          ),
-          SizedBox(height: verticalSpacing),
-          retryWidget ??
-              SkyButton(
-                wrapContent: true,
-                height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                text: retryText ?? 'txt_retry'.tr(),
-                onPressed: onRetry,
-              ),
-        ],
+    return Center(
+      child: SingleChildScrollView(
+        physics: physics,
+        padding: EdgeInsets.symmetric(
+          vertical: verticalSpacing,
+          horizontal: horizontalSpacing,
+        ),
+        child: Column(
+          children: [
+            errorImageWidget ??
+                Image.asset(
+                  errorImage ?? 'assets/images/img_error.png',
+                  height: imageSize,
+                ),
+            SizedBox(height: verticalSpacing * 2),
+            Text(
+              errorTitle ?? 'txt_err_general_formal'.tr(),
+              textAlign: TextAlign.center,
+              style: titleStyle ?? Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              errorSubtitle ?? 'txt_tap_retry'.tr(),
+              textAlign: TextAlign.center,
+              style: subtitleStyle,
+            ),
+            SizedBox(height: verticalSpacing),
+            retryWidget ??
+                SkyButton(
+                  wrapContent: true,
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  text: retryText ?? 'txt_retry'.tr(),
+                  onPressed: onRetry,
+                ),
+          ],
+        ),
       ),
     );
   }

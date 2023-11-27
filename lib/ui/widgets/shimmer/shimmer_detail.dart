@@ -62,7 +62,7 @@ class ShimmerDetail extends StatelessWidget {
                   TabBar(
                     labelColor: AppColors.primary,
                     unselectedLabelColor: Colors.grey,
-                    indicatorColor: AppColors.accent,
+                    indicatorColor: AppColors.secondary,
                     tabs: [
                       Tab(text: 'Repositories'),
                       Tab(text: 'Followers'),

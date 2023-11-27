@@ -107,7 +107,7 @@ class SkyFormField extends StatelessWidget {
                 child: Text(
                   endText.toString(),
                   style: AppStyle.subtitle4.copyWith(
-                    color: AppColors.systemDarkGrey,
+                    color: Colors.grey,
                   ),
                 ),
               ),
@@ -242,7 +242,7 @@ class RegisterPasswordRequirement extends StatelessWidget {
               )
             : const Icon(
                 Icons.close,
-                color: AppColors.systemDarkGrey,
+                color: Colors.grey,
               ),
         const SizedBox(width: 5),
         Expanded(
