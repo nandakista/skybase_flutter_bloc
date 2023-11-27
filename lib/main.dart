@@ -10,6 +10,7 @@ import 'config/themes/app_theme.dart';
 import 'ui/blocs/app_bloc_observer.dart';
 import 'service_locator.dart';
 import 'ui/routes/app_routes.dart';
+import 'ui/views/404_500/crash_error_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,12 @@ class App extends StatelessWidget {
             routeInformationParser: AppRoutes.router.routeInformationParser,
             routeInformationProvider: AppRoutes.router.routeInformationProvider,
             routerDelegate: AppRoutes.router.routerDelegate,
+            builder: (BuildContext context, child) {
+              ErrorWidget.builder = (FlutterErrorDetails error) {
+                return CrashErrorView(errorDetails: error);
+              };
+              return child ?? const SizedBox.shrink();
+            },
           );
         },
       ),
