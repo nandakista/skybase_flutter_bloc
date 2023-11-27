@@ -44,11 +44,11 @@ class AuthManager {
     return switch (state) {
       AppType.INITIAL => await setup(),
       AppType.FIRST_INSTALL =>
-        MainNavigation.contextLessPushAllReplacement(IntroView.route),
+        Navigation.instance.pushAllReplacementNoContext(IntroView.route),
       AppType.UNAUTHENTICATED =>
-        MainNavigation.contextLessPushAllReplacement(LoginView.route),
+        Navigation.instance.pushAllReplacementNoContext(LoginView.route),
       AppType.AUTHENTICATED =>
-        MainNavigation.contextLessPushAllReplacement(MainNavView.route),
+        Navigation.instance.pushAllReplacementNoContext(MainNavView.route),
     };
   }
 

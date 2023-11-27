@@ -40,7 +40,7 @@ class _ProfileViewState extends State<ProfileView>
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () => MainNavigation.push(context, SettingView.route),
+            onPressed: () => Navigation.instance.push(context, SettingView.route),
             icon: Icon(
               CupertinoIcons.settings,
               color: Theme.of(context).iconTheme.color,

@@ -28,7 +28,7 @@ class LoadingDialog {
     );
   }
 
-  static dismiss(BuildContext context) => MainNavigation.pop(context);
+  static dismiss(BuildContext context) => Navigation.instance.pop(context);
 }
 
 class DialogHelper {
@@ -153,5 +153,5 @@ class DialogHelper {
     );
   }
 
-  static dismiss(BuildContext context) => MainNavigation.pop(context);
+  static dismiss(BuildContext context) => Navigation.instance.pop(context);
 }

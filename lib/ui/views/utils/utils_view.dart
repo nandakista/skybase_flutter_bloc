@@ -33,7 +33,7 @@ class UtilsView extends StatelessWidget {
                 icon: Icons.photo_library_outlined,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, MediaUtilsView.route),
+                    Navigation.instance.push(context, MediaUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -41,7 +41,7 @@ class UtilsView extends StatelessWidget {
                 icon: Icons.account_tree_outlined,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, BottomSheetUtilsView.route),
+                    Navigation.instance.push(context, BottomSheetUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -49,7 +49,7 @@ class UtilsView extends StatelessWidget {
                 icon: Icons.list,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, ListUtilsView.route),
+                    Navigation.instance.push(context, ListUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -57,7 +57,7 @@ class UtilsView extends StatelessWidget {
                 icon: CupertinoIcons.conversation_bubble,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, DialogUtilsView.route),
+                    Navigation.instance.push(context, DialogUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -65,7 +65,7 @@ class UtilsView extends StatelessWidget {
                 icon: Icons.table_rows_outlined,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, SnackBarUtilsView.route),
+                    Navigation.instance.push(context, SnackBarUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -73,7 +73,7 @@ class UtilsView extends StatelessWidget {
                 icon: Icons.add,
                 outlineMode: true,
                 onPressed: () =>
-                    MainNavigation.push(context, OtherUtilsView.route),
+                    Navigation.instance.push(context, OtherUtilsView.route),
               ),
               const SizedBox(height: 12),
               SkyButton(
@@ -84,7 +84,7 @@ class UtilsView extends StatelessWidget {
                     end: Alignment.bottomRight,
                     colors: [Color(0xff003EA1), Color(0xff9F0077)]),
                 onPressed: () =>
-                    MainNavigation.push(context, ThemeComponentUtilsView.route),
+                    Navigation.instance.push(context, ThemeComponentUtilsView.route),
               ),
               const SizedBox(height: 28),
             ],

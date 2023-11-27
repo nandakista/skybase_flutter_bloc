@@ -66,7 +66,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
           leading: cameraIcon,
           title: cameraLabel ?? Text('txt_camera'.tr()),
           onTap: () {
-            MainNavigation.pop(context);
+            Navigation.instance.pop(context);
             _onPickImage(pageContext, ImageSource.camera);
           },
         ),
@@ -74,7 +74,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
           leading: galleryIcon,
           title: galleryLabel ?? Text('txt_gallery'.tr()),
           onTap: () {
-            MainNavigation.pop(context);
+            Navigation.instance.pop(context);
             _onPickImage(pageContext, ImageSource.gallery);
           },
         ),
@@ -83,7 +83,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
             leading: fileIcon,
             title: fileLabel ?? Text('txt_document'.tr()),
             onTap: () {
-              MainNavigation.pop(context);
+              Navigation.instance.pop(context);
               _onPickFile(pageContext);
             },
           ),
@@ -184,7 +184,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         );
       }
       onAttachmentsSelected(imageFile);
-      if (context.mounted) MainNavigation.pop(context);
+      if (context.mounted) Navigation.instance.pop(context);
     }
   }
 
@@ -195,7 +195,7 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
       imageQuality: imageQuality,
     );
     onMultipleAttachmentsSelected(result.map((e) => File(e.path)).toList());
-    if (context.mounted) MainNavigation.pop(context);
+    if (context.mounted) Navigation.instance.pop(context);
   }
 
   Future<void> _onPickFile(BuildContext context) async {
@@ -206,6 +206,6 @@ class AttachmentsSourceBottomSheet extends StatelessWidget {
         ) ??
         [];
     onMultipleAttachmentsSelected(result);
-    if (context.mounted) MainNavigation.pop(context);
+    if (context.mounted) Navigation.instance.pop(context);
   }
 }

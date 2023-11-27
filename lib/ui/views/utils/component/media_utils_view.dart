@@ -106,7 +106,7 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
                 setState(() {
                   imageFile = file;
                 });
-                MainNavigation.pop(context);
+                Navigation.instance.pop(context);
               },
               onMultipleAttachmentsSelected: (List<File> files) {},
             ),

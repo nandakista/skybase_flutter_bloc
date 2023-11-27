@@ -45,7 +45,7 @@ class LocaleManager {
                   onTap: () {
                     final locale = locales.entries.toList()[index].value;
                     updateLocale(context, locale);
-                    MainNavigation.pop(context);
+                    Navigation.instance.pop(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10),

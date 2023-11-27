@@ -18,8 +18,8 @@ import 'package:skybase/ui/views/profile/bloc/profile_bloc.dart';
 import 'package:skybase/ui/views/sample_feature/list/bloc/sample_feature_list_bloc.dart';
 import 'package:skybase/ui/views/settings/bloc/setting_bloc.dart';
 
+import 'config/base/main_navigation.dart';
 import 'config/network/api_config.dart';
-import 'config/themes/app_theme.dart';
 import 'config/themes/theme_manager/theme_manager.dart';
 import 'config/app/app_info.dart';
 import 'core/database/storage/storage_manager.dart';
@@ -52,10 +52,11 @@ class ServiceLocator {
 
     // _initService
     sl.registerLazySingleton(() => SecureStorageManager());
-    sl.registerSingleton(StorageManager());
-    sl.registerSingleton(LocaleManager());
-    sl.registerFactory(() => ThemeManager());
+    sl.registerLazySingleton(() => StorageManager());
+    sl.registerLazySingleton(() => LocaleManager());
+    sl.registerLazySingleton(() => ThemeManager());
     sl.registerSingleton(AuthManager());
+    sl.registerLazySingleton(() => Navigation());
 
     // Repository
     sl.registerLazySingleton<AuthRepository>(

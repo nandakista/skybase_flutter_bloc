@@ -14,7 +14,7 @@ class PermissionHelper {
       cancelText: 'txt_back'.tr(),
       onConfirm: openAppSettings,
       onCancel: () {
-        MainNavigation.pop(context);
+        Navigation.instance.pop(context);
       },
     );
   }
@@ -26,7 +26,7 @@ class PermissionHelper {
       message: message,
       confirmText: 'txt_back'.tr(),
       onConfirm: () {
-        MainNavigation.pop(context);
+        Navigation.instance.pop(context);
       },
     );
   }

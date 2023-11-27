@@ -88,7 +88,7 @@ class BottomSheetUtilsView extends StatelessWidget {
       enabledFileSource: false,
       onAttachmentsSelected: (file) {
         // controller.selectedProof.value = image;
-        MainNavigation.pop(context);
+        Navigation.instance.pop(context);
       },
       onMultipleAttachmentsSelected: (List<File> files) {},
     );
