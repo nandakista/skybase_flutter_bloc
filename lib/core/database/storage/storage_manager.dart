@@ -42,8 +42,14 @@ class StorageManager {
 
   Future<void> logout() async {
     try {
-      sharedPreferences.clear();
-      save<bool>(StorageKey.FIRST_INSTALL, false);
+      List<String> permanentKeys = StorageKey.permanentKeys;
+      List<String> deleteKeys = (sharedPreferences.getKeys()).where((key) {
+        return !permanentKeys.contains(key);
+      }).toList();
+
+      for (var key in deleteKeys) {
+        await sharedPreferences.remove(key);
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

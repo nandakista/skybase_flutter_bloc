@@ -28,9 +28,11 @@ class AuthManager {
   ThemeManager themeManager = ThemeManager.instance;
 
   AppType authState = AppType.INITIAL;
+
   AppType? get state => authState;
 
   StreamController<AppType> authStreamController = StreamController<AppType>();
+
   Stream<AppType?> get stream => authStreamController.stream;
 
   AuthManager() {
@@ -61,12 +63,8 @@ class AuthManager {
   Future<void> clearExpiredCache() async {
     await Future.wait(
       storage.sharedPreferences.getKeys().map((key) async {
-        List<String> permanentKeys = [
-          StorageKey.FIRST_INSTALL,
-          StorageKey.CURRENT_LOCALE,
-          StorageKey.IS_DARK_THEME,
-          StorageKey.USERS,
-        ];
+        List<String> permanentKeys =
+            StorageKey.permanentKeys + [StorageKey.USERS];
 
         if (!permanentKeys.contains(key)) {
           final now = DateTime.now();

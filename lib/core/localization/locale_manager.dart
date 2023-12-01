@@ -78,8 +78,7 @@ class LocaleManager {
     if (currentLanguageCode != null) {
       return currentLanguageCode.toLocale();
     } else {
-      StorageManager.instance.save<String>(StorageKey.CURRENT_LOCALE, "en");
-      return const Locale('en');
+      return fallbackLocale;
     }
   }
 }
