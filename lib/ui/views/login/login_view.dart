@@ -40,6 +40,14 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void dispose() {
+    phoneController.clear();
+    passwordController.clear();
+    emailController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return KeyboardDismissible(
       child: ColoredStatusBar.light(

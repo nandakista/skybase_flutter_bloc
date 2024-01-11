@@ -1,3 +1,8 @@
+/* Created by
+   Varcant
+   nanda.kista@gmail.com
+*/
+
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -10,18 +15,8 @@ import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 import 'empty_view.dart';
 import 'error_view.dart';
 
-/* Created by
-   Varcant
-   nanda.kista@gmail.com
-*/
-typedef ItemWidgetBuilder<ItemType> = Widget Function(
-  BuildContext context,
-  ItemType item,
-  int index,
-);
-
-class SkyPaginationView<ItemType> extends StatelessWidget {
-  const SkyPaginationView({
+class BasePaginationView<ItemType> extends StatelessWidget {
+  const BasePaginationView({
     super.key,
     required this.pagingController,
     required this.itemBuilder,

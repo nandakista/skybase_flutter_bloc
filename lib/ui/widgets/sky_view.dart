@@ -1,5 +1,12 @@
+/* Created by
+   Varcant
+   nanda.kista@gmail.com
+*/
+
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/ui/widgets/base/base_view.dart';
+import 'package:skybase/ui/widgets/base/sky_pagination_view.dart';
 
 abstract class SkyView {
   static Widget page({
@@ -117,6 +124,78 @@ abstract class SkyView {
       errorView: errorView,
       visibleOnError: visibleOnError,
       child: child,
+    );
+  }
+
+  static Widget pagination<ItemType>({
+    required PagingController<int, ItemType> pagingController,
+    required ItemWidgetBuilder<ItemType> itemBuilder,
+    bool emptyEnabled = true,
+    bool errorEnabled = true,
+    Widget? loadingView,
+    Widget? emptyView,
+    Widget? maxItemView,
+    Widget? errorView,
+    Widget? errorLoadView,
+    bool shrinkWrap = false,
+    ScrollPhysics? physics,
+    Widget? separator,
+    VoidCallback? onRefresh,
+    Widget? emptyImageWidget,
+    String? emptyImage,
+    String? errorTitle,
+    String? errorSubtitle,
+    String? emptyTitle,
+    String? emptySubtitle,
+    TextStyle? emptyTitleStyle,
+    TextStyle? emptySubtitleStyle,
+    bool enableIOSStyle = true,
+    String? errorImage,
+    Widget? errorImageWidget,
+    String? retryText,
+    double? verticalSpacing,
+    double? horizontalSpacing,
+    double? imageSize,
+    TextStyle? errorTitleStyle,
+    TextStyle? errorSubtitleStyle,
+    Widget? retryWidget,
+    Axis scrollDirection = Axis.vertical,
+    EdgeInsetsGeometry? padding,
+  }) {
+    return BasePaginationView<ItemType>(
+      pagingController: pagingController,
+      itemBuilder: itemBuilder,
+      padding: padding,
+      loadingView: loadingView,
+      emptyEnabled: emptyEnabled,
+      emptyImage: emptyImage,
+      emptyImageWidget: emptyImageWidget,
+      emptySubtitle: emptySubtitle,
+      emptySubtitleStyle: emptySubtitleStyle,
+      emptyTitle: emptyTitle,
+      emptyTitleStyle: emptyTitleStyle,
+      emptyView: emptyView,
+      enableIOSStyle: enableIOSStyle,
+      errorEnabled: errorEnabled,
+      errorImage: errorImage,
+      errorImageWidget: errorImageWidget,
+      errorLoadView: errorLoadView,
+      errorTitle: errorTitle,
+      errorTitleStyle: errorTitleStyle,
+      errorSubtitle: errorSubtitle,
+      errorSubtitleStyle: errorSubtitleStyle,
+      horizontalSpacing: horizontalSpacing,
+      verticalSpacing: verticalSpacing,
+      imageSize: imageSize,
+      maxItemView: maxItemView,
+      retryText: retryText,
+      retryWidget: retryWidget,
+      scrollDirection: scrollDirection,
+      separator: separator,
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      onRefresh: onRefresh,
+      errorView: errorView,
     );
   }
 }

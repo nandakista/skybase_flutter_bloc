@@ -4,7 +4,7 @@ import 'package:skybase/ui/views/sample_feature/detail/bloc/sample_feature_detai
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_header.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_info.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_tab.dart';
-import 'package:skybase/ui/widgets/base/sky_view.dart';
+import 'package:skybase/ui/widgets/sky_view.dart';
 import 'package:skybase/ui/widgets/shimmer/shimmer_detail.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 
