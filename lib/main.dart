@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
-import 'package:skybase/ui/blocs/app_blocs.dart';
 
 import 'app_configuration.dart';
 import 'config/themes/app_theme.dart';
-import 'ui/blocs/app_bloc_observer.dart';
+import 'config/observer/app_bloc_observer.dart';
 import 'service_locator.dart';
 import 'ui/routes/app_routes.dart';
 import 'ui/views/404_500/crash_error_view.dart';
@@ -37,7 +36,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<ThemeManager>()..init()),
-        ...AppBlocs.provider,
+        // Add global bloc provider here..
       ],
       child: BlocBuilder<ThemeManager, ThemeState>(
         builder: (context, state) {
