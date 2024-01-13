@@ -17,7 +17,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
           LocaleManager.instance.getCurrentLocale.languageCode,
         )) {
     on<InitLocale>(_setLocale);
-    on<UpdateLocale>(_onUpdateLocaleID);
+    on<UpdateLocale>(_onUpdateLocale);
   }
 
   void _setLocale(
@@ -28,7 +28,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     emit(SettingState(currentLocale.languageCode));
   }
 
-  void _onUpdateLocaleID(
+  void _onUpdateLocale(
     UpdateLocale event,
     Emitter<SettingState> emit,
   ) async {
