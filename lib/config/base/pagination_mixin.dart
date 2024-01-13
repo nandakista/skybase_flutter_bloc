@@ -33,7 +33,7 @@ mixin PaginationMixin<T> {
     await storage.delete(cacheKey.toString());
   }
 
-  void finishLoadData({required List<T> data, int? page}) {
+  void loadNextData({required List<T> data, int? page}) {
     final isLastPage = data.length < perPage;
     if (isLastPage) {
       pagingController.appendLastPage(data);
@@ -42,7 +42,7 @@ mixin PaginationMixin<T> {
     }
   }
 
-  void showError(String message) {
+  void loadError(String message) {
     pagingController.error = message;
   }
 }

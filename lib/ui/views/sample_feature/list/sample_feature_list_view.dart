@@ -61,9 +61,9 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
       body: BlocConsumer<SampleFeatureListBloc, SampleFeatureListState>(
         listener: (BuildContext context, SampleFeatureListState state) {
           if (state is SampleFeatureListError) {
-            showError(state.message);
+            loadError(state.message);
           } else if (state is SampleFeatureListLoaded) {
-            finishLoadData(data: state.result);
+            loadNextData(data: state.result);
           }
         },
         builder: (context, state) {
