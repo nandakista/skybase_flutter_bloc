@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skybase/config/themes/app_style.dart';
-import 'package:skybase/ui/widgets/sky_view.dart';
+import 'package:skybase/ui/widgets/base/state_view.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
-import 'package:skybase/ui/widgets/sky_grouped_listview.dart';
+import 'package:skybase/ui/widgets/grouped_listview.dart';
 
 class ListUtilsView extends StatelessWidget {
   static const String route = 'list';
@@ -21,15 +21,15 @@ class ListUtilsView extends StatelessWidget {
             ..._buildSection(
               page: 1,
               title: 'Sample Grouped ListView',
-              content: SkyView.component(
+              content: StateView.component(
                 loadingEnabled: false,
                 errorEnabled: false,
                 onRetry: () {},
                 emptyEnabled: dummyData.isEmpty,
-                child: SkyGroupedListView<dynamic, String>(
+                child: GroupedListView<dynamic, String>(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  sortBy: SortBy.ASC,
+                  sortBy: SortBy.asc,
                   data: dummyData,
                   separator: const Divider(thickness: 1, height: 12),
                   separatorGroup: const Divider(

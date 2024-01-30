@@ -11,7 +11,7 @@ import 'error_view.dart';
    Varcant
    nanda.kista@gmail.com
 */
-class BaseView extends StatelessWidget {
+class StateView extends StatelessWidget {
   /// Can override setting Visibility emptyView even if [emptyEnabled] is true
   final bool visibleOnEmpty;
 
@@ -68,7 +68,9 @@ class BaseView extends StatelessWidget {
 
   final VoidCallback? onRefresh;
 
-  final double? imageSize;
+  final double? imageHeight;
+
+  final double? imageWidth;
 
   final double? verticalSpacing;
 
@@ -82,7 +84,7 @@ class BaseView extends StatelessWidget {
 
   final bool emptyRetryEnabled;
 
-  const BaseView({
+  const StateView.page({
     super.key,
     required this.loadingEnabled,
     required this.errorEnabled,
@@ -104,7 +106,8 @@ class BaseView extends StatelessWidget {
     this.emptyView,
     this.retryText,
     this.onRefresh,
-    this.imageSize,
+    this.imageHeight,
+    this.imageWidth,
     this.verticalSpacing,
     this.horizontalSpacing,
     this.titleStyle,
@@ -113,6 +116,38 @@ class BaseView extends StatelessWidget {
     this.retryWidget,
     this.emptyImageWidget,
   });
+
+  const StateView.component({
+    super.key,
+    required this.loadingEnabled,
+    required this.errorEnabled,
+    required this.emptyEnabled,
+    required this.onRetry,
+    required this.child,
+    this.emptyRetryEnabled = false,
+    this.emptyTitle,
+    this.emptyImage,
+    this.emptySubtitle,
+    this.loadingView,
+    this.visibleOnEmpty = true,
+    this.visibleOnError = true,
+    this.errorImageWidget,
+    this.errorSubtitle,
+    this.errorTitle,
+    this.errorView,
+    this.isComponent = true,
+    this.emptyView,
+    this.retryText,
+    this.imageHeight,
+    this.imageWidth,
+    this.verticalSpacing,
+    this.horizontalSpacing,
+    this.titleStyle,
+    this.subtitleStyle,
+    this.errorImage,
+    this.retryWidget,
+    this.emptyImageWidget,
+  }) : onRefresh = null;
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +188,11 @@ class BaseView extends StatelessWidget {
           (!loadingEnabled)
               ? SliverToBoxAdapter(child: child)
               : SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
-                    child: loadingView ?? const CircularProgressIndicator(),
-                  ),
-                ),
+            hasScrollBody: false,
+            child: Center(
+              child: loadingView ?? const CircularProgressIndicator(),
+            ),
+          ),
         ],
       ),
     );
@@ -171,14 +206,14 @@ class BaseView extends StatelessWidget {
         ),
         (!loadingEnabled)
             ? SliverToBoxAdapter(
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: child,
-                ),
-              )
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: child,
+          ),
+        )
             : SliverFillRemaining(
-                child: loadingView ?? const PlatformLoadingIndicator(),
-              ),
+          child: loadingView ?? const PlatformLoadingIndicator(),
+        ),
       ],
     );
   }
@@ -200,7 +235,8 @@ class BaseView extends StatelessWidget {
           emptyImageWidget: emptyImageWidget,
           emptyTitle: emptyTitle,
           emptySubtitle: emptySubtitle,
-          imageSize: imageSize,
+          imageHeight: imageHeight,
+          imageWidth: imageWidth,
           horizontalSpacing: horizontalSpacing ?? 24,
           verticalSpacing: verticalSpacing ?? 24,
           titleStyle: titleStyle,
@@ -221,7 +257,8 @@ class BaseView extends StatelessWidget {
           errorSubtitle: errorSubtitle,
           onRetry: onRetry,
           retryText: retryText,
-          imageSize: imageSize,
+          imageHeight: imageHeight,
+          imageWidth: imageWidth,
           horizontalSpacing: horizontalSpacing ?? 24,
           verticalSpacing: verticalSpacing ?? 24,
           titleStyle: titleStyle,

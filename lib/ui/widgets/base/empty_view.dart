@@ -14,7 +14,8 @@ class EmptyView extends StatelessWidget {
     this.emptyTitle,
     this.emptySubtitle,
     this.physics,
-    this.imageSize,
+    this.imageHeight,
+    this.imageWidth,
     this.verticalSpacing = 24,
     this.horizontalSpacing = 24,
     this.titleStyle,
@@ -30,7 +31,8 @@ class EmptyView extends StatelessWidget {
   final String? emptyTitle;
   final String? emptySubtitle;
   final ScrollPhysics? physics;
-  final double? imageSize;
+  final double? imageHeight;
+  final double? imageWidth;
   final double verticalSpacing;
   final double horizontalSpacing;
   final TextStyle? titleStyle;
@@ -54,7 +56,8 @@ class EmptyView extends StatelessWidget {
             emptyImageWidget ??
                 Image.asset(
                   emptyImage ?? 'assets/images/img_empty.png',
-                  height: imageSize,
+                  height: imageHeight,
+                  width: imageWidth,
                 ),
             SizedBox(height: verticalSpacing),
             Text(
