@@ -70,6 +70,7 @@ class _ProfileViewState extends State<ProfileView>
                     shapeImage: ShapeImage.circle,
                     size: 40,
                     src: '${data?.avatarUrl}&s=200',
+                    enablePreview: true,
                   ),
                   const SizedBox(height: 12),
                   Text(

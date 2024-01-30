@@ -27,6 +27,7 @@ class SampleFeatureDetailHeader extends StatelessWidget {
             size: 45,
             shapeImage: ShapeImage.circle,
             src: '$avatar&s=200',
+            enablePreview: true,
           ),
           Column(
             children: [

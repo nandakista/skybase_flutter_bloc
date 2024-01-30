@@ -223,24 +223,25 @@ class _BaseImageState extends State<BaseImage> {
   Widget build(BuildContext context) {
     if (widget.shapeImage == ShapeImage.circle) {
       assert(
-      widget.size != null,
-      "Size cannot be null if shapeImage is ShapeImage.circle, ",
+        widget.size != null,
+        "Size cannot be null if shapeImage is ShapeImage.circle, ",
       );
     }
 
     return GestureDetector(
       onTap: widget.enablePreview
           ? () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MediaPreviewPage(
-            src: widget.src,
-            isAsset: widget.isAsset,
-            title: widget.previewTitle,
-            titleStyle: widget.previewTitleStyle,
-          ),
-        ),
-      )
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MediaPreviewPage(
+                    src: widget.src,
+                    isAsset: widget.isAsset,
+                    title: widget.previewTitle,
+                    titleStyle: widget.previewTitleStyle,
+                    forceImage: true,
+                  ),
+                ),
+              )
           : widget.onTapImage,
       child: _determineShapeImage(),
     );
@@ -250,16 +251,16 @@ class _BaseImageState extends State<BaseImage> {
     return switch (widget.shapeImage) {
       ShapeImage.oval => ClipOval(child: _determineImageWidget()),
       ShapeImage.circle => CircleAvatar(
-        radius: widget.size,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(widget.size!),
+          radius: widget.size,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(widget.size!),
+            child: _determineImageWidget(),
+          ),
+        ),
+      ShapeImage.react => ClipRRect(
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
           child: _determineImageWidget(),
         ),
-      ),
-      ShapeImage.react => ClipRRect(
-        borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
-        child: _determineImageWidget(),
-      ),
     };
   }
 
@@ -268,7 +269,7 @@ class _BaseImageState extends State<BaseImage> {
     final isSvg = widget.src.endsWith('svg');
     final isAssets = widget.isAsset ||
         widget.src.startsWith('lib/resources/') ||
-        widget.src.startsWith('assets/');
+        widget.src.startsWith('assets/images/');
     final isFile = !isFromRemote && !isAssets && !isSvg;
 
     if (isSvg || widget.forceSvgSrc) {

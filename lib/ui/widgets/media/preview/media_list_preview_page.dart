@@ -21,6 +21,12 @@ class MediaListPreviewPage extends StatelessWidget {
         DetermineMediaWidget(
           path: item,
           image: SkyImage(src: item, enablePreview: true),
+          // Set this widget if want to show file preview
+          file: const SizedBox.shrink(),
+          // Set this widget if want to show video preview
+          video: const SizedBox.shrink(),
+          // Set this widget if want to show custom unknown preview
+          unknown: const SizedBox.shrink(),
         ),
       );
       children.add(const Divider());
