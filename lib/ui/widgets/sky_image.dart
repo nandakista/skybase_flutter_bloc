@@ -50,6 +50,27 @@ class SkyImage extends StatelessWidget {
   /// If you fill this field and [placeholderSrc], the placeholderSrc will not work
   final String? generateByName;
 
+  /// Retry source image when network get 401 or 403
+  final Future<String?> Function()? onRetrySrc;
+
+  /// Max retry attempt count for [onRetrySrc]
+  final int maxRetryCount;
+
+  /// Timeout for retry network image
+  final Duration? retryTimeout;
+
+  /// Force load image from remote source
+  final bool forceRemoteSrc;
+
+  /// Force load image from file source
+  final bool forceFileSrc;
+
+  /// Force load image from asset source
+  final bool forceAssetSrc;
+
+  /// Force load image from svg source
+  final bool forceSvgSrc;
+
   const SkyImage({
     super.key,
     this.src,
@@ -72,6 +93,13 @@ class SkyImage extends StatelessWidget {
     this.alignment = Alignment.center,
     this.size,
     this.generateByName,
+    this.onRetrySrc,
+    this.maxRetryCount = 1,
+    this.retryTimeout,
+    this.forceFileSrc = false,
+    this.forceRemoteSrc = false,
+    this.forceAssetSrc = false,
+    this.forceSvgSrc = false,
   });
 
   @override
@@ -94,13 +122,20 @@ class SkyImage extends StatelessWidget {
         shapeImage: shapeImage,
         alignment: alignment,
         size: size,
+        onRetrySrc: onRetrySrc,
+        maxRetryCount: maxRetryCount,
+        timeoutRetry: retryTimeout,
+        forceAssetSrc: forceAssetSrc,
+        forceFileSrc: forceFileSrc,
+        forceRemoteSrc: forceRemoteSrc,
+        forceSvgSrc: forceSvgSrc,
       );
     } else {
       return placeholderWidget ??
           BaseImage(
             src: generateByName.isNotNullAndNotEmpty
                 ? MediaHelper.generateAvatarByName(generateByName ?? 'user')
-                : placeholderSrc ?? 'assets/images/img_empty.png',
+                : placeholderSrc ?? 'assets/images/img_not_found.png',
             width: width,
             height: height,
             fit: placeholderFit ?? BoxFit.contain,
@@ -113,12 +148,19 @@ class SkyImage extends StatelessWidget {
             shapeImage: shapeImage,
             alignment: alignment,
             size: size,
+            onRetrySrc: onRetrySrc,
+            maxRetryCount: maxRetryCount,
+            timeoutRetry: retryTimeout,
+            forceAssetSrc: forceAssetSrc,
+            forceFileSrc: forceFileSrc,
+            forceRemoteSrc: forceRemoteSrc,
+            forceSvgSrc: forceSvgSrc,
           );
     }
   }
 }
 
-class BaseImage extends StatelessWidget {
+class BaseImage extends StatefulWidget {
   final String src;
   final double? width;
   final double? height;
@@ -135,6 +177,13 @@ class BaseImage extends StatelessWidget {
   final Widget? loadingWidget;
   final ShapeImage shapeImage;
   final Alignment alignment;
+  final Future<String?> Function()? onRetrySrc;
+  final int maxRetryCount;
+  final Duration? timeoutRetry;
+  final bool forceRemoteSrc;
+  final bool forceFileSrc;
+  final bool forceAssetSrc;
+  final bool forceSvgSrc;
 
   const BaseImage({
     super.key,
@@ -154,122 +203,179 @@ class BaseImage extends StatelessWidget {
     this.shapeImage = ShapeImage.react,
     this.alignment = Alignment.center,
     this.size,
+    this.onRetrySrc,
+    this.maxRetryCount = 1,
+    this.timeoutRetry,
+    this.forceFileSrc = false,
+    this.forceRemoteSrc = false,
+    this.forceAssetSrc = false,
+    this.forceSvgSrc = false,
   });
 
   @override
+  State<BaseImage> createState() => _BaseImageState();
+}
+
+class _BaseImageState extends State<BaseImage> {
+  int retryCount = 0;
+
+  @override
   Widget build(BuildContext context) {
-    if (shapeImage == ShapeImage.circle) {
+    if (widget.shapeImage == ShapeImage.circle) {
       assert(
-        size != null,
-        "Size cannot be null if shapeImage is ShapeImage.circle, ",
+      widget.size != null,
+      "Size cannot be null if shapeImage is ShapeImage.circle, ",
       );
     }
 
     return GestureDetector(
-      onTap: enablePreview
+      onTap: widget.enablePreview
           ? () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MediaPreviewPage(
-                    src: src,
-                    isAsset: isAsset,
-                    title: previewTitle,
-                    titleStyle: previewTitleStyle,
-                  ),
-                ),
-              )
-          : onTapImage,
+        context,
+        MaterialPageRoute(
+          builder: (context) => MediaPreviewPage(
+            src: widget.src,
+            isAsset: widget.isAsset,
+            title: widget.previewTitle,
+            titleStyle: widget.previewTitleStyle,
+          ),
+        ),
+      )
+          : widget.onTapImage,
       child: _determineShapeImage(),
     );
   }
 
   Widget _determineShapeImage() {
-    return switch (shapeImage) {
+    return switch (widget.shapeImage) {
       ShapeImage.oval => ClipOval(child: _determineImageWidget()),
       ShapeImage.circle => CircleAvatar(
-          radius: size,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(size!),
-            child: _determineImageWidget(),
-          ),
-        ),
-      ShapeImage.react => ClipRRect(
-          borderRadius: borderRadius ?? BorderRadius.circular(0),
+        radius: widget.size,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(widget.size!),
           child: _determineImageWidget(),
         ),
+      ),
+      ShapeImage.react => ClipRRect(
+        borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
+        child: _determineImageWidget(),
+      ),
     };
   }
 
   Widget _determineImageWidget() {
-    final isFromRemote = src.startsWith('http');
-    final isSvg = src.endsWith('svg');
-    final isAssets = isAsset || src.startsWith('assets/images/');
+    final isFromRemote = widget.src.startsWith('http');
+    final isSvg = widget.src.endsWith('svg');
+    final isAssets = widget.isAsset ||
+        widget.src.startsWith('lib/resources/') ||
+        widget.src.startsWith('assets/');
+    final isFile = !isFromRemote && !isAssets && !isSvg;
 
-    if (isSvg) {
+    if (isSvg || widget.forceSvgSrc) {
       return SvgPicture.asset(
-        src,
-        width: width,
-        height: height,
-        colorFilter:
-            color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
-        fit: fit,
-        alignment: alignment,
+        widget.src,
+        width: widget.width,
+        height: widget.height,
+        colorFilter: widget.color != null
+            ? ColorFilter.mode(widget.color!, BlendMode.srcIn)
+            : null,
+        fit: widget.fit,
+        alignment: widget.alignment,
       );
-    } else if (isFromRemote) {
+    } else if (isFromRemote || widget.forceRemoteSrc) {
       return CachedNetworkImage(
-        imageUrl: src,
-        color: color,
-        fit: fit,
-        width: width,
-        height: height,
-        alignment: alignment,
+        imageUrl: isFromRemote ? widget.src : 'https://${widget.src}',
+        color: widget.color,
+        fit: widget.fit,
+        width: widget.width,
+        height: widget.height,
+        alignment: widget.alignment,
         placeholder: (context, url) => SizedBox(
-          height: height,
-          width: width,
-          child: loadingWidget ?? const PlatformLoadingIndicator(),
+          height: widget.height,
+          width: widget.width,
+          child: widget.loadingWidget ?? const PlatformLoadingIndicator(),
         ),
+        errorListener: (error) {
+          debugPrint('Error load network image: $error');
+        },
         errorWidget: (context, url, error) {
-          debugPrint('Error load network image $url $error');
+          debugPrint('Error load network image: $error');
+          if (error.toString().contains('401') ||
+              error.toString().contains('403')) {
+            if (retryCount < widget.maxRetryCount &&
+                widget.onRetrySrc != null) {
+              widget.onRetrySrc!().then((value) {
+                if (context.mounted) {
+                  setState(() {
+                    retryCount++;
+                  });
+                }
+              });
+            }
+          }
           return SizedBox(
-            height: height,
-            width: width,
-            child: errorWidget ?? const Icon(Icons.error),
+            height: widget.height,
+            width: widget.width,
+            child: widget.errorWidget ?? const Icon(Icons.error),
           );
         },
       );
-    } else if (isAssets) {
+    } else if (isAssets || widget.forceAssetSrc) {
       return Image.asset(
-        src,
-        width: width,
-        height: height,
-        fit: fit,
-        color: color,
-        alignment: alignment,
-        errorBuilder: (context, err, stackTrace) {
-          debugPrint('Error load asset image $err');
+        widget.src,
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        color: widget.color,
+        alignment: widget.alignment,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('Error load asset image $error');
           return SizedBox(
-            height: height,
-            width: width,
-            child: errorWidget ?? const Icon(Icons.error),
+            height: widget.height,
+            width: widget.width,
+            child: widget.errorWidget ?? const Icon(Icons.error),
+          );
+        },
+      );
+    } else if (isFile || widget.forceFileSrc) {
+      return Image.file(
+        File(widget.src),
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        color: widget.color,
+        alignment: widget.alignment,
+        errorBuilder: (context, err, stackTrace) {
+          debugPrint('Error load file image $err');
+          return SizedBox(
+            height: widget.height,
+            width: widget.width,
+            child: widget.errorWidget ?? const Icon(Icons.error),
+          );
+        },
+      );
+    } else if (isFile || widget.forceFileSrc) {
+      return Image.file(
+        File(widget.src),
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        color: widget.color,
+        alignment: widget.alignment,
+        errorBuilder: (context, error, stackTrace) {
+          debugPrint('Error load file image $error');
+          return SizedBox(
+            height: widget.height,
+            width: widget.width,
+            child: widget.errorWidget ?? const Icon(Icons.error),
           );
         },
       );
     } else {
-      return Image.file(
-        File(src),
-        width: width,
-        height: height,
-        fit: fit,
-        color: color,
-        alignment: alignment,
-        errorBuilder: (context, err, stackTrace) {
-          debugPrint('Error load file image $err');
-          return SizedBox(
-            height: height,
-            width: width,
-            child: errorWidget ?? const Icon(Icons.error),
-          );
-        },
+      return SizedBox(
+        height: widget.height,
+        width: widget.width,
+        child: widget.errorWidget ?? const Icon(Icons.error),
       );
     }
   }
