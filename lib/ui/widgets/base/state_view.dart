@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:skybase/ui/widgets/base/pagination/pagination_sliver_grid.dart';
+import 'package:skybase/ui/widgets/base/pagination/pagination_sliver_list.dart';
 import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 
 import 'empty_view.dart';
@@ -84,6 +87,45 @@ class StateView extends StatelessWidget {
 
   final bool emptyRetryEnabled;
 
+  /// Scroll properties
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
+  final Widget? separator;
+  final EdgeInsetsGeometry? padding;
+  final Axis scrollDirection;
+  final bool? addAutomaticKeepAlives;
+  final bool? addRepaintBoundaries;
+  final bool? addSemanticIndexes;
+  final double? cacheExtent;
+  final Clip? clipBehavior;
+  final DragStartBehavior? dragStartBehavior;
+  final double? itemExtent;
+  final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
+  final bool? primary;
+  final bool? reverse;
+  final ScrollController? scrollController;
+  final String? restorationId;
+  final ScrollBehavior? scrollBehavior;
+  final int? semanticChildCount;
+  final double? anchor;
+  final Key? center;
+
+  /// **Warning:**
+  /// Only accept sliver widget
+  ///
+  /// Useful when you need adding pagination widget inside SingleChildScrollView
+  /// - Put your pagination widget in [headerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  /// - Put your pagination widget in [footerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  final List<Widget>? footerSliver;
+
+  /// **Warning:**
+  /// Only accept sliver widget
+  ///
+  /// Useful when you need adding pagination widget inside SingleChildScrollView
+  /// - Put your pagination widget in [headerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  /// - Put your pagination widget in [footerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  final List<Widget>? headerSliver;
+
   const StateView.page({
     super.key,
     required this.loadingEnabled,
@@ -115,6 +157,29 @@ class StateView extends StatelessWidget {
     this.errorImage,
     this.retryWidget,
     this.emptyImageWidget,
+    this.footerSliver,
+    this.headerSliver,
+    this.shrinkWrap = false,
+    this.physics,
+    this.separator,
+    this.padding,
+    this.scrollDirection = Axis.vertical,
+    this.addAutomaticKeepAlives,
+    this.addRepaintBoundaries,
+    this.addSemanticIndexes,
+    this.cacheExtent,
+    this.clipBehavior,
+    this.dragStartBehavior,
+    this.itemExtent,
+    this.keyboardDismissBehavior,
+    this.primary,
+    this.reverse,
+    this.scrollController,
+    this.restorationId,
+    this.scrollBehavior,
+    this.semanticChildCount,
+    this.anchor,
+    this.center,
   });
 
   const StateView.component({
@@ -147,6 +212,29 @@ class StateView extends StatelessWidget {
     this.errorImage,
     this.retryWidget,
     this.emptyImageWidget,
+    this.footerSliver,
+    this.headerSliver,
+    this.shrinkWrap = false,
+    this.physics,
+    this.separator,
+    this.padding,
+    this.scrollDirection = Axis.vertical,
+    this.addAutomaticKeepAlives,
+    this.addRepaintBoundaries,
+    this.addSemanticIndexes,
+    this.cacheExtent,
+    this.clipBehavior,
+    this.dragStartBehavior,
+    this.itemExtent,
+    this.keyboardDismissBehavior,
+    this.primary,
+    this.reverse,
+    this.scrollController,
+    this.restorationId,
+    this.scrollBehavior,
+    this.semanticChildCount,
+    this.anchor,
+    this.center,
   }) : onRefresh = null;
 
   @override
@@ -154,9 +242,9 @@ class StateView extends StatelessWidget {
     Widget body;
     if (visibleOnError && errorEnabled) {
       body = getErrorView(context);
-    } else if (visibleOnEmpty && emptyEnabled) {
+    } else if (visibleOnEmpty && emptyEnabled && !loadingEnabled) {
       body = getEmptyView(context);
-    } else if (!emptyEnabled && !errorEnabled) {
+    } else if (loadingEnabled || (!emptyEnabled && !errorEnabled)) {
       body = getLoadingAndBodyView(context);
     } else {
       body = const SizedBox.shrink();
@@ -166,17 +254,14 @@ class StateView extends StatelessWidget {
   }
 
   Widget getLoadingAndBodyView(BuildContext context) {
-    if (isComponent) {
+    if (isComponent || onRefresh == null) {
       return loadingEnabled
           ? loadingView ?? const PlatformLoadingIndicator()
           : child;
-    }
-    if (onRefresh != null) {
+    } else {
       return Platform.isIOS
           ? _iosObjectView(onRefresh: onRefresh!)
           : _androidObjectView(onRefresh: onRefresh!);
-    } else {
-      return child;
     }
   }
 
@@ -184,15 +269,33 @@ class StateView extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => Future.sync(onRefresh),
       child: CustomScrollView(
+        shrinkWrap: shrinkWrap,
+        physics: physics,
+        scrollDirection: scrollDirection,
+        scrollBehavior: scrollBehavior,
+        controller: scrollController,
+        keyboardDismissBehavior:
+            keyboardDismissBehavior ?? ScrollViewKeyboardDismissBehavior.manual,
+        cacheExtent: cacheExtent,
+        clipBehavior: clipBehavior ?? Clip.hardEdge,
+        dragStartBehavior: dragStartBehavior ?? DragStartBehavior.start,
+        primary: primary,
+        restorationId: restorationId,
+        reverse: reverse ?? false,
+        semanticChildCount: semanticChildCount,
+        anchor: anchor ?? 0.0,
+        center: center,
         slivers: [
+          if (headerSliver != null) ...headerSliver!,
           (!loadingEnabled)
               ? SliverToBoxAdapter(child: child)
               : SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(
-              child: loadingView ?? const CircularProgressIndicator(),
-            ),
-          ),
+                  hasScrollBody: false,
+                  child: Center(
+                    child: loadingView ?? const CircularProgressIndicator(),
+                  ),
+                ),
+          if (footerSliver != null) ...footerSliver!,
         ],
       ),
     );
@@ -200,20 +303,38 @@ class StateView extends StatelessWidget {
 
   Widget _iosObjectView({required VoidCallback onRefresh}) {
     return CustomScrollView(
+      shrinkWrap: shrinkWrap,
+      physics: physics,
+      scrollDirection: scrollDirection,
+      scrollBehavior: scrollBehavior,
+      controller: scrollController,
+      keyboardDismissBehavior:
+          keyboardDismissBehavior ?? ScrollViewKeyboardDismissBehavior.manual,
+      cacheExtent: cacheExtent,
+      clipBehavior: clipBehavior ?? Clip.hardEdge,
+      dragStartBehavior: dragStartBehavior ?? DragStartBehavior.start,
+      primary: primary,
+      restorationId: restorationId,
+      reverse: reverse ?? false,
+      semanticChildCount: semanticChildCount,
+      anchor: anchor ?? 0.0,
+      center: center,
       slivers: [
+        if (headerSliver != null) ...headerSliver!,
         CupertinoSliverRefreshControl(
           onRefresh: () => Future.sync(onRefresh),
         ),
         (!loadingEnabled)
             ? SliverToBoxAdapter(
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: child,
-          ),
-        )
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: child,
+                ),
+              )
             : SliverFillRemaining(
-          child: loadingView ?? const PlatformLoadingIndicator(),
-        ),
+                child: loadingView ?? const PlatformLoadingIndicator(),
+              ),
+        if (footerSliver != null) ...footerSliver!,
       ],
     );
   }

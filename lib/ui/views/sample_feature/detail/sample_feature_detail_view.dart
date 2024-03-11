@@ -5,7 +5,7 @@ import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_de
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_info.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_tab.dart';
 import 'package:skybase/ui/widgets/base/state_view.dart';
-import 'package:skybase/ui/widgets/shimmer/shimmer_detail.dart';
+import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_detail.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 
 class SampleFeatureDetailView extends StatefulWidget {
@@ -53,7 +53,7 @@ class _SampleFeatureDetailViewState extends State<SampleFeatureDetailView> {
               loadingEnabled: state is SampleFeatureDetailLoading,
               errorEnabled: state is SampleFeatureDetailError,
               emptyEnabled: false,
-              loadingView: const ShimmerDetail(),
+              loadingView: const ShimmerSampleFeatureDetail(),
               errorTitle: errMessage,
               onRefresh: () => bloc
                   .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),

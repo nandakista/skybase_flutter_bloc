@@ -8,7 +8,7 @@ mixin PaginationMixin<T> {
 
   StorageManager storage = StorageManager.instance;
 
-  final pagingController = PagingController<int, T>(firstPageKey: 0);
+  final pagingController = PagingController<int, T>(firstPageKey: 1);
   final int perPage = 20;
   int page = 1;
 
@@ -20,7 +20,7 @@ mixin PaginationMixin<T> {
     pagingController.addPageRequestListener((page) => onLoad());
   }
 
-  Future<void> onRefresh() async {
+  void onRefresh() async {
     try {
       page = 1;
       pagingController.refresh();

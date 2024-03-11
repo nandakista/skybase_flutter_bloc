@@ -3,12 +3,12 @@ import 'package:shimmer/shimmer.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_theme.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_header.dart';
-import 'package:skybase/ui/widgets/shimmer/shimmer_list.dart';
+import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_list.dart';
 
-import 'shimmer_text.dart';
+import '../shimmer_text.dart';
 
-class ShimmerDetail extends StatelessWidget {
-  const ShimmerDetail({super.key});
+class ShimmerSampleFeatureDetail extends StatelessWidget {
+  const ShimmerSampleFeatureDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class ShimmerDetail extends StatelessWidget {
                       Tab(text: 'Followings'),
                     ],
                   ),
-                  ShimmerList(),
+                  ShimmerSampleFeatureList(),
                 ],
               ),
             )

@@ -1,3 +1,8 @@
+/* Created by
+   Varcant
+   nanda.kista@gmail.com
+*/
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -7,94 +12,58 @@ import 'package:skybase/core/extension/string_extension.dart';
 import 'package:skybase/data/sources/local/cached_model_converter.dart';
 
 mixin CacheMixin {
-  String cachedTag = 'CacheMixin::->';
+  final String _tag = 'CacheMixin::->';
 
   StorageManager storage = StorageManager.instance;
 
-  /// Save list data in cache, only in saving page 1.
-  Future<List<T>> getCacheList<T>({
-    required String cachedKey,
-    required int page,
-    required Future<List<T>> Function() onLoad,
+  Future<List<T>> getCachedList<T>({
+    required String key,
   }) async {
-    List<T> result = [];
-    log('$cachedTag page = $page');
-    if (page == 1) {
-      dynamic cache = storage.get(cachedKey);
-      if (storage.has(cachedKey) && cache.toString().isNotEmpty) {
-        log('$cachedTag get cache');
+    log("get cached, key: $key");
 
-        /// Refresh data so the cache is always actual data
-        _saveCacheList(cachedKey: cachedKey, onLoad: onLoad);
-
-        CacheData cacheData = CacheData.fromJson(jsonDecode(cache));
-        result = List<T>.from(
-          (json.decode(cacheData.value) as List).map(
-            (x) => CachedModelConverter<T>().fromJson(x),
-          ),
-        );
-      } else {
-        result = await _saveCacheList(cachedKey: cachedKey, onLoad: onLoad);
-      }
+    dynamic cache = storage.get(key);
+    if (storage.has(key) && cache.toString().isNotEmpty) {
+      CacheData cacheData = CacheData.fromJson(jsonDecode(cache));
+      _logging(cacheData, key);
+      return List<T>.from(
+        (jsonDecode(cacheData.value) as List).map(
+          (x) => CachedModelConverter<T>().fromJson(x),
+        ),
+      );
     } else {
-      result = await onLoad();
+      return [];
     }
-
-    return result;
   }
 
-  Future<List<T>> _saveCacheList<T>({
-    required String cachedKey,
-    required Future<List<T>> Function() onLoad,
+  Future<void> saveCachedList<T>({
+    required String key,
+    required List<T> list,
   }) async {
-    log('$cachedTag Load & save cache data');
-    List<T> result = await onLoad();
+    log('$_tag save cache, key: $key');
     await storage.save<String>(
-      cachedKey,
+      key,
       jsonEncode(
-        CacheData(value: json.encode(result)),
+        CacheData(value: jsonEncode(list)),
       ),
     );
-    return result;
   }
 
-  /// Save object data to cache.
-  ///
-  /// Set **[onlyCacheLast]** to true if you want to cache only the last data you've open.
-  ///
-  /// Set **[customFieldId]** to your actual data id if your data id is not using "id".
-  /// For example: the id of user data is user_id
-  Future<T> getCache<T>({
-    required String cachedKey,
-    required Future<T> Function() onLoad,
+  Future<T?> getCacheObject<T>({
+    required String key,
     required String? cachedId,
-    bool onlyCacheLast = false,
     String? customFieldId,
   }) async {
-    T result;
-    String key = cachedKey;
-    if (!onlyCacheLast) key = '$cachedKey/$cachedId';
-    log('$cachedTag cached key = $key');
+    log("$_tag get cache, key : $key");
     dynamic cache = await storage.get(key);
-
     if (storage.has(key) && cache.toString().isNotNullAndNotEmpty) {
       CacheData cacheData = CacheData.fromJson(jsonDecode(cache));
+      _logging(cacheData, key);
       Map<String, dynamic> cacheMap = cacheData.value as Map<String, dynamic>;
       if (cachedId == _getId(cache: cacheMap, customFieldId: customFieldId)) {
-        log('$cachedTag get cache');
-
-        /// Refresh data so the cache is always actual data
-        _saveCache(cachedKey: key, onLoad: onLoad);
-
-        result = CachedModelConverter<T>().fromJson(cacheMap);
-      } else {
-        log('$cachedTag cache is not equal with data');
-        result = await _saveCache(cachedKey: key, onLoad: onLoad);
+        return CachedModelConverter<T>().fromJson(cacheMap);
       }
-    } else {
-      result = await _saveCache(cachedKey: key, onLoad: onLoad);
     }
-    return result;
+    return null;
   }
 
   String _getId({
@@ -105,18 +74,26 @@ mixin CacheMixin {
     return (cache['id']).toString();
   }
 
-  Future<T> _saveCache<T>({
-    required String cachedKey,
-    required Future<T> Function() onLoad,
+  Future<void> saveCachedObject<T>({
+    required String key,
+    required T data,
   }) async {
-    log('$cachedTag Load & save cache data');
-    T result = await onLoad();
     await storage.save<String>(
-      cachedKey,
+      key,
       jsonEncode(
-        CacheData(value: result).toJson(),
+        CacheData(value: data).toJson(),
       ),
     );
-    return result;
+  }
+
+  Future<void> deleteCached(String key) async {
+    await storage.delete(key.toString());
+  }
+
+  void _logging(CacheData cacheData, String key) {
+    log('$_tag get cache $key');
+    log('$_tag expiry: ${cacheData.expiredDate}');
+    log('$_tag Expired in: ${DateTime.now().difference(cacheData.expiredDate).inMinutes} minutes');
+    log('$_tag isExpired: ${cacheData.expiredDate.isBefore(DateTime.now())}');
   }
 }

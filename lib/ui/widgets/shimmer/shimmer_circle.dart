@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skybase/ui/widgets/sky_box.dart';
 
-class ShimmerBox extends StatelessWidget {
-  const ShimmerBox({
+class ShimmerCircle extends StatelessWidget {
+  const ShimmerCircle({
     super.key,
     this.height,
     this.width,
-    this.borderRadius,
     this.margin,
+    this.padding,
     this.baseColor,
   });
 
   final double? height;
   final double? width;
-  final double? borderRadius;
   final EdgeInsets? margin;
+  final EdgeInsets? padding;
   final Color? baseColor;
 
   @override
@@ -25,11 +25,11 @@ class ShimmerBox extends StatelessWidget {
       highlightColor: Colors.white,
       child: SkyBox(
         margin: margin,
+        padding: padding,
         height: height,
         width: width,
-        borderRadius: borderRadius ?? 6,
-        enabledCard: false,
-        color: Colors.grey,
+        borderRadius: height,
+        elevation: 0,
         child: const SizedBox.shrink(),
       ),
     );

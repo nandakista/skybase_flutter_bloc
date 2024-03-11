@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/ui/views/profile/component/repository/bloc/profile_repository_bloc.dart';
 import 'package:skybase/ui/widgets/base/state_view.dart';
-import 'package:skybase/ui/widgets/shimmer/shimmer_list.dart';
+import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_list.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
 class ProfileRepositoryView extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ProfileRepositoryViewState extends State<ProfileRepositoryView> {
           emptyEnabled: state is ProfileRepositoryInitial,
           errorTitle: errMessage,
           onRetry: () => bloc.add(LoadRepositories()),
-          loadingView: const ShimmerList(),
+          loadingView: const ShimmerSampleFeatureList(),
           child: ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
