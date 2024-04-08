@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/ui/views/sample_feature/detail/bloc/sample_feature_detail_bloc.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_header.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_info.dart';
@@ -55,8 +56,10 @@ class _SampleFeatureDetailViewState extends State<SampleFeatureDetailView> {
               emptyEnabled: false,
               loadingView: const ShimmerSampleFeatureDetail(),
               errorTitle: errMessage,
-              onRefresh: () => bloc
-                  .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),
+              onRefresh: () async => await bloc.addAndAwait(
+                RefreshGithubUser(widget.idArgs, widget.usernameArgs),
+                (state) => state is SampleFeatureDetailLoaded,
+              ),
               onRetry: () => bloc
                   .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),
               child: Column(

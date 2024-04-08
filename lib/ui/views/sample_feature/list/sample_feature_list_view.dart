@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skybase/config/base/pagination_mixin.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
@@ -27,25 +28,25 @@ class SampleFeatureListView extends StatefulWidget {
 
 class _SampleFeatureListViewState extends State<SampleFeatureListView>
     with PaginationMixin<SampleFeature>, AutomaticKeepAliveClientMixin {
-
   @override
   void initState() {
     super.initState();
     loadData(
-      () => context
-          .read<SampleFeatureListBloc>()
-          .add(LoadGithubUsers(page, perPage)),
+      () => context.read<SampleFeatureListBloc>().addAndAwait(
+            LoadGithubUsers(page, perPage),
+            (state) => state is SampleFeatureListLoaded,
+          ),
     );
   }
+
+  @override
+  String get cachedKey => CachedKey.SAMPLE_FEATURE_LIST;
 
   @override
   bool get wantKeepAlive => true;
 
   @override
-  void onRefresh() async {
-    deleteCached(CachedKey.SAMPLE_FEATURE_LIST);
-    super.onRefresh();
-  }
+  bool get keepAlivePaging => false;
 
   @override
   void dispose() {
