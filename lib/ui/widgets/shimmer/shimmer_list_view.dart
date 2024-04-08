@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ShimmerList extends StatelessWidget {
-  const ShimmerList({
+class ShimmerListView extends StatelessWidget {
+  const ShimmerListView({
     super.key,
     required this.children,
     this.physics,
@@ -11,7 +11,7 @@ class ShimmerList extends StatelessWidget {
         itemCount = null,
         separatorBuilder = null;
 
-  const ShimmerList.separated({
+  const ShimmerListView.separated({
     super.key,
     required this.itemCount,
     required this.separatorBuilder,
@@ -21,7 +21,7 @@ class ShimmerList extends StatelessWidget {
     this.scrollDirection,
   }) : children = null;
 
-  const ShimmerList.builder({
+  const ShimmerListView.builder({
     super.key,
     required this.itemCount,
     required this.itemBuilder,
@@ -57,7 +57,7 @@ class ShimmerList extends StatelessWidget {
         scrollDirection: scrollDirection ?? Axis.vertical,
         child: Column(
           children: List.generate(
-            itemCount!,
+            itemCount! * 2,
             (index) => index.isOdd
                 ? separatorBuilder!(context, (index - 1) ~/ 2)
                 : itemBuilder!(context, index ~/ 2),
