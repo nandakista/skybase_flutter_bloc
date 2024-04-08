@@ -29,7 +29,7 @@ class SampleFeatureDetailInfo extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.location_city),
-              Text(' $company'),
+              Expanded(child: Text(' $company')),
             ],
           ),
           Row(
