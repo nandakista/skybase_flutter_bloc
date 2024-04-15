@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 
@@ -13,8 +16,14 @@ import 'ui/views/404_500/crash_error_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
+  );
   await EasyLocalization.ensureInitialized();
   await ServiceLocator.init();
+
   Bloc.observer = AppBlocObserver();
   runApp(
     EasyLocalization(
