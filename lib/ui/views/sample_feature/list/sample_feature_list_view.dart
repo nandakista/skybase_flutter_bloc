@@ -2,9 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:skybase/config/base/pagination_mixin.dart';
-import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
@@ -27,37 +24,10 @@ class SampleFeatureListView extends StatefulWidget {
 }
 
 class _SampleFeatureListViewState extends State<SampleFeatureListView>
-    with PaginationMixin<SampleFeature>, AutomaticKeepAliveClientMixin {
-  @override
-  void initState() {
-    super.initState();
-    var state = context.read<SampleFeatureListBloc>().state;
-    if (state is SampleFeatureListLoaded) {
-      pagingController.value = PagingState(
-        nextPageKey: page,
-        error: null,
-        itemList: state.result,
-      );
-    }
-    loadData(
-      () => context.read<SampleFeatureListBloc>().addAndAwait(
-            LoadGithubUsers(page, perPage),
-            (state) => state is SampleFeatureListLoaded,
-          ),
-    );
-  }
+    with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
-
-  @override
-  bool get keepAlivePaging => false;
-
-  @override
-  void dispose() {
-    pagingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +36,19 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
       appBar: SkyAppBar.secondary(title: 'txt_list_users'.tr()),
       body: BlocConsumer<SampleFeatureListBloc, SampleFeatureListState>(
         listener: (BuildContext context, SampleFeatureListState state) {
+          SampleFeatureListBloc bloc = context.read<SampleFeatureListBloc>();
           if (state is SampleFeatureListError) {
-            loadError(state.message);
+            bloc.loadError(state.message);
           } else if (state is SampleFeatureListLoaded) {
-            loadNextData(data: state.result);
+            bloc.loadNextData(data: state.result);
           }
         },
         builder: (context, state) {
+          SampleFeatureListBloc bloc = context.read<SampleFeatureListBloc>();
           return PaginationStateView<SampleFeature>.list(
-            pagingController: pagingController,
+            pagingController: bloc.pagingController,
             loadingView: const ShimmerSampleFeatureList(),
-            onRefresh: onRefresh,
+            onRefresh: bloc.onRefresh,
             itemBuilder: (BuildContext context, item, int index) {
               return ListTile(
                 onTap: () {

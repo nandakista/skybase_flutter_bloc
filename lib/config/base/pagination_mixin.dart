@@ -4,7 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 
 mixin PaginationMixin<T> {
-  final String tag = 'PaginationMixin::->';
+  final String _tag = 'PaginationMixin::->';
 
   StorageManager storage = StorageManager.instance;
 
@@ -38,7 +38,7 @@ mixin PaginationMixin<T> {
         await _onLoad!();
       }
     } catch (e) {
-      log('$tag Error $e');
+      log('$_tag Error $e');
     }
   }
 
