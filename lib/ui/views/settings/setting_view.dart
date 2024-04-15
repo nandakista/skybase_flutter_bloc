@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:skybase/app_configuration.dart';
 import 'package:skybase/config/auth_manager/auth_manager.dart';
@@ -50,9 +51,10 @@ class _SettingViewState extends State<SettingView> {
               ),
               const SizedBox(height: 12),
               SkyButton(
-                onPressed: () {
+                onPressed: () async {
                   LoadingDialog.show(context);
-                  AuthManager.instance.logout();
+                  await AuthManager.instance.logout();
+                  await HydratedBloc.storage.clear();
                 },
                 text: 'txt_logout'.tr(),
               ),
