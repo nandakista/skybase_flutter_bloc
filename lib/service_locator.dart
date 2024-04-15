@@ -81,8 +81,11 @@ class ServiceLocator {
     sl.registerFactory(
       () => SampleFeatureListBloc(sl<SampleFeatureRepository>()),
     );
-    sl.registerFactory(
-          () => SampleFeatureDetailBloc(sl<SampleFeatureRepository>()),
+    sl.registerFactoryParam<SampleFeatureDetailBloc, SampleFeatureRepository, int>(
+      (repository, userId) => SampleFeatureDetailBloc(
+        repository: repository,
+        userId: userId,
+      ),
     );
   }
 }
