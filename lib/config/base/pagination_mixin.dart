@@ -18,13 +18,13 @@ mixin PaginationMixin<T> {
 
   Future Function()? _onLoad;
 
-  void loadData(Future Function() onLoad) {
+  void loadData(Future Function() onLoad) async {
     pagingController.addPageRequestListener(
       (page) async {
         if (page > 1) Future.microtask(() => onLoad());
       },
     );
-    if (page == 1) onLoad();
+    if (page == 1) await onLoad();
     this._onLoad = onLoad;
   }
 
@@ -47,12 +47,16 @@ mixin PaginationMixin<T> {
     }
   }
 
-  void loadNextData({required List<T> data, int? page}) {
+  void loadNextData({required List<T> data}) {
     final isLastPage = data.length < perPage;
     if (isLastPage) {
       pagingController.appendLastPage(data);
     } else {
-      pagingController.appendPage(data, page ?? this.page++);
+      if (page == 1 && (pagingController.itemList ?? []).isNotEmpty) {
+        pagingController.itemList?.clear();
+      }
+      this.page++;
+      pagingController.appendPage(data, page);
     }
   }
 
