@@ -3,6 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:skybase/config/base/pagination_mixin.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
 
@@ -11,14 +14,35 @@ part 'sample_feature_list_event.dart';
 part 'sample_feature_list_state.dart';
 
 class SampleFeatureListBloc
-    extends HydratedBloc<SampleFeatureListEvent, SampleFeatureListState> {
+    extends HydratedBloc<SampleFeatureListEvent, SampleFeatureListState>
+    with PaginationMixin<SampleFeature> {
   String tag = 'SampleFeatureListBloc::->';
 
   final SampleFeatureRepository repository;
   CancelToken cancelToken = CancelToken();
 
+  @override
+  bool get keepAlivePaging => false;
+
   SampleFeatureListBloc(this.repository) : super(SampleFeatureListInitial()) {
     on<LoadGithubUsers>(_onLoadData);
+    onInit();
+  }
+
+  void onInit() {
+    if (state is SampleFeatureListLoaded) {
+      pagingController.value = PagingState(
+        nextPageKey: page,
+        error: null,
+        itemList: (state as SampleFeatureListLoaded).result,
+      );
+    }
+    loadData(
+      () => addAndAwait(
+        LoadGithubUsers(page, perPage),
+        (state) => state is SampleFeatureListLoaded,
+      ),
+    );
   }
 
   @override
@@ -30,7 +54,7 @@ class SampleFeatureListBloc
 
   @override
   Map<String, dynamic>? toJson(SampleFeatureListState state) {
-    return (state is SampleFeatureListLoaded)
+    return (page == 1 && state is SampleFeatureListLoaded)
         ? {
             'data': List<dynamic>.from(state.result.map((x) => x.toJson())),
           }
@@ -56,6 +80,7 @@ class SampleFeatureListBloc
 
   @override
   Future<void> close() {
+    pagingController.dispose();
     cancelToken.cancel();
     return super.close();
   }
