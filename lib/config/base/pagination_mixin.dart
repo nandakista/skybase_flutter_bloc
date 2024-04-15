@@ -14,8 +14,6 @@ mixin PaginationMixin<T> {
 
   bool get keepAlivePaging => false;
 
-  String get cachedKey => '';
-
   Future Function()? _onLoad;
 
   void loadData(Future Function() onLoad) async {
@@ -32,9 +30,6 @@ mixin PaginationMixin<T> {
     try {
       if (_onLoad != null) {
         page = 1;
-        if (cachedKey.isNotEmpty) {
-          await storage.delete(cachedKey.toString());
-        }
         pagingController.value = PagingState(
           nextPageKey: page,
           error: null,
