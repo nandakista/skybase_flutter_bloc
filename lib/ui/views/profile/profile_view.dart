@@ -10,30 +10,13 @@ import 'package:skybase/ui/widgets/sky_image.dart';
 
 import 'component/repository/profile_repository_view.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileView extends StatelessWidget {
   static const String route = '/profile';
 
   const ProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState();
-}
-
-class _ProfileViewState extends State<ProfileView>
-    with AutomaticKeepAliveClientMixin {
-
-  @override
-  void initState() {
-    Future.microtask(() => context.read<ProfileBloc>().add(LoadProfile()));
-    super.initState();
-  }
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -60,8 +43,8 @@ class _ProfileViewState extends State<ProfileView>
             errorEnabled: state is ProfileError,
             emptyEnabled: false,
             errorTitle: errMessage,
-            onRetry: () => bloc.add(LoadProfile()),
-            onRefresh: () => bloc.add(LoadProfile()),
+            onRetry: bloc.onRefresh,
+            onRefresh: bloc.onRefresh,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
