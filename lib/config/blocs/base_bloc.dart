@@ -48,6 +48,35 @@ abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> {
     }
   }
 
+  /// Hydrated Bloc helper for saving data into cache
+  /// only save page 1 for caching
+  /// Should called in toJson hydrated
+  Map<String, dynamic>? saveCacheList(List<T> data) {
+    try {
+      return {
+        'data': List.from(
+          data.map((x) => CachedModelConverter<T>().toJson(x)),
+        ),
+      };
+    } catch (e, stack) {
+      log('$_tag Error save cache, error = $e, $stack');
+      return null;
+    }
+  }
+
+  /// Hydrated Bloc helper for get cache
+  /// should called in fromJson hydrated
+  List<T> loadCacheList(Map<String, dynamic> json) {
+    try {
+      return ((json['data'] as List?) ?? [])
+          .map((e) => CachedModelConverter<T>().fromJson(e))
+          .toList();
+    } catch (e, stack) {
+      log('$_tag Error load cache, error = $e, $stack');
+      return [];
+    }
+  }
+
   @override
   Future<void> close() {
     cancelToken.cancel();

@@ -1,8 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/config/blocs/base_bloc.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/data/models/repo/repo.dart';
 import 'package:skybase/data/repositories/auth/auth_repository.dart';
 
@@ -11,14 +12,32 @@ part 'profile_repository_event.dart';
 part 'profile_repository_state.dart';
 
 class ProfileRepositoryBloc
-    extends Bloc<ProfileRepositoryEvent, ProfileRepositoryState> {
+    extends BaseBloc<Repo, ProfileRepositoryEvent, ProfileRepositoryState> {
   String tag = 'ProfileRepositoryBloc::->';
 
   final AuthRepository repository;
-  CancelToken cancelToken = CancelToken();
 
   ProfileRepositoryBloc(this.repository) : super(ProfileRepositoryInitial()) {
     on<LoadRepositories>(_onLoadData);
+
+    loadData(
+      () => addAndAwait(
+        LoadRepositories(),
+        (state) => state is ProfileRepositoryLoaded,
+      ),
+    );
+  }
+
+  @override
+  ProfileRepositoryState? fromJson(Map<String, dynamic> json) {
+    return ProfileRepositoryLoaded(loadCacheList(json));
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ProfileRepositoryState state) {
+    return (state is ProfileRepositoryLoaded)
+        ? saveCacheList(state.result)
+        : null;
   }
 
   void _onLoadData(
@@ -35,11 +54,5 @@ class ProfileRepositoryBloc
     } catch (e) {
       emit(ProfileRepositoryError(e.toString()));
     }
-  }
-
-  @override
-  Future<void> close() {
-    cancelToken.cancel();
-    return super.close();
   }
 }

@@ -6,21 +6,8 @@ import 'package:skybase/ui/widgets/base/state_view.dart';
 import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_list.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
-class ProfileRepositoryView extends StatefulWidget {
+class ProfileRepositoryView extends StatelessWidget {
   const ProfileRepositoryView({super.key});
-
-  @override
-  State<ProfileRepositoryView> createState() => _ProfileRepositoryViewState();
-}
-
-class _ProfileRepositoryViewState extends State<ProfileRepositoryView> {
-  @override
-  void initState() {
-    Future.microtask(
-      () => context.read<ProfileRepositoryBloc>().add(LoadRepositories()),
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,7 @@ class _ProfileRepositoryViewState extends State<ProfileRepositoryView> {
           errorEnabled: state is ProfileRepositoryError,
           emptyEnabled: state is ProfileRepositoryInitial,
           errorTitle: errMessage,
-          onRetry: () => bloc.add(LoadRepositories()),
+          onRetry: bloc.onRefresh,
           loadingView: const ShimmerSampleFeatureList(),
           child: ListView.builder(
             padding: EdgeInsets.zero,
