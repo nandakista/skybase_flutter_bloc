@@ -11,7 +11,7 @@ import 'package:skybase/data/models/user/user.dart';
 
 import 'auth_sources.dart';
 
-class AuthSourcesImpl extends AuthSources {
+class AuthSourcesImpl implements AuthSources {
   String tag = 'Auth Api';
 
   @override
