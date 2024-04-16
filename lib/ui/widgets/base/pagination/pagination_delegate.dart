@@ -14,6 +14,7 @@ import 'package:skybase/ui/widgets/platform_loading_indicator.dart';
 PagedChildBuilderDelegate<T> PaginationDelegate<T>({
   required PagingController<int, T> pagingController,
   required ItemWidgetBuilder<T> itemBuilder,
+  required VoidCallback onRetry,
   Widget? loadingView,
   Widget? emptyView,
   Widget? emptyImageWidget,
@@ -52,7 +53,7 @@ PagedChildBuilderDelegate<T> PaginationDelegate<T>({
           child: PlatformLoadingIndicator(),
         ),
     noItemsFoundIndicatorBuilder: (ctx) =>
-    emptyView ??
+        emptyView ??
         EmptyView(
           emptyImage: emptyImage,
           emptyImageWidget: emptyImageWidget,
@@ -65,13 +66,16 @@ PagedChildBuilderDelegate<T> PaginationDelegate<T>({
           imageHeight: imageHeight,
           imageWidth: imageWidth,
           emptyRetryEnabled: emptyRetryEnabled,
-          onRetry: () => pagingController.refresh(),
+          onRetry: () {
+            pagingController.refresh();
+            onRetry();
+          },
           physics: const NeverScrollableScrollPhysics(),
         ),
     firstPageErrorIndicatorBuilder: (ctx) =>
         errorView ??
         ErrorView(
-          errorImage:  errorImage,
+          errorImage: errorImage,
           errorImageWidget: errorImageWidget,
           errorTitle:
               '${errorTitle ?? pagingController.error ?? 'txt_err_general_formal'.tr()}',
@@ -85,7 +89,10 @@ PagedChildBuilderDelegate<T> PaginationDelegate<T>({
           retryText: retryText,
           retryWidget: retryWidget,
           physics: const BouncingScrollPhysics(),
-          onRetry: () => pagingController.retryLastFailedRequest(),
+          onRetry: () {
+            // pagingController.retryLastFailedRequest();
+            onRetry();
+          },
         ),
     noMoreItemsIndicatorBuilder: (ctx) =>
         maxItemView ?? const SizedBox.shrink(),
