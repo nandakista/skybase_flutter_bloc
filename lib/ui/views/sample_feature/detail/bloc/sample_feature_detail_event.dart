@@ -16,13 +16,3 @@ class LoadGithubUser extends SampleFeatureDetailEvent {
   @override
   List<Object> get props => [id, username];
 }
-
-class RefreshGithubUser extends SampleFeatureDetailEvent {
-  final int id;
-  final String username;
-
-  const RefreshGithubUser(this.id, this.username);
-
-  @override
-  List<Object> get props => [id, username];
-}

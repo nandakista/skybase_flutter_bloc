@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/ui/views/sample_feature/detail/bloc/sample_feature_detail_bloc.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_header.dart';
 import 'package:skybase/ui/views/sample_feature/detail/widgets/sample_feature_detail_info.dart';
@@ -9,38 +8,17 @@ import 'package:skybase/ui/widgets/base/state_view.dart';
 import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_detail.dart';
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 
-class SampleFeatureDetailView extends StatefulWidget {
+class SampleFeatureDetailView extends StatelessWidget {
   static const String route = '/user-detail';
 
-  const SampleFeatureDetailView({
-    super.key,
-    required this.idArgs,
-    required this.usernameArgs,
-  });
+  const SampleFeatureDetailView({super.key, required this.username});
 
-  final int idArgs;
-  final String usernameArgs;
-
-  @override
-  State<SampleFeatureDetailView> createState() =>
-      _SampleFeatureDetailViewState();
-}
-
-class _SampleFeatureDetailViewState extends State<SampleFeatureDetailView> {
-  @override
-  void initState() {
-    Future.microtask(
-      () => context
-          .read<SampleFeatureDetailBloc>()
-          .add(LoadGithubUser(widget.idArgs, widget.usernameArgs)),
-    );
-    super.initState();
-  }
+  final String username;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SkyAppBar.primary(title: widget.usernameArgs),
+      appBar: SkyAppBar.primary(title: username),
       body: SafeArea(
         child: BlocBuilder<SampleFeatureDetailBloc, SampleFeatureDetailState>(
           builder: (context, state) {
@@ -56,12 +34,8 @@ class _SampleFeatureDetailViewState extends State<SampleFeatureDetailView> {
               emptyEnabled: false,
               loadingView: const ShimmerSampleFeatureDetail(),
               errorTitle: errMessage,
-              onRefresh: () async => await bloc.addAndAwait(
-                RefreshGithubUser(widget.idArgs, widget.usernameArgs),
-                (state) => state is SampleFeatureDetailLoaded,
-              ),
-              onRetry: () => bloc
-                  .add(RefreshGithubUser(widget.idArgs, widget.usernameArgs)),
+              onRefresh: bloc.onRefresh,
+              onRetry: bloc.onRefresh,
               child: Column(
                 children: [
                   SampleFeatureDetailHeader(

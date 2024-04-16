@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:skybase/config/blocs/base_bloc.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
 
@@ -16,14 +17,24 @@ class SampleFeatureDetailBloc extends BaseBloc<SampleFeature,
 
   final SampleFeatureRepository repository;
   final int userId;
+  final String username;
 
   @override
   String get id => userId.toString();
 
-  SampleFeatureDetailBloc({required this.repository, required this.userId})
-      : super(SampleFeatureDetailInitial()) {
+  SampleFeatureDetailBloc({
+    required this.repository,
+    required this.userId,
+    required this.username,
+  }) : super(SampleFeatureDetailInitial()) {
     on<LoadGithubUser>(_onLoadData);
-    on<RefreshGithubUser>(_onRefreshData);
+
+    loadData(
+      () => addAndAwait(
+        LoadGithubUser(userId, username),
+        (state) => state is SampleFeatureDetailLoaded,
+      ),
+    );
   }
 
   @override
@@ -36,15 +47,6 @@ class SampleFeatureDetailBloc extends BaseBloc<SampleFeature,
     return (state is SampleFeatureDetailLoaded)
         ? saveCache(state.result)
         : null;
-  }
-
-  Future<void> _onRefreshData(
-    RefreshGithubUser event,
-    Emitter<SampleFeatureDetailState> emit,
-  ) async {
-    await clear();
-    emit(SampleFeatureDetailLoading());
-    await _onLoadData(LoadGithubUser(event.id, event.username), emit);
   }
 
   Future<void> _onLoadData(

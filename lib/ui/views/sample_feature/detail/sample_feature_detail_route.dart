@@ -15,11 +15,9 @@ final sampleFeatureDetailPage = [
         create: (_) => SampleFeatureDetailBloc(
           repository: sl<SampleFeatureRepository>(),
           userId: extra['id'] as int,
+          username: extra['username'] as String,
         ),
-        child: SampleFeatureDetailView(
-          idArgs: extra['id'] as int,
-          usernameArgs: extra['username'] as String,
-        ),
+        child: SampleFeatureDetailView(username: extra['username'] as String),
       );
     },
   ),
