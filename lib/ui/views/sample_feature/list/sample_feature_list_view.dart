@@ -49,6 +49,7 @@ class _SampleFeatureListViewState extends State<SampleFeatureListView>
             pagingController: bloc.pagingController,
             loadingView: const ShimmerSampleFeatureList(),
             onRefresh: bloc.onRefresh,
+            onRetry: bloc.onRefresh,
             itemBuilder: (BuildContext context, item, int index) {
               return ListTile(
                 onTap: () {

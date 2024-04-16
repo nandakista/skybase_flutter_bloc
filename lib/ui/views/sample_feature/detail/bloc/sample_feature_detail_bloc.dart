@@ -20,6 +20,12 @@ class SampleFeatureDetailBloc extends BaseBloc<SampleFeature,
   @override
   String get id => userId.toString();
 
+  SampleFeatureDetailBloc({required this.repository, required this.userId})
+      : super(SampleFeatureDetailInitial()) {
+    on<LoadGithubUser>(_onLoadData);
+    on<RefreshGithubUser>(_onRefreshData);
+  }
+
   @override
   SampleFeatureDetailState? fromJson(Map<String, dynamic> json) {
     return SampleFeatureDetailLoaded(loadCache(json));
@@ -30,12 +36,6 @@ class SampleFeatureDetailBloc extends BaseBloc<SampleFeature,
     return (state is SampleFeatureDetailLoaded)
         ? saveCache(state.result)
         : null;
-  }
-
-  SampleFeatureDetailBloc({required this.repository, required this.userId})
-      : super(SampleFeatureDetailInitial()) {
-    on<LoadGithubUser>(_onLoadData);
-    on<RefreshGithubUser>(_onRefreshData);
   }
 
   Future<void> _onRefreshData(

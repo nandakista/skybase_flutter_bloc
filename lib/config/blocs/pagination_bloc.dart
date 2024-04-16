@@ -30,7 +30,11 @@ abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
         itemList: _tempData,
       );
     }
-    loadData(() => addAndAwait(event, state));
+    try {
+      loadData(() => addAndAwait(event, state));
+    } catch (e) {
+      log('$_tag Failed to load paging data');
+    }
   }
 
   /// Hydrated Bloc helper for saving data into cache
