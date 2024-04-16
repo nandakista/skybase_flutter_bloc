@@ -17,6 +17,8 @@ class PaginationSliverGrid<T> extends StatelessWidget {
     required this.pagingController,
     required this.itemBuilder,
     required this.gridDelegate,
+    required this.onRetry,
+    this.onRefresh,
     this.padding,
     this.showNewPageErrorIndicatorAsGridChild = false,
     this.showNewPageProgressIndicatorAsGridChild = false,
@@ -47,12 +49,12 @@ class PaginationSliverGrid<T> extends StatelessWidget {
     this.emptyImageWidget,
     this.emptyTitleStyle,
     this.emptySubtitleStyle,
-    this.onRefresh,
   });
 
   final PagingController<int, T> pagingController;
   final ItemWidgetBuilder<T> itemBuilder;
   final SliverGridDelegate gridDelegate;
+  final VoidCallback onRetry;
   final bool showNewPageErrorIndicatorAsGridChild;
   final bool showNewPageProgressIndicatorAsGridChild;
   final bool showNoMoreItemsIndicatorAsGridChild;
@@ -108,6 +110,7 @@ class PaginationSliverGrid<T> extends StatelessWidget {
         shrinkWrapFirstPageIndicators: shrinkWrapFirstPageIndicators,
         builderDelegate: PaginationDelegate<T>(
           pagingController: pagingController,
+          onRetry: onRetry,
           loadingView: loadingView,
           emptyView: emptyView,
           emptyRetryEnabled: emptyRetryEnabled,

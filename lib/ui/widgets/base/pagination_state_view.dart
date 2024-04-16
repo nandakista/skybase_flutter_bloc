@@ -22,6 +22,8 @@ class PaginationStateView<T> extends StatelessWidget {
     super.key,
     required this.pagingController,
     required this.itemBuilder,
+    required this.onRetry,
+    this.onRefresh,
     this.loadingView,
     this.emptyView,
     this.maxItemView,
@@ -31,7 +33,6 @@ class PaginationStateView<T> extends StatelessWidget {
     this.shrinkWrapFirstPageIndicators = false,
     this.physics,
     this.separator,
-    this.onRefresh,
     this.emptyImageWidget,
     this.emptyImage,
     this.errorTitle,
@@ -82,6 +83,8 @@ class PaginationStateView<T> extends StatelessWidget {
     required this.pagingController,
     required this.itemBuilder,
     required this.gridDelegate,
+    required this.onRetry,
+    this.onRefresh,
     this.showNewPageErrorIndicatorAsGridChild,
     this.showNewPageProgressIndicatorAsGridChild,
     this.showNoMoreItemsIndicatorAsGridChild,
@@ -108,7 +111,6 @@ class PaginationStateView<T> extends StatelessWidget {
     this.shrinkWrap = false,
     this.shrinkWrapFirstPageIndicators = false,
     this.physics,
-    this.onRefresh,
     this.emptyImageWidget,
     this.emptyImage,
     this.errorTitle,
@@ -183,6 +185,7 @@ class PaginationStateView<T> extends StatelessWidget {
   final Widget? errorLoadView;
   final bool shrinkWrapFirstPageIndicators;
   final VoidCallback? onRefresh;
+  final VoidCallback onRetry;
   final Widget? emptyImageWidget;
   final String? emptyImage;
   final String? errorTitle;
@@ -367,6 +370,7 @@ class PaginationStateView<T> extends StatelessWidget {
   PagedChildBuilderDelegate<T> _builderDelete() {
     return PaginationDelegate<T>(
       pagingController: pagingController,
+      onRetry: onRetry,
       loadingView: loadingView,
       emptyView: emptyView,
       emptyRetryEnabled: emptyRetryEnabled,
