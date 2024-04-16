@@ -14,24 +14,13 @@ import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature
 import 'package:skybase/ui/widgets/sky_appbar.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
-class SampleFeatureListView extends StatefulWidget {
+class SampleFeatureListView extends StatelessWidget {
   static const String route = '/user-list';
 
   const SampleFeatureListView({super.key});
 
   @override
-  State<SampleFeatureListView> createState() => _SampleFeatureListViewState();
-}
-
-class _SampleFeatureListViewState extends State<SampleFeatureListView>
-    with AutomaticKeepAliveClientMixin {
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       appBar: SkyAppBar.secondary(title: 'txt_list_users'.tr()),
       body: BlocConsumer<SampleFeatureListBloc, SampleFeatureListState>(
