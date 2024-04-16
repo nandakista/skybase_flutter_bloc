@@ -24,8 +24,8 @@ mixin PaginationMixin<T> {
         if (page > 1) Future.microtask(() => onLoad());
       },
     );
-    if (page == 1) await onLoad();
     this._onLoad = onLoad;
+    if (page == 1) await onLoad();
   }
 
   void onRefresh() async {
