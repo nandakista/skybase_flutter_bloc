@@ -11,6 +11,19 @@ abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> {
 
   BaseBloc(super.state);
 
+  Future Function()? _onLoad;
+
+  void loadData(Future Function() onLoad) async {
+    await onLoad();
+    this._onLoad = onLoad;
+  }
+
+  void onRefresh() async {
+    if (_onLoad != null) {
+      await clear();
+      await _onLoad!();
+    }
+  }
 
   /// Hydrated Bloc helper for saving data into cache
   /// only save page 1 for caching
