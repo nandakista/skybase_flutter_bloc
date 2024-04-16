@@ -12,7 +12,9 @@ mixin PaginationMixin<T> {
   final int perPage = 20;
   int page = 1;
 
-  bool get keepAlivePaging => false;
+  /// Set to true to make data persistent when pull to refresh triggered.
+  /// Set to false to show shimmer every pull to refresh triggered.
+  bool get keepAlive => false;
 
   Future Function()? _onLoad;
 
@@ -33,7 +35,7 @@ mixin PaginationMixin<T> {
         pagingController.value = PagingState(
           nextPageKey: page,
           error: null,
-          itemList: keepAlivePaging ? _keepAliveData : null,
+          itemList: keepAlive ? _keepAliveData : null,
         );
         await _onLoad!();
       }

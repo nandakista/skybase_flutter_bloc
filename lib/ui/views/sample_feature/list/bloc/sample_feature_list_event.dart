@@ -8,11 +8,8 @@ sealed class SampleFeatureListEvent extends Equatable {
 }
 
 class LoadGithubUsers extends SampleFeatureListEvent {
-  final int page;
-  final int perPage;
-
-  const LoadGithubUsers(this.page, this.perPage);
+  const LoadGithubUsers();
 
   @override
-  List<Object> get props => [page, perPage];
+  List<Object> get props => [];
 }
