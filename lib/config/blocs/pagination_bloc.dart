@@ -1,14 +1,15 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/config/base/pagination_mixin.dart';
 import 'package:skybase/config/blocs/bloc_extension.dart';
-import 'package:skybase/data/sources/local/cached_model_converter.dart';
+import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 
 abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
-    with PaginationMixin<T> {
+    with PaginationMixin<T>, HydratedCacheMixin<T> {
   final String _tag = 'PaginationBloc::->';
 
   CancelToken cancelToken = CancelToken();
@@ -37,42 +38,23 @@ abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
     }
   }
 
-  /// Hydrated Bloc helper for saving data into cache
-  /// only save page 1 for caching
-  /// Should called in toJson hydrated
-  Map<String, dynamic>? saveCache(List<T> data) {
-    try {
+  /// Manipulate hydrated saving cache for pagination to only cache page 1
+  @override
+  Map<String, dynamic>? saveCacheList(List<T> data) {
       if (page == 1) {
         _tempData = data;
-        return {
-          'data': List.from(
-            data.map((x) => CachedModelConverter<T>().toJson(x)),
-          ),
-        };
+        return super.saveCacheList(data);
       } else {
         _tempData?.clear();
         return null;
       }
-    } catch (e, stack) {
-      log('$_tag Error save cache, error = $e, $stack');
-      return null;
-    }
   }
 
-  /// Hydrated Bloc helper for get cache
-  /// should called in fromJson hydrated
-  List<T> loadCache(Map<String, dynamic> json) {
-    try {
-      return ((json['data'] as List?) ?? [])
-          .map((e) => CachedModelConverter<T>().fromJson(e))
-          .toList();
-    } catch (e, stack) {
-      log('$_tag Error load cache, error = $e, $stack');
-      return [];
-    }
-  }
+  void onClose() {}
 
+  @protected
   @override
+  @mustCallSuper
   Future<void> close() {
     pagingController.dispose();
     cancelToken.cancel();
