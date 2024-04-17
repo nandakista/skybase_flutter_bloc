@@ -8,6 +8,11 @@ import 'package:skybase/config/base/pagination_mixin.dart';
 import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 
+
+/// Base bloc with several generic type, each description of type explained below :
+/// - T is type data
+/// - E is event bloc
+/// - S is state bloc
 abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
     with PaginationMixin<T>, HydratedCacheMixin<T> {
   final String _tag = 'PaginationBloc::->';
@@ -16,6 +21,7 @@ abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
 
   PaginationBloc(super.state);
 
+  /// For persist data when paging init
   List<T>? _tempData = [];
 
   /// Must be call this in init state for make pagination not loading
