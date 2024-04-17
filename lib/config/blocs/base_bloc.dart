@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:skybase/data/sources/local/cached_model_converter.dart';
+import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 
-abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> {
-  final String _tag = 'BaseBloc::->';
-
+abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> with HydratedCacheMixin<T> {
   CancelToken cancelToken = CancelToken();
 
   BaseBloc(super.state);
@@ -14,8 +11,8 @@ abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> {
   Future Function()? _onLoad;
 
   void loadData(Future Function() onLoad) async {
-    await onLoad();
     this._onLoad = onLoad;
+    await onLoad();
   }
 
   void onRefresh() async {
@@ -25,61 +22,14 @@ abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S> {
     }
   }
 
-  /// Hydrated Bloc helper for saving data into cache
-  /// only save page 1 for caching
-  /// Should called in toJson hydrated
-  Map<String, dynamic>? saveCache(T data) {
-    try {
-      return CachedModelConverter<T>().toJson(data);
-    } catch (e, stack) {
-      log('$_tag Error save cache, error = $e, $stack');
-      return null;
-    }
-  }
-
-  /// Hydrated Bloc helper for get cache
-  /// should called in fromJson hydrated
-  T loadCache(Map<String, dynamic> json) {
-    try {
-      return CachedModelConverter<T>().fromJson(json);
-    } catch (e, stack) {
-      log('$_tag Error load cache, error = $e, $stack');
-      throw Exception('$_tag Failed when load cache');
-    }
-  }
-
-  /// Hydrated Bloc helper for saving data into cache
-  /// only save page 1 for caching
-  /// Should called in toJson hydrated
-  Map<String, dynamic>? saveCacheList(List<T> data) {
-    try {
-      return {
-        'data': List.from(
-          data.map((x) => CachedModelConverter<T>().toJson(x)),
-        ),
-      };
-    } catch (e, stack) {
-      log('$_tag Error save cache, error = $e, $stack');
-      return null;
-    }
-  }
-
-  /// Hydrated Bloc helper for get cache
-  /// should called in fromJson hydrated
-  List<T> loadCacheList(Map<String, dynamic> json) {
-    try {
-      return ((json['data'] as List?) ?? [])
-          .map((e) => CachedModelConverter<T>().fromJson(e))
-          .toList();
-    } catch (e, stack) {
-      log('$_tag Error load cache, error = $e, $stack');
-      return [];
-    }
-  }
+  void onClose() {}
 
   @override
+  @protected
+  @mustCallSuper
   Future<void> close() {
     cancelToken.cancel();
+    onClose();
     return super.close();
   }
 }

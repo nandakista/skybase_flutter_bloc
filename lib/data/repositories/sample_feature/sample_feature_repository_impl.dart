@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:skybase/config/base/base_repository.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
 import 'package:skybase/data/sources/server/sample_feature/sample_feature_sources.dart';
 
-class SampleFeatureRepositoryImpl extends BaseRepository
-    implements SampleFeatureRepository {
+class SampleFeatureRepositoryImpl implements SampleFeatureRepository {
   String tag = 'SampleFeatureRepository::->';
 
   final SampleFeatureSources apiService;
@@ -21,18 +19,6 @@ class SampleFeatureRepositoryImpl extends BaseRepository
     required int perPage,
   }) async {
     try {
-      // Using cached
-      // return await loadCachedList(
-      //   cachedKey: CachedKey.SAMPLE_FEATURE_LIST,
-      //   page: page,
-      //   onLoad: () async => await apiService.getUsers(
-      //     cancelToken: cancelToken,
-      //     page: page,
-      //     perPage: perPage,
-      //   ),
-      // );
-
-      // Without cache
       return await apiService.getUsers(
         cancelToken: cancelToken,
         page: page,

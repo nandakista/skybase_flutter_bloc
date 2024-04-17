@@ -31,12 +31,12 @@ class SampleFeatureListBloc extends PaginationBloc<SampleFeature,
 
   @override
   SampleFeatureListState? fromJson(Map<String, dynamic> json) {
-    return SampleFeatureListLoaded(loadCache(json));
+    return SampleFeatureListLoaded(loadCacheList(json));
   }
 
   @override
   Map<String, dynamic>? toJson(SampleFeatureListState state) {
-    return (state is SampleFeatureListLoaded) ? saveCache(state.result) : null;
+    return (state is SampleFeatureListLoaded) ? saveCacheList(state.result) : null;
   }
 
   void _onLoadData(
