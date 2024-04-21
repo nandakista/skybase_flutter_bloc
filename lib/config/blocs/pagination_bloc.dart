@@ -8,7 +8,6 @@ import 'package:skybase/config/base/pagination_mixin.dart';
 import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 
-
 /// Base bloc with several generic type, each description of type explained below :
 /// - T is type data
 /// - E is event bloc
@@ -47,13 +46,13 @@ abstract class PaginationBloc<T, E, S> extends HydratedBloc<E, S>
   /// Manipulate hydrated saving cache for pagination to only cache page 1
   @override
   Map<String, dynamic>? saveCacheList(List<T> data) {
-      if (page == 1) {
-        _tempData = data;
-        return super.saveCacheList(data);
-      } else {
-        _tempData?.clear();
-        return null;
-      }
+    if (page == 1) {
+      _tempData = data;
+      return super.saveCacheList(data);
+    } else {
+      _tempData?.clear();
+      return null;
+    }
   }
 
   void onClose() {}

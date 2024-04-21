@@ -7,7 +7,10 @@ import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 /// - T is type data
 /// - E is event bloc
 /// - S is state bloc
-abstract class BaseBloc<T, Event, State> extends HydratedBloc<Event, State> with HydratedCacheMixin<T> {
+abstract class BaseBloc<T, E, S> extends HydratedBloc<E, S>
+    with HydratedCacheMixin<T> {
+  final String _tag = 'PaginationBloc::->';
+
   CancelToken cancelToken = CancelToken();
 
   BaseBloc(super.state);
