@@ -7,11 +7,11 @@ import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 /// - T is type data
 /// - E is event bloc
 /// - S is state bloc
-abstract class BaseBloc<T, E, S> extends Bloc<E, S>
+abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
     with HydratedCacheMixin<T> {
   CancelToken cancelToken = CancelToken();
 
-  BaseBloc(super.state);
+  BaseHydratedBloc(super.state);
 
   Future Function()? _onLoad;
 
@@ -22,6 +22,7 @@ abstract class BaseBloc<T, E, S> extends Bloc<E, S>
 
   void onRefresh() async {
     if (_onLoad != null) {
+      await clear();
       await _onLoad!();
     }
   }
