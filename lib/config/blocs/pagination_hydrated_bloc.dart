@@ -12,13 +12,13 @@ import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
 /// - T is type data
 /// - E is event bloc
 /// - S is state bloc
-abstract class PaginationBloc<T, E, S> extends Bloc<E, S>
+abstract class PaginationHydratedBloc<T, E, S> extends HydratedBloc<E, S>
     with PaginationMixin<T>, HydratedCacheMixin<T> {
   final String _tag = 'PaginationBloc::->';
 
   CancelToken cancelToken = CancelToken();
 
-  PaginationBloc(super.state);
+  PaginationHydratedBloc(super.state);
 
   /// For persist data when paging init
   List<T>? _tempData = [];

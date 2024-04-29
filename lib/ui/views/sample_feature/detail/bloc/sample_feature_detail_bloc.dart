@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:skybase/config/blocs/base_bloc.dart';
+import 'package:skybase/config/blocs/base_hydrated_bloc.dart';
 import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
@@ -11,7 +11,7 @@ part 'sample_feature_detail_event.dart';
 
 part 'sample_feature_detail_state.dart';
 
-class SampleFeatureDetailBloc extends BaseBloc<SampleFeature,
+class SampleFeatureDetailBloc extends BaseHydratedBloc<SampleFeature,
     SampleFeatureDetailEvent, SampleFeatureDetailState> {
   String tag = 'SampleFeatureDetailBloc::->';
 

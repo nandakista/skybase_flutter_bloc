@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skybase/config/blocs/base_bloc.dart';
+import 'package:skybase/config/blocs/base_hydrated_bloc.dart';
 import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/data/models/repo/repo.dart';
 import 'package:skybase/data/repositories/auth/auth_repository.dart';
@@ -12,7 +12,7 @@ part 'profile_repository_event.dart';
 part 'profile_repository_state.dart';
 
 class ProfileRepositoryBloc
-    extends BaseBloc<Repo, ProfileRepositoryEvent, ProfileRepositoryState> {
+    extends BaseHydratedBloc<Repo, ProfileRepositoryEvent, ProfileRepositoryState> {
   String tag = 'ProfileRepositoryBloc::->';
 
   final AuthRepository repository;
