@@ -25,6 +25,7 @@ class AppTheme {
         unselectedItemColor: Colors.grey,
       ),
       appBarTheme: const AppBarTheme(
+        surfaceTintColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.black,
