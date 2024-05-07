@@ -45,7 +45,7 @@ abstract class SkyAppBar {
       centerTitle: centerTitle ?? true,
       action: action,
       backgroundColor: AppColors.primary,
-      titleStyle: TextStyle(color: textColor),
+      titleStyle: TextStyle(color: textColor ?? Colors.white),
       iconColor: iconColor ?? Colors.white,
     );
   }
