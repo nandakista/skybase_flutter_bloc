@@ -15,6 +15,18 @@ abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
 
   Future Function()? _onLoad;
 
+  bool get keepAlive => false;
+
+  void emitLoading(
+    Emitter<S> emit,
+    S state, {
+    required bool when,
+  }) {
+    if (when || !keepAlive) {
+      emit(state);
+    }
+  }
+
   void loadData(Future Function() onLoad) async {
     this._onLoad = onLoad;
     await onLoad();
@@ -23,6 +35,7 @@ abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
   void onRefresh() async {
     if (_onLoad != null) {
       await clear();
+      // if (!keepAlive) showLoading();
       await _onLoad!();
     }
   }

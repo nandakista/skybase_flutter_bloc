@@ -22,6 +22,9 @@ class SampleFeatureDetailBloc extends BaseHydratedBloc<SampleFeature,
   @override
   String get id => userId.toString();
 
+  @override
+  bool get keepAlive => false;
+
   SampleFeatureDetailBloc({
     required this.repository,
     required this.userId,
@@ -54,7 +57,11 @@ class SampleFeatureDetailBloc extends BaseHydratedBloc<SampleFeature,
     Emitter<SampleFeatureDetailState> emit,
   ) async {
     try {
-      if (state is SampleFeatureDetailInitial) emit(SampleFeatureDetailLoading());
+      emitLoading(
+        emit,
+        SampleFeatureDetailLoading(),
+        when: state is SampleFeatureDetailInitial,
+      );
       final response = await repository.getDetailUser(
         cancelToken: cancelToken,
         id: event.id,
