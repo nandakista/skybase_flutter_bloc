@@ -43,15 +43,12 @@ class AuthSourcesImpl implements AuthSources {
   }) async {
     try {
       String? token = await SecureStorageManager.instance.getToken();
-      String url = AppEnv.config.baseUrl;
-      url += 'auth/verify-token';
       final response = await Dio().get(
-        url,
+        '${AppEnv.config.baseUrl}/auth/verify-token',
         options: Options(
           headers: {
             HttpHeaders.authorizationHeader: 'Bearer $token',
             'Accept': Headers.jsonContentType,
-            'Client-Token': AppEnv.config.clientToken,
           },
           contentType: Headers.jsonContentType,
         ),

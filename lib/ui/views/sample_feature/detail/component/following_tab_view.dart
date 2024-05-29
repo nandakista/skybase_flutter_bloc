@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
@@ -16,8 +17,8 @@ class FollowingTabView extends StatelessWidget {
       itemBuilder: (_, index) {
         final SampleFeature? user = data.followingList?[index];
         return (user == null)
-            ? const Center(
-                child: Text('User belum mem-follow siapapun'),
+            ? Center(
+                child: Text('txt_no_following'.tr()),
               )
             : ListTile(
                 leading: SkyImage(

@@ -9,6 +9,9 @@ class AppConfiguration {
   //-- Main Configuration
   static const tokenType = TokenType.ACCESS_TOKEN;
 
+  /// TODO: To test this repository you can change this clientToken to Github token
+  /// You can get github token with : Profile > Settings > Developer Settings > Personal access tokens
+
   //-- Production
   static const prodBaseUrl = 'https://api.github.production.com';
   static const prodClientToken = 'Some Client Token';

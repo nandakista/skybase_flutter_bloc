@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:skybase/dev/dev_token.dart';
+import 'package:skybase/config/environment/app_env.dart';
 
 import 'api_config.dart';
 import 'api_exception.dart';
@@ -140,7 +140,7 @@ final class NetworkUtilsRequest with NetworkException {
     DioClient.setInterceptor();
     // String? token = await SecureStorageManager.instance.getToken();
     if (useToken) {
-      headers[HttpHeaders.authorizationHeader] = 'token $gitToken';
+      headers[HttpHeaders.authorizationHeader] = 'token ${AppEnv.config.clientToken}';
     } else {
       headers.clear();
     }

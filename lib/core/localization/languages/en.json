@@ -88,5 +88,8 @@
   "txt_need_permission_camera": "This app need your camera permission",
   "txt_need_permission_gallery_photo": "This app need your gallery and photo permission",
   "txt_crash_error_title": "Something Went Wrong!",
-  "txt_crash_error_message": "Sorry, the page you requested is not accessible at this time. Try again in a moment."
+  "txt_crash_error_message": "Sorry, the page you requested is not accessible at this time. Try again in a moment.",
+  "txt_no_follower": "You dont have follower",
+  "txt_no_following": "You are not following anyone",
+  "txt_no_repository": "You dont have any repositories"
 }

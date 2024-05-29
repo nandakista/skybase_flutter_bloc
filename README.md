@@ -7,6 +7,10 @@ A Flutter Base project that developed with :
 - Go Router
 - Dio
 
+## How to run
+To test this repository you can change this clientToken to Github token.
+You can get github token with : Profile > Settings > Developer Settings > Personal access tokens
+
 ## Skybase Documentation
 Read [this documentation](https://docs.google.com/document/d/1ZwO60uk2SnqVBfL-L7tmIu6ykHCB8MCHP9VxE-ijXYM/edit?usp=share_link) to understand architecture, state, pattern, and style guide of the skybase.
 
