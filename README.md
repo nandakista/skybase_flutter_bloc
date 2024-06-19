@@ -11,9 +11,7 @@ A Flutter Base project that developed with :
 Follow step below to run :
 1. Type `flutter pub get` in terminal
 2. Get github token from = Github Profile > Settings > Developer Settings > Personal access tokens 
-3. Open `main_development.dart` and change `clientToken` to Github token.
-4. Open `main_staging.dart` and change `clientToken` to Github token.
-5. Open `main_production.dart` and change `clientToken` to Github token.
+3. Open `app_configuration.dart` and change `prodClientToken`, `devClientToken`, and `stagingClientToken` to Github token.
 
 ## Skybase Documentation
 Read [this documentation](https://docs.google.com/document/d/1ZwO60uk2SnqVBfL-L7tmIu6ykHCB8MCHP9VxE-ijXYM/edit?usp=share_link) to understand architecture, state, pattern, and style guide of the skybase.
