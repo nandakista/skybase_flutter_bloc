@@ -8,7 +8,7 @@ A Flutter Base project that developed with :
 - Dio
 
 ## How to run
-Follow step below to run :
+Follow the steps below to run :
 1. Type `flutter pub get` in terminal
 2. Get github token from = Github Profile > Settings > Developer Settings > Personal access tokens 
 3. Create file called `api_keys.json` and save it to `lib/config/environment/`, then write with the following format
