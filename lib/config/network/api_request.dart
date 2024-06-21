@@ -140,7 +140,7 @@ final class NetworkUtilsRequest with NetworkException {
     DioClient.setInterceptor();
     // String? token = await SecureStorageManager.instance.getToken();
     if (useToken) {
-      headers[HttpHeaders.authorizationHeader] = 'token ${AppEnv.config.clientToken}';
+      headers[HttpHeaders.authorizationHeader] = 'token ${AppEnv.config.githubToken}';
     } else {
       headers.clear();
     }

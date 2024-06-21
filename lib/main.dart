@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
 
-import 'app_configuration.dart';
+import 'config/environment/app_configuration.dart';
 import 'config/themes/app_theme.dart';
 import 'config/observer/app_bloc_observer.dart';
 import 'service_locator.dart';

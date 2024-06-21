@@ -31,7 +31,7 @@
 .pub/
 /build/
 /mason/.mason
-/lib/dev
+/lib/config/environment/api_keys.json
 
 # Web related
 lib/generated_plugin_registrant.dart

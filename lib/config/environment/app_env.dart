@@ -1,4 +1,4 @@
-import 'package:skybase/app_configuration.dart';
+import 'package:skybase/config/environment/app_configuration.dart';
 
 import 'config_data.dart';
 
@@ -22,7 +22,7 @@ class AppEnv {
   static Config config = Config(
     baseUrl: AppConfiguration.devBaseUrl,
     tokenType: AppConfiguration.tokenType,
-    clientToken: AppConfiguration.devClientToken,
+    githubToken: AppConfiguration.githubToken,
   );
   static Environment env = Environment.DEVELOPMENT;
 
@@ -33,21 +33,21 @@ class AppEnv {
         config = Config(
           baseUrl: AppConfiguration.prodBaseUrl,
           tokenType: AppConfiguration.tokenType,
-          clientToken: AppConfiguration.prodClientToken,
+          githubToken: AppConfiguration.githubToken,
         );
         break;
       case Environment.STAGING:
         config = Config(
           baseUrl: AppConfiguration.stagingBaseUrl,
           tokenType: AppConfiguration.tokenType,
-          clientToken: AppConfiguration.stagingClientToken,
+          githubToken: AppConfiguration.githubToken,
         );
         break;
       case Environment.DEVELOPMENT:
         config = Config(
           baseUrl: AppConfiguration.devBaseUrl,
           tokenType: AppConfiguration.tokenType,
-          clientToken: AppConfiguration.devClientToken,
+          githubToken: AppConfiguration.githubToken,
         );
         break;
     }
