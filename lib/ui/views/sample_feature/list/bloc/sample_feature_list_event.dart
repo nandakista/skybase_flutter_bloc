@@ -8,7 +8,9 @@ sealed class SampleFeatureListEvent extends Equatable {
 }
 
 class LoadGithubUsers extends SampleFeatureListEvent {
-  const LoadGithubUsers();
+  const LoadGithubUsers(this.username);
+
+  final String username;
 
   @override
   List<Object> get props => [];

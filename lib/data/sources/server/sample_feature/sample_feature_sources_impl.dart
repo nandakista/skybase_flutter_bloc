@@ -13,12 +13,13 @@ class SampleFeatureSourcesImpl implements SampleFeatureSources {
     required CancelToken cancelToken,
     required int page,
     required int perPage,
+    required String username,
   }) async {
     try {
       final res = await ApiRequest.get(
         url: '/search/users',
         queryParameters: {
-          'q': 'nanda',
+          'q': username,
           'page': page,
           'per_page': perPage,
         },

@@ -6,7 +6,7 @@ import 'package:skybase/service_locator.dart';
 import 'package:skybase/ui/views/main_navigation/main_nav_view.dart';
 import 'package:skybase/ui/views/profile/bloc/profile_bloc.dart';
 import 'package:skybase/ui/views/profile/component/repository/bloc/profile_repository_bloc.dart';
-import 'package:skybase/ui/views/sample_feature/list/bloc/sample_feature_list_bloc.dart';
+import 'package:skybase/ui/views/sample_feature/list/bloc/sample_feature_list_tab_bloc.dart';
 
 final mainNavRoute = [
   GoRoute(
@@ -15,8 +15,15 @@ final mainNavRoute = [
     builder: (context, state) => MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => SampleFeatureListBloc(
+          create: (_) => NandaBloc(
             sl<SampleFeatureRepository>(),
+            'nanda',
+          ),
+        ),
+        BlocProvider(
+          create: (_) => PermanaBloc(
+            sl<SampleFeatureRepository>(),
+            'permana',
           ),
         ),
         BlocProvider(

@@ -17,12 +17,14 @@ class SampleFeatureRepositoryImpl implements SampleFeatureRepository {
     required CancelToken cancelToken,
     required int page,
     required int perPage,
+    required String username,
   }) async {
     try {
       return await apiService.getUsers(
         cancelToken: cancelToken,
         page: page,
         perPage: perPage,
+        username: username,
       );
     } catch (e, stack) {
       log('$tag error = $e, $stack');

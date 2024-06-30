@@ -16,14 +16,16 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
 
   final SampleFeatureRepository repository;
 
+  final String username;
+
   @override
   bool get keepAlive => false;
 
-  SampleFeatureListBloc(this.repository) : super(SampleFeatureListInitial()) {
+  SampleFeatureListBloc(this.repository, this.username) : super(SampleFeatureListInitial()) {
     on<LoadGithubUsers>(_onLoadData);
 
     loadPagingData(
-      event: const LoadGithubUsers(),
+      event: LoadGithubUsers(username),
       state: (state) => state is SampleFeatureListLoaded,
       until: state is SampleFeatureListLoaded,
     );
@@ -36,7 +38,9 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
 
   @override
   Map<String, dynamic>? toJson(SampleFeatureListState state) {
-    return (state is SampleFeatureListLoaded) ? saveCacheList(state.result) : null;
+    return (state is SampleFeatureListLoaded)
+        ? saveCacheList(state.result)
+        : null;
   }
 
   void _onLoadData(
@@ -49,6 +53,7 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
         cancelToken: cancelToken,
         page: page,
         perPage: perPage,
+        username: event.username,
       );
       emit(SampleFeatureListLoaded(response));
     } catch (e) {
