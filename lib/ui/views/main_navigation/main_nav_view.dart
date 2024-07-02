@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skybase/ui/views/profile/profile_view.dart';
-import 'package:skybase/ui/views/sample_feature/list/sample_feature_list_view.dart';
+import 'package:skybase/ui/views/sample_feature/list/sample_feature_list_tab_view.dart';
 import 'package:skybase/ui/views/utils/utils_view.dart';
 import 'package:skybase/ui/widgets/colored_status_bar.dart';
 import 'package:skybase/ui/widgets/sky_box.dart';
@@ -34,7 +34,7 @@ class _MainNavViewState extends State<MainNavView> {
               });
             },
             children: const [
-              SampleFeatureListView(),
+              SampleFeatureListTabView(),
               UtilsView(),
               ProfileView(),
             ],
