@@ -43,11 +43,12 @@ dependencies:
   flutter_svg: ^2.0.9
 
   # Others
+  collection: ^1.18.0
   package_info_plus: ^5.0.1
   device_info_plus: ^9.0.2
   url_launcher: ^6.2.1
   permission_handler: ^11.1.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   open_filex: ^4.3.4
   device_preview: ^1.1.0
 

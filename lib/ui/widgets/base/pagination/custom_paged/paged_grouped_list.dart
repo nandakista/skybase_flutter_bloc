@@ -20,7 +20,8 @@ class PagedGroupedListView<PageKeyType, T, G> extends BoxScrollView {
     this.shrinkWrapFirstPageIndicators = false,
     this.separator,
     this.separatorHeader,
-    this.separatorGroup,
+    this.sortGroupBy = SortBy.asc,
+    this.sortGroupItems,
     super.scrollDirection,
     super.reverse,
     super.controller,
@@ -44,7 +45,8 @@ class PagedGroupedListView<PageKeyType, T, G> extends BoxScrollView {
   final G Function(T element) groupBy;
   final Widget? separator;
   final Widget? separatorHeader;
-  final Widget? separatorGroup;
+  final SortBy sortGroupBy;
+  final int Function(T, T)? sortGroupItems;
 
   @override
   Widget buildChildLayout(BuildContext context) {
@@ -57,7 +59,8 @@ class PagedGroupedListView<PageKeyType, T, G> extends BoxScrollView {
       groupFooterBuilder: groupFooterBuilder,
       separator: separator,
       separatorHeader: separatorHeader,
-      separatorGroup: separatorGroup,
+      sortGroupBy: sortGroupBy,
+      sortGroupItems: sortGroupItems,
     );
   }
 }
@@ -73,8 +76,8 @@ class PagedSliverGroupedListView<PageKeyType, T, G> extends StatelessWidget {
     this.separator = const SizedBox.shrink(),
     this.groupFooterBuilder,
     this.separatorHeader,
-    this.separatorGroup,
-    this.sortBy = SortBy.asc,
+    this.sortGroupBy = SortBy.asc,
+    this.sortGroupItems,
   });
 
   final PagingController<PageKeyType, T> pagingController;
@@ -85,8 +88,8 @@ class PagedSliverGroupedListView<PageKeyType, T, G> extends StatelessWidget {
   final G Function(T element) groupBy;
   final Widget? separator;
   final Widget? separatorHeader;
-  final Widget? separatorGroup;
-  final SortBy sortBy;
+  final SortBy sortGroupBy;
+  final int Function(T, T)? sortGroupItems;
 
   @override
   Widget build(BuildContext context) {
@@ -103,14 +106,14 @@ class PagedSliverGroupedListView<PageKeyType, T, G> extends StatelessWidget {
               itemBuilder: (context, index, item) =>
                   itemBuilder(context, index),
               groupHeaderBuilder: groupHeaderBuilder,
-              separatorBuilder: (BuildContext context, int index) {
+              separatorGroupBuilder: (BuildContext context, int index) {
                 return const SizedBox.shrink();
               },
               groupFooterBuilder: groupFooterBuilder,
-              separatorGroup: separatorGroup,
               separatorHeader: separatorHeader,
               separator: separator,
-              sortBy: sortBy,
+              sortGroupBy: sortGroupBy,
+              sortGroupItems: sortGroupItems,
             ),
             if (statusIndicatorBuilder != null)
               SliverToBoxAdapter(

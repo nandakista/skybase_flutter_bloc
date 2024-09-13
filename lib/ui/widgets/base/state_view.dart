@@ -111,19 +111,23 @@ class StateView extends StatelessWidget {
   final Key? center;
 
   /// **Warning:**
-  /// Only accept sliver widget
+  /// Only accept sliver widget and
+  /// only visible when onRefresh is not null.
   ///
   /// Useful when you need adding pagination widget inside SingleChildScrollView
-  /// - Put your pagination widget in [headerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
-  /// - Put your pagination widget in [footerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  /// and the trigger of paginate (load next) is SingleChildScrollView not the list
+  /// - Put your pagination widget in [headerSliver] or [footerSliver] using
+  /// [PaginationSliverList] or [PaginationSliverGrid]
   final List<Widget>? footerSliver;
 
   /// **Warning:**
-  /// Only accept sliver widget
+  /// Only accept sliver widget and
+  /// only visible when onRefresh is not null.
   ///
   /// Useful when you need adding pagination widget inside SingleChildScrollView
-  /// - Put your pagination widget in [headerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
-  /// - Put your pagination widget in [footerSliver] using [PaginationSliverList] or [PaginationSliverGrid]
+  /// and the trigger of paginate (load next) is SingleChildScrollView not the list
+  /// - Put your pagination widget in [headerSliver] or [footerSliver] using
+  /// [PaginationSliverList] or [PaginationSliverGrid]
   final List<Widget>? headerSliver;
 
   const StateView.page({
