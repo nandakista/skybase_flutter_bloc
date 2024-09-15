@@ -26,7 +26,12 @@ class _SettingViewState extends State<SettingView> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => context.read<SettingBloc>().add(InitLocale()));
+
+    Future.microtask(() {
+      if (mounted) {
+        context.read<SettingBloc>().add(InitLocale());
+      }
+    });
   }
 
   @override
@@ -81,8 +86,8 @@ class _SettingViewState extends State<SettingView> {
                               groupValue: state.languageCode,
                               onChanged: (value) {
                                 context.read<SettingBloc>().add(
-                                  UpdateLocale(context, value.toString()),
-                                );
+                                      UpdateLocale(context, value.toString()),
+                                    );
                               },
                             ),
                             const Text('ID'),
@@ -91,8 +96,8 @@ class _SettingViewState extends State<SettingView> {
                               groupValue: state.languageCode,
                               onChanged: (value) async {
                                 context.read<SettingBloc>().add(
-                                  UpdateLocale(context, value.toString()),
-                                );
+                                      UpdateLocale(context, value.toString()),
+                                    );
                               },
                             ),
                           ],
