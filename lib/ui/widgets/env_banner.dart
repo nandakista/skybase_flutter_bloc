@@ -33,7 +33,7 @@ class EnvBanner extends StatelessWidget {
           message: title,
           textDirection: Directionality.of(context),
           layoutDirection: Directionality.of(context),
-          location: BannerLocation.topEnd,
+          location: BannerLocation.topStart,
           color: color,
         ),
       ),
