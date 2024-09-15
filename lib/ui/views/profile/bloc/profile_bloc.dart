@@ -19,7 +19,10 @@ class ProfileBloc extends BaseHydratedBloc<User, ProfileEvent, ProfileState> {
   ProfileBloc(this.repository) : super(ProfileInitial()) {
     on<LoadProfile>(_onLoadData);
     loadData(
-      () => addAndAwait(LoadProfile(), (state) => state is ProfileLoaded),
+      onLoad: () => addAndAwait(
+        LoadProfile(),
+        (state) => state is ProfileLoaded,
+      ),
     );
   }
 

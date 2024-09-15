@@ -21,13 +21,18 @@ abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
     Emitter<S> emit,
     S state, {
     required bool when,
-  }) {
-    if (when || !keepAlive) {
+  }) async {
+    dynamic cachedData = await HydratedBloc.storage.read(storageToken);
+    if (when && cachedData == null) {
       emit(state);
+    } else {
+      if (!keepAlive && cachedData == null) {
+        emit(state);
+      }
     }
   }
 
-  void loadData(Future Function() onLoad) async {
+  void loadData({required Future Function() onLoad}) async {
     this._onLoad = onLoad;
     await onLoad();
   }
@@ -35,7 +40,6 @@ abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
   void onRefresh() async {
     if (_onLoad != null) {
       await clear();
-      // if (!keepAlive) showLoading();
       await _onLoad!();
     }
   }

@@ -5,6 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:skybase/config/blocs/pagination_hydrated_bloc.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 
 part 'sample_feature_list_event.dart';
 
@@ -23,8 +24,10 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
     on<LoadGithubUsers>(_onLoadData);
 
     loadPagingData(
-      event: const LoadGithubUsers(),
-      state: (state) => state is SampleFeatureListLoaded,
+      onLoad: () => addAndAwait(
+        const LoadGithubUsers(),
+        (state) => state is SampleFeatureListLoaded,
+      ),
       until: state is SampleFeatureListLoaded,
     );
   }
@@ -36,7 +39,9 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
 
   @override
   Map<String, dynamic>? toJson(SampleFeatureListState state) {
-    return (state is SampleFeatureListLoaded) ? saveCacheList(state.result) : null;
+    return (state is SampleFeatureListLoaded)
+        ? saveCacheList(state.result)
+        : null;
   }
 
   void _onLoadData(
