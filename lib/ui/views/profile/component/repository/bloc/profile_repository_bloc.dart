@@ -17,6 +17,9 @@ class ProfileRepositoryBloc extends BaseHydratedBloc<Repo,
 
   final AuthRepository repository;
 
+  @override
+  bool get keepAlive => false;
+
   ProfileRepositoryBloc(this.repository) : super(ProfileRepositoryInitial()) {
     on<LoadRepositories>(_onLoadData);
 
@@ -45,7 +48,11 @@ class ProfileRepositoryBloc extends BaseHydratedBloc<Repo,
     Emitter<ProfileRepositoryState> emit,
   ) async {
     try {
-      emit(ProfileRepositoryLoading());
+      emitLoading(
+        emit,
+        ProfileRepositoryLoading(),
+        when: state is ProfileRepositoryInitial,
+      );
       final response = await repository.getProfileRepository(
         cancelToken: cancelToken,
         username: 'nandakista',

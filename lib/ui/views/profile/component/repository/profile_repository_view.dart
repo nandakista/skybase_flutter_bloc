@@ -23,7 +23,7 @@ class ProfileRepositoryView extends StatelessWidget {
           errorEnabled: state is ProfileRepositoryError,
           emptyEnabled: state is ProfileRepositoryInitial,
           errorTitle: errMessage,
-          onRetry: bloc.onRefresh,
+          onRetry: () => bloc.onRefresh(context),
           loadingView: const ShimmerSampleFeatureList(),
           child: ListView.builder(
             padding: EdgeInsets.zero,

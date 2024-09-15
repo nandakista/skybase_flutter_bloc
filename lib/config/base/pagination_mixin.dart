@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/core/database/storage/storage_manager.dart';
 
@@ -28,7 +29,7 @@ mixin PaginationMixin<T> {
     if (page == 1) await onLoad();
   }
 
-  void onRefresh() async {
+  Future<void> onRefresh([BuildContext? context]) async {
     try {
       if (_onLoad != null) {
         page = 1;

@@ -37,7 +37,7 @@ abstract class BaseHydratedBloc<T, E, S> extends HydratedBloc<E, S>
     await onLoad();
   }
 
-  void onRefresh() async {
+  Future<void> onRefresh([BuildContext? context]) async {
     if (_onLoad != null) {
       await clear();
       await _onLoad!();
