@@ -50,11 +50,7 @@ class ProfileBloc extends BaseHydratedBloc<User, ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     try {
-      emitLoading(
-        emit,
-        ProfileLoading(),
-        when: state is ProfileInitial,
-      );
+      emitLoading(emit, ProfileLoading(), when: state is ProfileInitial);
       final response = await repository.getProfile(
         cancelToken: cancelToken,
         username: 'nandakista',

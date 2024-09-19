@@ -49,7 +49,7 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
     Emitter<SampleFeatureListState> emit,
   ) async {
     try {
-      emit(SampleFeatureListLoading());
+      emitLoading(emit, SampleFeatureListLoading());
       final response = await repository.getUsers(
         cancelToken: cancelToken,
         page: page,
