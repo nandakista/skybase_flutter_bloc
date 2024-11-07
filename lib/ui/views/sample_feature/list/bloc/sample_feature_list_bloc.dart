@@ -5,6 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:skybase/config/blocs/pagination_hydrated_bloc.dart';
 import 'package:skybase/data/models/sample_feature/sample_feature.dart';
 import 'package:skybase/data/repositories/sample_feature/sample_feature_repository.dart';
+import 'package:skybase/config/blocs/bloc_extension.dart';
 
 part 'sample_feature_list_event.dart';
 
@@ -25,8 +26,10 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
     on<LoadGithubUsers>(_onLoadData);
 
     loadPagingData(
-      event: LoadGithubUsers(username),
-      state: (state) => state is SampleFeatureListLoaded,
+      onLoad: () => addAndAwait(
+        LoadGithubUsers(username),
+        (state) => state is SampleFeatureListLoaded,
+      ),
       until: state is SampleFeatureListLoaded,
     );
   }
@@ -48,7 +51,7 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
     Emitter<SampleFeatureListState> emit,
   ) async {
     try {
-      emit(SampleFeatureListLoading());
+      emitLoading(emit, SampleFeatureListLoading());
       final response = await repository.getUsers(
         cancelToken: cancelToken,
         page: page,

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:skybase/config/environment/app_env.dart';
 import 'package:skybase/core/localization/locale_manager.dart';
 import 'package:skybase/config/themes/theme_manager/theme_manager.dart';
+import 'package:skybase/ui/widgets/env_banner.dart';
 
 import 'config/environment/app_configuration.dart';
 import 'config/themes/app_theme.dart';
@@ -65,7 +67,11 @@ class App extends StatelessWidget {
               ErrorWidget.builder = (FlutterErrorDetails error) {
                 return CrashErrorView(errorDetails: error);
               };
-              return child ?? const SizedBox.shrink();
+              return EnvBanner(
+                title: AppEnv.env.title,
+                color: AppEnv.env.color,
+                child: child ?? const SizedBox.shrink(),
+              );
             },
           );
         },

@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/config/base/pagination_mixin.dart';
-import 'package:skybase/config/blocs/bloc_extension.dart';
 import 'package:skybase/config/blocs/hydrated_cache_mixin.dart';
+import 'package:skybase/config/blocs/base_hydrated_bloc.dart';
 
 /// Base bloc with several generic type, each description of type explained below :
 /// - T is type data
@@ -23,21 +23,26 @@ abstract class PaginationHydratedBloc<T, E, S> extends HydratedBloc<E, S>
   /// For persist data when paging init
   List<T>? _tempData = [];
 
+  /// Only manipulate syntax so in [BaseHydratedBloc] and [PaginationHydratedBloc]
+  /// have same syntax when emit the loading state
+  void emitLoading(Emitter<S> emit, S state, {bool? when}) async {
+    emit(state);
+  }
+
   /// Must be call this in init state for make pagination not loading
   void loadPagingData({
-    required E event,
-    required bool Function(S state) state,
+    required Future Function() onLoad,
     required bool until,
   }) {
-    if (until) {
-      pagingController.value = PagingState(
-        nextPageKey: page,
-        error: null,
-        itemList: _tempData,
-      );
-    }
     try {
-      loadData(() => addAndAwait(event, state));
+      if (until) {
+        pagingController.value = PagingState(
+          nextPageKey: page,
+          error: null,
+          itemList: _tempData,
+        );
+      }
+      loadData(onLoad);
     } catch (e) {
       log('$_tag Failed to load paging data');
     }

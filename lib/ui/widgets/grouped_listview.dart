@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart' as c;
 
 /* Created by
    Varcant
@@ -19,14 +20,15 @@ class GroupedListView<T, G> extends StatelessWidget {
     required this.groupHeaderBuilder,
     required this.itemBuilder,
     this.controller,
-    this.sortBy = SortBy.asc,
+    this.sortGroupBy = SortBy.asc,
     this.padding,
     this.shrinkWrap = false,
     this.physics,
     this.separator,
-    this.separatorHeader,
     this.groupFooterBuilder,
     this.separatorGroup,
+    this.reverse = false,
+    this.sortGroupItems,
   });
 
   final ScrollPhysics? physics;
@@ -36,105 +38,66 @@ class GroupedListView<T, G> extends StatelessWidget {
   final Widget Function(BuildContext context, int index, T element) itemBuilder;
   final Widget Function(G element)? groupFooterBuilder;
   final ScrollController? controller;
-  final SortBy sortBy;
+  final SortBy sortGroupBy;
   final G Function(T element) groupBy;
   final EdgeInsetsGeometry? padding;
   final Widget? separator;
-  final Widget? separatorHeader;
   final Widget? separatorGroup;
+  final bool reverse;
+  final int Function(T, T)? sortGroupItems;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    switch (sortGroupBy) {
+      case SortBy.asc:
+        (data).sort((b, a) => (groupBy(b) as dynamic)!.compareTo(groupBy(a)));
+        break;
+      case SortBy.desc:
+        (data).sort((b, a) => (groupBy(a) as dynamic)!.compareTo(groupBy(b)));
+        break;
+    }
+
+    Map<G, List<T>> groupedData =
+        c.groupBy<T, G>((data).where((_) => true), groupBy);
+
+    List<G> groupList = groupedData.keys.toList();
+
+    return ListView.separated(
       shrinkWrap: shrinkWrap,
       physics: physics,
       padding: padding ?? const EdgeInsets.all(0),
-      itemCount: data.length,
+      itemCount: groupList.length,
       controller: controller,
-      reverse: sortBy == SortBy.asc ? false : true,
-      itemBuilder: (_, index) {
-        (data).sort(
-              (b, a) => (groupBy(b) as dynamic)!.compareTo(
-            groupBy(a),
-          ),
+      reverse: reverse,
+      itemBuilder: (_, indexGroup) {
+        G group = groupList[indexGroup];
+        List<T> groupItems = groupedData.values.toList()[indexGroup];
+        if (sortGroupItems != null) {
+          groupItems.sort(sortGroupItems);
+        }
+
+        return Column(
+          children: [
+            groupHeaderBuilder(group),
+            ListView.separated(
+              itemCount: groupItems.length,
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return itemBuilder(context, index, groupItems[index]);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return separator ?? const SizedBox.shrink();
+              },
+            ),
+            if (groupFooterBuilder != null) groupFooterBuilder!(group),
+          ],
         );
-
-        bool isSame = true;
-        final G item = groupBy(data[index]);
-
-        G prevItem;
-        if (index != 0) {
-          prevItem = groupBy(data[index - 1]);
-          isSame = item == prevItem;
-        } else {
-          prevItem = item;
-          isSame = item == prevItem;
-        }
-
-        G nextItem;
-        if (index == data.length - 1) {
-          nextItem = item;
-        } else {
-          nextItem = groupBy(data[index + 1]);
-        }
-
-        bool isFirstIndex = index == 0;
-        bool isLastIndex = index + 1 == data.length;
-
-        if (sortBy == SortBy.asc) {
-          return Column(
-            children: [
-              if (isFirstIndex || !isSame) _buildHeaderWidget(item),
-              if (!isFirstIndex && item == prevItem)
-                _buildSeparatorWidget(separator),
-              _buildItemWidget(context, index),
-              if (groupFooterBuilder != null &&
-                  (item != nextItem || isLastIndex))
-                groupFooterBuilder!(item),
-              if (separatorGroup != null &&
-                  (item != nextItem || isLastIndex) &&
-                  !isLastIndex)
-                separatorGroup!,
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              if (isLastIndex) _buildHeaderWidget(item),
-              _buildItemWidget(context, index),
-              if (!isFirstIndex && item == prevItem)
-                _buildSeparatorWidget(separator),
-              if (groupFooterBuilder != null &&
-                  (item != prevItem || isFirstIndex))
-                groupFooterBuilder!(item),
-              if (!isSame) _buildHeaderWidget(prevItem),
-            ],
-          );
-        }
       },
-    );
-  }
-
-  _buildHeaderWidget(G item) {
-    return Column(
-      children: [
-        SizedBox(width: double.infinity, child: groupHeaderBuilder(item)),
-        _buildSeparatorWidget(separatorHeader),
-      ],
-    );
-  }
-
-  _buildItemWidget(BuildContext context, int index) {
-    return SizedBox(
-      width: double.infinity,
-      child: itemBuilder(context, index, data[index]),
-    );
-  }
-
-  _buildSeparatorWidget(Widget? item) {
-    return SizedBox(
-      width: double.infinity,
-      child: item ?? const SizedBox.shrink(),
+      separatorBuilder: (BuildContext context, int index) {
+        return separatorGroup ?? const SizedBox.shrink();
+      },
     );
   }
 }
@@ -146,115 +109,70 @@ class SliverGroupedListView<T, G> extends StatelessWidget {
     required this.groupBy,
     required this.groupHeaderBuilder,
     required this.itemBuilder,
-    this.sortBy = SortBy.asc,
+    this.sortGroupBy = SortBy.asc,
     this.separator,
     this.separatorHeader,
     this.groupFooterBuilder,
-    this.separatorGroup,
-    required this.separatorBuilder,
+    required this.separatorGroupBuilder,
+    this.sortGroupItems,
   });
 
   final List<T> data;
   final Widget Function(G element) groupHeaderBuilder;
   final Widget Function(BuildContext context, int index, T element) itemBuilder;
   final Widget Function(G element)? groupFooterBuilder;
-  final SortBy sortBy;
+  final SortBy sortGroupBy;
   final G Function(T element) groupBy;
   final Widget? separator;
   final Widget? separatorHeader;
-  final Widget? separatorGroup;
-
-  final Widget? Function(BuildContext, int) separatorBuilder;
+  final NullableIndexedWidgetBuilder separatorGroupBuilder;
+  final int Function(T, T)? sortGroupItems;
 
   @override
   Widget build(BuildContext context) {
+    switch (sortGroupBy) {
+      case SortBy.asc:
+        (data).sort((b, a) => (groupBy(b) as dynamic)!.compareTo(groupBy(a)));
+        break;
+      case SortBy.desc:
+        (data).sort((b, a) => (groupBy(a) as dynamic)!.compareTo(groupBy(b)));
+        break;
+    }
+
+    Map<G, List<T>> groupedData =
+        c.groupBy<T, G>((data).where((_) => true), groupBy);
+
+    List<G> groupList = groupedData.keys.toList();
+
     return SliverList.separated(
-      itemCount: data.length,
-      separatorBuilder: separatorBuilder,
-      itemBuilder: (context, index) {
+      itemCount: groupList.length,
+      separatorBuilder: separatorGroupBuilder,
+      itemBuilder: (context, indexGroup) {
+        G group = groupList[indexGroup];
+        List<T> groupItems = groupedData.values.toList()[indexGroup];
+        if (sortGroupItems != null) {
+          groupItems.sort(sortGroupItems);
+        }
 
-        bool isFirstIndex = index == 0;
-        bool isLastIndex = index + 1 == data.length;
-
-        (data).sort(
-              (b, a) => (groupBy(b) as dynamic)!.compareTo(
-            groupBy(a),
-          ),
+        return Column(
+          children: [
+            groupHeaderBuilder(group),
+            ListView.separated(
+              itemCount: groupItems.length,
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return itemBuilder(context, index, groupItems[index]);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return separator ?? const SizedBox.shrink();
+              },
+            ),
+            if (groupFooterBuilder != null) groupFooterBuilder!(group),
+          ],
         );
-
-        bool isSame = true;
-        final G item = groupBy(data[index]);
-
-        G prevItem;
-        if (!isFirstIndex) {
-          prevItem = groupBy(data[index - 1]);
-          isSame = item == prevItem;
-        } else {
-          prevItem = item;
-          isSame = item == prevItem;
-        }
-
-        G nextItem;
-        if (isLastIndex) {
-          nextItem = item;
-        } else {
-          nextItem = groupBy(data[index + 1]);
-        }
-
-        if (sortBy == SortBy.asc) {
-          return Column(
-            children: [
-              if (isFirstIndex || !isSame) _buildHeaderWidget(item),
-              if (!isFirstIndex && item == prevItem)
-                _buildSeparatorWidget(separator),
-              _buildItemWidget(context, index),
-              if (groupFooterBuilder != null &&
-                  (item != nextItem || isLastIndex))
-                groupFooterBuilder!(item),
-              if (separatorGroup != null &&
-                  (item != nextItem || isLastIndex) &&
-                  !isLastIndex)
-                separatorGroup!,
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              if (isLastIndex) _buildHeaderWidget(item),
-              _buildItemWidget(context, index),
-              if (!isFirstIndex && item == prevItem)
-                _buildSeparatorWidget(separator),
-              if (groupFooterBuilder != null &&
-                  (item != prevItem || isFirstIndex))
-                groupFooterBuilder!(item),
-              if (!isSame) _buildHeaderWidget(prevItem),
-            ],
-          );
-        }
       },
-    );
-  }
-
-  _buildHeaderWidget(G item) {
-    return Column(
-      children: [
-        SizedBox(width: double.infinity, child: groupHeaderBuilder(item)),
-        _buildSeparatorWidget(separatorHeader),
-      ],
-    );
-  }
-
-  _buildItemWidget(BuildContext context, int index) {
-    return SizedBox(
-      width: double.infinity,
-      child: itemBuilder(context, index, data[index]),
-    );
-  }
-
-  _buildSeparatorWidget(Widget? item) {
-    return SizedBox(
-      width: double.infinity,
-      child: item ?? const SizedBox.shrink(),
     );
   }
 }

@@ -23,7 +23,7 @@ class SampleFeatureDetailBloc extends BaseHydratedBloc<SampleFeature,
   String get id => userId.toString();
 
   @override
-  bool get keepAlive => false;
+  bool get keepAlive => true;
 
   SampleFeatureDetailBloc({
     required this.repository,
@@ -33,7 +33,7 @@ class SampleFeatureDetailBloc extends BaseHydratedBloc<SampleFeature,
     on<LoadGithubUser>(_onLoadData);
 
     loadData(
-      () => addAndAwait(
+      onLoad: () => addAndAwait(
         LoadGithubUser(userId, username),
         (state) => state is SampleFeatureDetailLoaded,
       ),

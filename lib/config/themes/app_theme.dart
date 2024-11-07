@@ -82,12 +82,12 @@ class AppTheme {
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
       side: const BorderSide(width: 1, color: Color(0xFFCFCFCF)),
-      fillColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.secondary;
         }
         return null;
@@ -97,12 +97,12 @@ class AppTheme {
 
   static RadioThemeData radioThemeData() {
     return RadioThemeData(
-      fillColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.secondary;
         }
         return null;
@@ -112,22 +112,22 @@ class AppTheme {
 
   static SwitchThemeData switchThemeData() {
     return SwitchThemeData(
-      thumbColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      thumbColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.materialAccent[200];
         }
         return null;
       }),
-      trackColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      trackColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.secondary;
         }
         return null;

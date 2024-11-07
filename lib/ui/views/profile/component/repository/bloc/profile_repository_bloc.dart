@@ -11,17 +11,20 @@ part 'profile_repository_event.dart';
 
 part 'profile_repository_state.dart';
 
-class ProfileRepositoryBloc
-    extends BaseHydratedBloc<Repo, ProfileRepositoryEvent, ProfileRepositoryState> {
+class ProfileRepositoryBloc extends BaseHydratedBloc<Repo,
+    ProfileRepositoryEvent, ProfileRepositoryState> {
   String tag = 'ProfileRepositoryBloc::->';
 
   final AuthRepository repository;
+
+  @override
+  bool get keepAlive => false;
 
   ProfileRepositoryBloc(this.repository) : super(ProfileRepositoryInitial()) {
     on<LoadRepositories>(_onLoadData);
 
     loadData(
-      () => addAndAwait(
+      onLoad: () => addAndAwait(
         LoadRepositories(),
         (state) => state is ProfileRepositoryLoaded,
       ),
@@ -45,7 +48,11 @@ class ProfileRepositoryBloc
     Emitter<ProfileRepositoryState> emit,
   ) async {
     try {
-      emit(ProfileRepositoryLoading());
+      emitLoading(
+        emit,
+        ProfileRepositoryLoading(),
+        when: state is ProfileRepositoryInitial,
+      );
       final response = await repository.getProfileRepository(
         cancelToken: cancelToken,
         username: 'nandakista',

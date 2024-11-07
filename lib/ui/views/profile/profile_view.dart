@@ -43,8 +43,8 @@ class ProfileView extends StatelessWidget {
             errorEnabled: state is ProfileError,
             emptyEnabled: false,
             errorTitle: errMessage,
-            onRetry: bloc.onRefresh,
-            onRefresh: bloc.onRefresh,
+            onRetry: () => bloc.onRefresh(context),
+            onRefresh: () => bloc.onRefresh(context),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(

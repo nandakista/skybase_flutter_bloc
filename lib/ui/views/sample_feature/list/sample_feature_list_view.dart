@@ -28,8 +28,8 @@ class SampleFeatureListView<T extends SampleFeatureListBloc> extends StatelessWi
         return PaginationStateView<SampleFeature>.list(
           pagingController: bloc.pagingController,
           loadingView: const ShimmerSampleFeatureList(),
-          onRefresh: bloc.onRefresh,
-          onRetry: bloc.onRefresh,
+          onRefresh: () => bloc.onRefresh(context),
+          onRetry: () => bloc.onRefresh(context),
           itemBuilder: (BuildContext context, item, int index) {
             return ListTile(
               onTap: () {

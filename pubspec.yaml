@@ -15,51 +15,52 @@ dependencies:
     sdk: flutter
 
   # Architecture
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^8.1.6
   hydrated_bloc: ^9.1.5
-  go_router: ^12.1.1
-  dio: ^5.3.4
-  get_it: ^7.6.4
-  flutter_secure_storage: ^9.0.0
-  shared_preferences: ^2.2.2
-  easy_localization: ^3.0.3
+  go_router: ^14.4.1
+  dio: ^5.7.0
+  get_it: ^8.0.2
+  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.3.2
+  easy_localization: ^3.0.7
   equatable: ^2.0.5
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   sliver_tools: ^0.2.12
 
   # File Manager
   path_provider: ^2.1.1
-  image_picker: ^1.0.4
-  file_picker: ^6.1.1
-  flutter_image_compress: ^2.1.0
+  image_picker: ^1.1.2
+  file_picker: ^8.1.3
+  flutter_image_compress: ^2.3.0
   path: ^1.8.3
 
   # Widget
-  modal_bottom_sheet: ^3.0.0-pre
+  modal_bottom_sheet: ^3.0.0
   infinite_scroll_pagination: ^4.0.0
   shimmer: ^3.0.0
-  cached_network_image: ^3.3.0
-  cupertino_icons: ^1.0.6
-  flutter_svg: ^2.0.9
+  cached_network_image: ^3.4.1
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.14
 
   # Others
-  package_info_plus: ^5.0.1
-  device_info_plus: ^9.0.2
-  url_launcher: ^6.2.1
-  permission_handler: ^11.1.0
-  intl: ^0.18.1
-  open_filex: ^4.3.4
-  device_preview: ^1.1.0
+  collection: ^1.18.0
+  package_info_plus: ^8.1.1
+  device_info_plus: ^11.1.1
+  url_launcher: ^6.3.1
+  permission_handler: ^11.3.1
+  intl: ^0.19.0
+  open_filex: ^4.5.0
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.1
-  flutter_native_splash: ^2.3.6
-#  change_app_package_name: ^1.1.0
-#  rename: ^2.1.1
-#  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^5.0.0
+  flutter_native_splash: ^2.4.2
+#  change_app_package_name: ^1.4.0
+#  rename: ^3.0.2
+#  flutter_launcher_icons: ^0.14.1
 
 flutter:
   uses-material-design: true
@@ -82,7 +83,6 @@ flutter:
           weight: 400
         - asset: fonts/Poppins-Light.ttf
           weight: 300
-
 #
 # Usage :
 # flutter pub run flutter_launcher_icons
