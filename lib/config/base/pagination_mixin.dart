@@ -32,12 +32,14 @@ mixin PaginationMixin<T> {
   Future<void> onRefresh([BuildContext? context]) async {
     try {
       if (_onLoad != null) {
-        page = 1;
-        pagingController.value = PagingState(
-          nextPageKey: page,
-          error: null,
-          itemList: keepAlive ? _keepAliveData : null,
-        );
+        if (page > 1) {
+          page = 1;
+          pagingController.value = PagingState(
+            nextPageKey: page,
+            error: null,
+            itemList: keepAlive ? _keepAliveData : null,
+          );
+        }
         await _onLoad!();
       }
     } catch (e) {

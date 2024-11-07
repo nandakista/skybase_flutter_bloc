@@ -134,7 +134,7 @@ class PaginationSliverGrid<T> extends StatelessWidget {
           imageHeight: imageHeight,
           imageWidth: imageWidth,
           itemBuilder: itemBuilder,
-          errorLoadView: errorLoadView,
+          errorLoadMoreView: errorLoadView,
           errorView: errorView,
         ),
       ),

@@ -4,6 +4,7 @@
 */
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:skybase/ui/widgets/base/empty_view.dart';
@@ -33,7 +34,7 @@ PagedChildBuilderDelegate<T> PaginationDelegate<T>({
   TextStyle? emptySubtitleStyle,
   bool emptyRetryEnabled = false,
   Widget? errorView,
-  Widget? errorLoadView,
+  Widget? errorLoadMoreView,
   String? retryText,
   Widget? retryWidget,
   TextStyle? errorTitleStyle,
@@ -97,7 +98,20 @@ PagedChildBuilderDelegate<T> PaginationDelegate<T>({
     noMoreItemsIndicatorBuilder: (ctx) =>
         maxItemView ?? const SizedBox.shrink(),
     newPageErrorIndicatorBuilder: (ctx) =>
-        errorLoadView ?? const SizedBox.shrink(),
+        errorLoadMoreView ??
+        InkWell(
+          onTap: onRetry,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: errorLoadMoreView ?? const Icon(CupertinoIcons.refresh),
+              ),
+              Text('txt_tap_retry'.tr())
+            ],
+          ),
+        ),
     itemBuilder: itemBuilder,
   );
 }

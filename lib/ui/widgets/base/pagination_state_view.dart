@@ -28,7 +28,7 @@ class PaginationStateView<T> extends StatelessWidget {
     this.emptyView,
     this.maxItemView,
     this.errorView,
-    this.errorLoadView,
+    this.errorLoadMoreView,
     this.shrinkWrap = false,
     this.shrinkWrapFirstPageIndicators = false,
     this.physics,
@@ -107,7 +107,7 @@ class PaginationStateView<T> extends StatelessWidget {
     this.emptyView,
     this.maxItemView,
     this.errorView,
-    this.errorLoadView,
+    this.errorLoadMoreView,
     this.shrinkWrap = false,
     this.shrinkWrapFirstPageIndicators = false,
     this.physics,
@@ -182,7 +182,7 @@ class PaginationStateView<T> extends StatelessWidget {
   final Widget? emptyView;
   final Widget? maxItemView;
   final Widget? errorView;
-  final Widget? errorLoadView;
+  final Widget? errorLoadMoreView;
   final bool shrinkWrapFirstPageIndicators;
   final VoidCallback? onRefresh;
   final VoidCallback onRetry;
@@ -394,7 +394,7 @@ class PaginationStateView<T> extends StatelessWidget {
       imageHeight: imageHeight,
       imageWidth: imageWidth,
       itemBuilder: itemBuilder,
-      errorLoadView: errorLoadView,
+      errorLoadMoreView: errorLoadMoreView,
       errorView: errorView,
     );
   }
