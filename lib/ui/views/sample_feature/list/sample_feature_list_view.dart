@@ -9,7 +9,8 @@ import 'package:skybase/ui/widgets/base/pagination_state_view.dart';
 import 'package:skybase/ui/widgets/shimmer/sample_feature/shimmer_sample_feature_list.dart';
 import 'package:skybase/ui/widgets/sky_image.dart';
 
-class SampleFeatureListView<T extends SampleFeatureListBloc> extends StatelessWidget {
+class SampleFeatureListView<T extends SampleFeatureListBloc>
+    extends StatelessWidget {
   const SampleFeatureListView({super.key});
 
   @override
