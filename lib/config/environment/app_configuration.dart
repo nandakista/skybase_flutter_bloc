@@ -8,8 +8,8 @@ import 'package:skybase/config/network/api_token_manager.dart';
 class AppConfiguration {
   //-- Main Configuration
   static const TokenType tokenType = TokenType.ACCESS_TOKEN;
-  static const String prodBaseUrl = 'https://api.github.production.com';
-  static const String stagingBaseUrl = 'https://api.github.staging.com';
+  static const String prodBaseUrl = 'https://api.github.com';
+  static const String stagingBaseUrl = 'https://api.github.com';
   static const String devBaseUrl = 'https://api.github.com';
 
   //-- App Info
