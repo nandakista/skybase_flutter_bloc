@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+.build_ios_dsyms
 
 # IntelliJ related
 *.iml

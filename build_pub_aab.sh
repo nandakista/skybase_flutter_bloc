@@ -6,7 +6,7 @@ source trap_ctrlc.sh
 declare ENV=$1
 declare MODE=$2
 
-declare PUB_VERSION=$(sed -n 's/version: //p' pubspec.yaml)
+declare PUB_VERSION=$(sed -n 's/^version: //p' pubspec.yaml)
 
 declare BUILD_NAME=$(echo "$PUB_VERSION" | sed -n 's/\+.*//p')
 
