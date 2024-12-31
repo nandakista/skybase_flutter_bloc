@@ -1,14 +1,18 @@
 extension ListNullExtension<T> on List<T>? {
-  bool get isNullOrEmpty {
-    if (this == null) {
-      return true;
-    } else {
-      if (this!.isEmpty) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+  void sortAscBy<K extends Comparable<dynamic>>(K Function(T) keySelector) {
+    this?.sort((T a, T b) {
+      final K keyA = keySelector(a);
+      final K keyB = keySelector(b);
+      return keyA.compareTo(keyB);
+    });
+  }
+
+  void sortDescBy<K extends Comparable<dynamic>>(K Function(T) keySelector) {
+    this?.sort((T a, T b) {
+      final K keyA = keySelector(a);
+      final K keyB = keySelector(b);
+      return keyB.compareTo(keyA);
+    });
   }
 }
 
