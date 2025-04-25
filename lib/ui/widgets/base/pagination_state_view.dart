@@ -240,7 +240,7 @@ class PaginationStateView<T> extends StatelessWidget {
   }
 
   Widget _iosPaginationView() {
-    if (onRefresh != null) {
+    if (onRefresh != null && scrollDirection == Axis.vertical) {
       return Padding(
         key: key,
         padding: padding ?? EdgeInsets.zero,
