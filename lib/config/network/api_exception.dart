@@ -36,12 +36,12 @@ mixin NetworkException implements Exception {
   NetworkExceptionData handleResponse(Response response) {
     int statusCode = response.statusCode!;
     return switch (statusCode) {
-      400 || 403 || 422  => BadRequestException(response: response),
-      401 => UnauthorisedException(response: response),
-      404 => NotFoundException(response: response),
-      409 => FetchDataException(response: response),
+      400 || 403 || 422  => BadRequestException(),
+      401 => UnauthorisedException(),
+      404 => NotFoundException(),
+      409 => FetchDataException(),
       408 => SendTimeOutException(),
-      413 => RequestEntityTooLargeException(response: response),
+      413 => RequestEntityTooLargeException(),
       500 || 503 => InternalServerErrorException(),
       _ => FetchDataException(
         message: 'Received invalid status code: $statusCode',
