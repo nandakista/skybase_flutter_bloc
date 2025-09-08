@@ -13,3 +13,12 @@ class LoadGithubUsers extends SampleFeatureListEvent {
   @override
   List<Object> get props => [];
 }
+
+class SearchUser extends SampleFeatureListEvent {
+  final String? querySearch;
+
+  const SearchUser(this.querySearch);
+
+  @override
+  List<Object> get props => [];
+}

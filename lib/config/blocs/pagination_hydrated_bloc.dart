@@ -67,6 +67,7 @@ abstract class PaginationHydratedBloc<T, E, S> extends HydratedBloc<E, S>
   @mustCallSuper
   Future<void> close() {
     pagingController.dispose();
+    scrollController.dispose();
     cancelToken.cancel();
     return super.close();
   }

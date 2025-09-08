@@ -7,6 +7,7 @@ abstract interface class SampleFeatureSources {
     required CancelToken cancelToken,
     required int page,
     required int perPage,
+    String? username,
   });
 
   Future<SampleFeature> getDetailUser({

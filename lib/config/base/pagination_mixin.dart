@@ -9,6 +9,7 @@ mixin PaginationMixin<T> {
 
   StorageManager storage = StorageManager.instance;
 
+  final scrollController = ScrollController();
   final pagingController = PagingController<int, T>(firstPageKey: 1);
   final int perPage = 20;
   int page = 1;
@@ -32,19 +33,26 @@ mixin PaginationMixin<T> {
   Future<void> onRefresh([BuildContext? context]) async {
     try {
       if (_onLoad != null) {
-        if (page > 1) {
-          page = 1;
-          pagingController.value = PagingState(
-            nextPageKey: page,
-            error: null,
-            itemList: keepAlive ? _keepAliveData : null,
-          );
-        }
+        if (page > 1) resetState(keepAlive: keepAlive);
         await _onLoad!();
       }
     } catch (e) {
       log('$_tag Error $e');
     }
+  }
+
+  void resetState({bool keepAlive = false}) {
+    page = 1;
+    pagingController.value = PagingState(
+      nextPageKey: page,
+      error: null,
+      itemList: keepAlive ? _keepAliveData : null,
+    );
+    scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   void loadNextData({required List<T> data}) {

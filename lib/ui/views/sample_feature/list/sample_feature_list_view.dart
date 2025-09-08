@@ -66,14 +66,30 @@ class SampleFeatureListView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () async {
-          LoadingDialog.show(context);
-          await HydratedBloc.storage.clear();
-          if (context.mounted) LoadingDialog.dismiss(context);
-        },
-        child: const Icon(Icons.delete, color: Colors.white),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          spacing: 12,
+          children: [
+            FloatingActionButton(
+              backgroundColor: AppColors.primary,
+              onPressed: () async {
+                LoadingDialog.show(context);
+                await HydratedBloc.storage.clear();
+                if (context.mounted) LoadingDialog.dismiss(context);
+              },
+              child: const Icon(Icons.delete, color: Colors.white),
+            ),
+            FloatingActionButton(
+              backgroundColor: AppColors.primary,
+              onPressed: () {
+                context.read<SampleFeatureListBloc>().add(SearchUser( 'ada'));
+              },
+              child: const Icon(Icons.search, color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }

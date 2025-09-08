@@ -17,17 +17,21 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
 
   final SampleFeatureRepository repository;
 
+  String? querySearch;
+
   @override
   bool get keepAlive => false;
 
   SampleFeatureListBloc(this.repository) : super(SampleFeatureListInitial()) {
     on<LoadGithubUsers>(_onLoadData);
+    on<SearchUser>(_onSearchData);
 
     loadPagingData(
-      onLoad: () => addAndAwait(
-        const LoadGithubUsers(),
-        (state) => state is SampleFeatureListLoaded,
-      ),
+      onLoad:
+          () => addAndAwait(
+            const LoadGithubUsers(),
+            (state) => state is SampleFeatureListLoaded,
+          ),
       until: state is SampleFeatureListLoaded,
     );
   }
@@ -39,7 +43,7 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
 
   @override
   Map<String, dynamic>? toJson(SampleFeatureListState state) {
-    return (state is SampleFeatureListLoaded)
+    return (state is SampleFeatureListLoaded && querySearch == null)
         ? saveCacheList(state.result)
         : null;
   }
@@ -54,10 +58,20 @@ class SampleFeatureListBloc extends PaginationHydratedBloc<SampleFeature,
         cancelToken: cancelToken,
         page: page,
         perPage: perPage,
+        username: querySearch,
       );
       emit(SampleFeatureListLoaded(response));
     } catch (e) {
       emit(SampleFeatureListError(e.toString()));
     }
+  }
+
+  void _onSearchData(
+    SearchUser event,
+    Emitter<SampleFeatureListState> emit,
+  ) async {
+    querySearch = event.querySearch;
+    resetState();
+    add(LoadGithubUsers());
   }
 }
