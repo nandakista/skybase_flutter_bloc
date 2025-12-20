@@ -140,7 +140,7 @@ class _MediaUtilsViewState extends State<MediaUtilsView> {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(5),
                           bottomLeft: Radius.circular(5),

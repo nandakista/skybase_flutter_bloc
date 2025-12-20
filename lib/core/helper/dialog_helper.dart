@@ -10,7 +10,7 @@ class LoadingDialog {
       context: context,
       barrierLabel: 'Barrier',
       barrierDismissible: dismissible ?? false,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       pageBuilder: (_, __, ___) {
         return Center(
           child: Container(

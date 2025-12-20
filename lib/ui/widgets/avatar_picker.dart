@@ -66,7 +66,7 @@ class AvatarPicker extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                           spreadRadius: 2,
                           blurRadius: 1,
                           offset: const Offset(0, 0),
@@ -95,7 +95,7 @@ class AvatarPicker extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: Colors.grey.withValues(alpha: 0.2),
                         spreadRadius: 2,
                         blurRadius: 1,
                         offset: const Offset(0, 0),

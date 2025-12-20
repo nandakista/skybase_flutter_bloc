@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skybase/core/extension/form_state_extension.dart';
 import 'package:skybase/core/helper/dialog_helper.dart';
-import 'package:skybase/core/helper/validator_helper.dart';
+import 'package:skybase/core/helper/validator.dart';
 import 'package:skybase/config/themes/app_colors.dart';
 import 'package:skybase/config/themes/app_style.dart';
 import 'package:skybase/ui/views/login/bloc/login_bloc.dart';
@@ -82,8 +83,10 @@ class _LoginViewState extends State<LoginView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('txt_login'.tr(),
-                                    style: AppStyle.headline2),
+                                Text(
+                                  'txt_login'.tr(),
+                                  style: AppStyle.headline2,
+                                ),
                                 const SizedBox(height: 10),
                                 Text(
                                   'txt_login_subtitle'.tr(),
@@ -92,9 +95,7 @@ class _LoginViewState extends State<LoginView> {
                               ],
                             ),
                           ),
-                          const Flexible(
-                            child: FlutterLogo(size: 160),
-                          )
+                          const Flexible(child: FlutterLogo(size: 160)),
                         ],
                       ),
                       const SizedBox(height: 40),
@@ -110,11 +111,7 @@ class _LoginViewState extends State<LoginView> {
                               controller: phoneController,
                               keyboardType: TextInputType.phone,
                               icon: Icons.phone,
-                              validator: (value) => ValidatorHelper.field(
-                                title: 'txt_phone'.tr(),
-                                value: value.toString(),
-                                regex: AppRegex.phone,
-                              ),
+                              validator: Validator.phone(),
                             ),
                             const SizedBox(height: 20),
                             SkyPasswordFormField(
@@ -127,25 +124,21 @@ class _LoginViewState extends State<LoginView> {
                                 icon: const Icon(Icons.visibility_off),
                                 onPressed: onHidePassword,
                               ),
-                              validator: (value) => ValidatorHelper.field(
-                                title: 'txt_password'.tr(),
-                                value: value.toString(),
-                                regex: AppRegex.password,
-                              ),
+                              validator: Validator.password(),
                             ),
                             const SizedBox(height: 20),
                             SkyButton(
                               onPressed: () {
                                 FocusScope.of(context).unfocus();
-                                if (ValidatorHelper.validateForm(formKey)) {
-                                  bloc.add(
-                                    SubmitLogin(
-                                      phoneController.text,
-                                      emailController.text,
-                                      passwordController.text,
-                                    ),
-                                  );
-                                }
+                                bool isValid = formKey.saveAndValidate();
+                                if (!isValid) return;
+                                bloc.add(
+                                  SubmitLogin(
+                                    phoneController.text,
+                                    emailController.text,
+                                    passwordController.text,
+                                  ),
+                                );
                               },
                               text: 'txt_login'.tr(),
                               icon: Icons.arrow_forward,

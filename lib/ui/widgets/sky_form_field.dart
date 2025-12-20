@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:skybase/config/themes/app_colors.dart';
-import 'package:skybase/config/themes/app_style.dart';
-
 /* Created by
    Varcant
    nanda.kista@gmail.com
 */
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:skybase/config/themes/app_colors.dart';
+import 'package:skybase/config/themes/app_style.dart';
+import 'package:skybase/core/helper/validator.dart';
+
 class SkyFormField extends StatelessWidget {
   final String? label, hint, endText;
   final TextEditingController? controller;
@@ -15,7 +17,9 @@ class SkyFormField extends StatelessWidget {
   final Widget? endIcon;
   final int? maxLength, maxLines;
   final VoidCallback? onPress;
+  final bool isRequired;
   final String? Function(String?)? validator;
+  final List<FormFieldValidator<String>>? validators;
   final List<TextInputFormatter>? inputFormatters;
   final Color? backgroundColor;
   final Color? textColor;
@@ -40,7 +44,9 @@ class SkyFormField extends StatelessWidget {
     this.maxLines = 1,
     this.onPress,
     this.endIcon,
+    this.isRequired = false,
     this.validator,
+    this.validators,
     this.controller,
     this.keyboardType,
     this.icon,
@@ -97,20 +103,18 @@ class SkyFormField extends StatelessWidget {
         prefixIcon: (prefixWidget != null)
             ? prefixWidget
             : (icon != null)
-                ? Icon(icon, size: 25)
-                : null,
+            ? Icon(icon, size: 25)
+            : null,
         suffixIcon: (endText == null)
             ? endIcon
             : Align(
-                widthFactor: 1,
-                alignment: Alignment.centerRight,
-                child: Text(
-                  endText.toString(),
-                  style: AppStyle.subtitle4.copyWith(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
+          widthFactor: 1,
+          alignment: Alignment.centerRight,
+          child: Text(
+            endText.toString(),
+            style: AppStyle.subtitle4.copyWith(color: Colors.grey),
+          ),
+        ),
         errorText: validate ? 'Field cannot be empty!' : null,
         hintText: hint,
         labelText: (label != null) ? label : null,
@@ -119,7 +123,12 @@ class SkyFormField extends StatelessWidget {
         hintStyle: hintStyle ?? AppStyle.body2.copyWith(color: hintColor),
       ),
       style: style,
-      validator: validator,
+      validator:
+      validator ??
+          Validator.list([
+            if (isRequired) Validator.required(),
+            ...?validators,
+          ]),
       inputFormatters: formatters,
     );
   }
@@ -132,7 +141,12 @@ class SkyPasswordFormField extends StatelessWidget {
   final Widget? endIcon;
   final VoidCallback? onPress;
   final int? maxLength;
-  final String? Function(String?)? validator, onSaved, onChanged, onSubmit;
+  final String? Function(String?)? onSaved;
+  final String? Function(String?)? onChanged;
+  final String? Function(String?)? onSubmit;
+  final bool isRequired;
+  final String? Function(String?)? validator;
+  final List<FormFieldValidator<String>>? validators;
   final String? errorText;
   final bool hiddenText;
   final Color? backgroundColor;
@@ -155,7 +169,9 @@ class SkyPasswordFormField extends StatelessWidget {
     this.hiddenText = true,
     this.onSaved,
     this.onChanged,
+    this.isRequired = true,
     required this.validator,
+    this.validators,
     required this.controller,
     this.icon,
     this.backgroundColor,
@@ -174,7 +190,6 @@ class SkyPasswordFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Create
     if (controller != null && controller?.text == '' && initialValue != null) {
       controller?.text = initialValue.toString();
     }
@@ -193,18 +208,15 @@ class SkyPasswordFormField extends StatelessWidget {
         prefixIcon: (prefixWidget != null)
             ? prefixWidget
             : (icon != null)
-                ? Icon(icon, size: 25)
-                : null,
+            ? Icon(icon, size: 25)
+            : null,
         suffixIcon: (endText == null)
             ? endIcon
             : Align(
-                widthFactor: 1,
-                alignment: Alignment.centerRight,
-                child: Text(
-                  endText.toString(),
-                  style: AppStyle.subtitle4,
-                ),
-              ),
+          widthFactor: 1,
+          alignment: Alignment.centerRight,
+          child: Text(endText.toString(), style: AppStyle.subtitle4),
+        ),
         hintText: hint,
         labelText: (label != null) ? label : null,
         floatingLabelStyle: TextStyle(color: textColor),
@@ -217,7 +229,12 @@ class SkyPasswordFormField extends StatelessWidget {
       onSaved: onSaved,
       onTap: onPress,
       onFieldSubmitted: onSubmit,
-      validator: validator,
+      validator:
+      validator ??
+          Validator.list([
+            if (isRequired) Validator.required(),
+            ...?validators,
+          ]),
       style: style,
     );
   }
@@ -227,8 +244,11 @@ class RegisterPasswordRequirement extends StatelessWidget {
   final bool isValid;
   final String message;
 
-  const RegisterPasswordRequirement(
-      {super.key, required this.isValid, required this.message});
+  const RegisterPasswordRequirement({
+    super.key,
+    required this.isValid,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -236,19 +256,15 @@ class RegisterPasswordRequirement extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         (isValid)
-            ? const Icon(
-                Icons.check_circle_outline,
-                color: Colors.green,
-              )
-            : const Icon(
-                Icons.close,
-                color: Colors.grey,
-              ),
+            ? const Icon(Icons.check_circle_outline, color: Colors.green)
+            : const Icon(Icons.close, color: Colors.grey),
         const SizedBox(width: 5),
         Expanded(
-          child: Text(message,
-              style: TextStyle(color: (isValid) ? Colors.green : Colors.grey)),
-        )
+          child: Text(
+            message,
+            style: TextStyle(color: (isValid) ? Colors.green : Colors.grey),
+          ),
+        ),
       ],
     );
   }
