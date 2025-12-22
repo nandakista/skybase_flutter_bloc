@@ -73,6 +73,7 @@ class SampleFeatureListView extends StatelessWidget {
           spacing: 12,
           children: [
             FloatingActionButton(
+              heroTag: 'clear_cache',
               backgroundColor: AppColors.primary,
               onPressed: () async {
                 LoadingDialog.show(context);
@@ -82,6 +83,7 @@ class SampleFeatureListView extends StatelessWidget {
               child: const Icon(Icons.delete, color: Colors.white),
             ),
             FloatingActionButton(
+              heroTag: 'search',
               backgroundColor: AppColors.primary,
               onPressed: () {
                 context.read<SampleFeatureListBloc>().add(SearchUser( 'ada'));
